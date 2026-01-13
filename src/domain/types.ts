@@ -1,4 +1,4 @@
-import type { Representative, BaseSchedule, RepresentativeRole } from './representatives/types'
+import type { Representative, BaseSchedule, RepresentativeRole, RepresentativeId } from './representatives/types'
 // This Incident type is now the "raw" data type, without calculated points.
 // Points are calculated on-the-fly by the analytics layer, not stored here.
 import type {

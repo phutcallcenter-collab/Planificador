@@ -62,9 +62,9 @@ export function EditModeProvider({ children }: { children: ReactNode }) {
     [mode, enableAdmin, disableAdmin, toggle]
   )
 
-  return (
-    <EditModeContext.Provider value={value}>
-      {children}
-    </EditModeContext.Provider>
+  return React.createElement(
+    EditModeContext.Provider,
+    { value },
+    children
   )
 }

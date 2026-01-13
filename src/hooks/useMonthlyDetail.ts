@@ -7,19 +7,20 @@ import type { PersonMonthlySummary } from '@/domain/analytics/types'
 
 type UseMonthlyDetailArgs = {
   personSummary: PersonMonthlySummary | null
+  month: string // YYYY-MM format
 }
 
 /**
  * Hook to manage the state of the visible month in the detail modal.
  * It handles the base month, navigation offset, and provides formatted labels.
  */
-export function useMonthlyDetail({ personSummary }: UseMonthlyDetailArgs) {
+export function useMonthlyDetail({ personSummary, month }: UseMonthlyDetailArgs) {
   // The base month is derived from the initial summary passed to the modal.
   const baseMonth = useMemo(() => {
-    if (!personSummary) return null
+    if (!month) return null
     // The month is in 'YYYY-MM' format, so we append '-01' to make it a valid ISO date.
-    return parseISO(`${personSummary.month}-01`)
-  }, [personSummary])
+    return parseISO(`${month}-01`)
+  }, [month])
 
   // The offset is a simple number that represents how many months
   // the user has navigated away from the base month.

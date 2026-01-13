@@ -1,0 +1,81 @@
+﻿
+> control-de-puntos@0.1.0 build
+> next build
+
+  Ôû▓ Next.js 14.2.35
+
+   Creating an optimized production build ...
+ Ô£ô Compiled successfully
+   Linting and checking validity of types ...
+node.exe : Failed 
+to compile.
+En línea: 1 
+Carácter: 1
++ & "C:\Program Fil
+es\nodejs/node.exe"
+ "C:\Program Files\
+nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~
+    + CategoryInfo 
+             : No  
+  tSpecified: (F   
+ ailed to compi    
+le.:String) []    
+, RemoteExcept    
+ion
+    + FullyQualifi 
+   edErrorId : Na  
+  tiveCommandErr   
+ or
+ 
+
+./src/domain/types.
+ts:76:21
+Type error: Cannot 
+find name 'Represen
+tativeId'. Did you 
+mean 
+'Representative'?
+
+[0m [90m 74 
+|[39m 
+[36mexport[39m [
+36minterface[39m 
+[33mSpecialSchedule
+[39m {[0m
+[0m [90m 75 
+|[39m   
+id[33m:[39m 
+string[0m
+[0m[31m[1m>[22m
+[39m[90m 76 
+|[39m   representa
+tiveId[33m:[39m 
+[33mRepresentativeI
+d[39m[0m
+[0m [90m    
+|[39m             
+        [31m[1m^
+[22m[39m[0m
+[0m [90m 77 
+|[39m   startDate
+[33m:[39m [33mISO
+Date[39m[0m
+[0m [90m 78 
+|[39m   
+endDate[33m:[39m 
+[33mISODate[39m[
+0m
+[0m [90m 79 
+|[39m   daysOfWeek
+[33m:[39m 
+number[] [90m// 
+0=Sun, 1=Mon, ..., 
+6=Sat[39m[0m
+Next.js build 
+worker exited with 
+code: 1 and 
+signal: null

@@ -1,0 +1,70 @@
+﻿
+> control-de-puntos@0.1.0 build
+> next build
+
+  Ôû▓ Next.js 14.2.35
+
+   Creating an optimized production build ...
+ Ô£ô Compiled successfully
+   Linting and checking validity of types ...
+node.exe : Failed to 
+compile.
+En línea: 1 Carácter: 1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo       
+       : No    
+tSpecified: (F    ailed 
+to compi    le.:String) 
+[]    , RemoteExcept    
+ion
+    + FullyQualifi    
+edErrorId : Na    
+tiveCommandErr    or
+ 
+
+./src/domain/planning/get
+BaseAssignmentForDay.ts:7
+7:7
+Type error: 'assignment' 
+is possibly 'undefined'.
+
+[0m [90m 75 |[39m   
+[90m// Convertir 
+ShiftAssignment a 
+ShiftType | 
+'OFF'[39m[0m
+[0m [90m 76 |[39m   
+[36mconst[39m 
+assignment [33m=[39m re
+solvedDay[33m.[39massig
+nment[0m
+[0m[31m[1m>[22m[39m
+[90m 77 |[39m   
+[36mif[39m (assignment
+[33m.[39mtype 
+[33m===[39m 
+[32m'NONE'[39m) {[0m
+[0m [90m    |[39m     
+  
+[31m[1m^[22m[39m[0m
+[0m [90m 78 |[39m     
+[36mreturn[39m 
+[32m'OFF'[39m[0m
+[0m [90m 79 |[39m   } 
+[36melse[39m 
+[36mif[39m (assignment
+[33m.[39mtype 
+[33m===[39m 
+[32m'SINGLE'[39m) {[0m
+[0m [90m 80 |[39m     
+[36mreturn[39m assignme
+nt[33m.[39mshift[0m
+Next.js build worker 
+exited with code: 1 and 
+signal: null

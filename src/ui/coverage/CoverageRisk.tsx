@@ -1,6 +1,7 @@
 'use client'
 
-import { ShiftDeficit, ShiftType } from "@/domain/types";
+import { ShiftType } from "@/domain/types"
+import { ShiftDeficit } from "@/domain/planning/coverageDeficit"
 import React from "react";
 import { Tooltip } from "../components/Tooltip";
 

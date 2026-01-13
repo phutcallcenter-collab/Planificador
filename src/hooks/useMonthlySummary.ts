@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { computeMonthlySummary } from '@/domain/analytics/computeMonthlySummary'
 import { useAppStore } from '@/store/useAppStore'
 
-export function useMonthlySummary(month: string) {
+export function useMonthlySummary(month: string | null) {
   const { incidents, representatives } = useAppStore(s => ({
     incidents: s.incidents,
     representatives: s.representatives,

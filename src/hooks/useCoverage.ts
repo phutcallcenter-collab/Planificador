@@ -130,8 +130,7 @@ export function useCoverage(
       const swapsForDate = swapsByDate.get(date) || []
       const finalDailyCoverage = applySwapsToCoverage(
         baseDailyCoverage,
-        swapsForDate,
-        date
+        swapsForDate
       )
 
       // 3. Diagnose deficit based on the final, swap-adjusted coverage.

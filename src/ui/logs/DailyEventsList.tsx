@@ -243,19 +243,19 @@ const PunctualIncidentGroup = memo(function PunctualIncidentGroup({
       <div style={{ padding: '10px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
         {group.type === 'OTRO'
           ? group.items?.map(inc => (
-              <OtherIncidentRow
-                key={inc.id}
-                incident={inc}
-                onDelete={onDeleteSingle}
-              />
-            ))
+            <OtherIncidentRow
+              key={inc.id}
+              incident={inc}
+              onDelete={onDeleteSingle}
+            />
+          ))
           : group.people?.map(person => (
-              <PersonRow
-                key={person.repName}
-                person={person}
-                onDelete={onDeleteGroup}
-              />
-            ))}
+            <PersonRow
+              key={person.repName}
+              person={person}
+              onDelete={onDeleteGroup}
+            />
+          ))}
       </div>
     </motion.div>
   )
@@ -348,9 +348,8 @@ export function DailyEventsList({
   const handleDeleteSingle = async (incident: EnrichedIncident) => {
     const confirmed = await showConfirm({
       title: `¿Eliminar incidencia?`,
-      description: `Esto eliminará permanentemente la incidencia "${
-        incident.note || INCIDENT_STYLES[incident.type].label
-      }" registrada para ${incident.repName}.`,
+      description: `Esto eliminará permanentemente la incidencia "${incident.note || INCIDENT_STYLES[incident.type].label
+        }" registrada para ${incident.repName}.`,
       intent: 'danger',
       confirmLabel: 'Sí, eliminar',
     })
@@ -403,19 +402,22 @@ export function DailyEventsList({
             {emptyMessage}
           </motion.div>
         )}
-        
+
         {rangeIncidents.map(incident => (
           <RangeIncidentCard key={incident.id} incident={incident} onDelete={() => handleDeleteSingle(incident)} />
         ))}
-        
+
         {punctualGroups.map(group => (
           <PunctualIncidentGroup
             key={group.type}
             group={group}
-            onDeleteSingle={handleDeleteSingle}
+            onDeleteSingle={(id) => {
+              const incident = group.people?.flatMap(p => p.incidents).find(i => i.id === id)
+              if (incident) handleDeleteSingle(incident)
+            }}
             onDeleteGroup={(ids) => {
-                const person = group.people?.find(p => p.incidents.some(i => i.id === ids[0]));
-                if(person) handleDeleteGroup(person, group.type);
+              const person = group.people?.find(p => p.incidents.some(i => i.id === ids[0]));
+              if (person) handleDeleteGroup(person, group.type);
             }}
           />
         ))}

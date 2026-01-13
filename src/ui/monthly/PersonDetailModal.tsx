@@ -472,14 +472,17 @@ export function PersonDetailModal({
 
                         if (i.type === 'VACACIONES' || i.type === 'LICENCIA') {
                           const resolved = resolveIncidentDates(i, allCalendarDays, currentRepresentative!)
-                          const startFormatted = format(parseLocalDate(resolved.start), "dd 'de' MMMM", { locale: es })
-                          const endFormatted = format(parseLocalDate(resolved.end), "dd 'de' MMMM", { locale: es })
-                          const returnFormatted = format(parseLocalDate(resolved.returnDate), "dd 'de' MMMM", { locale: es })
 
-                          dateLabel = `${i.type === 'VACACIONES' ? 'Vacaciones' : 'Licencia'} del ${startFormatted} al ${endFormatted}`
-                          workingDaysInfo = i.type === 'VACACIONES'
-                            ? `${resolved.dates.length} días laborables • Retorna ${returnFormatted}`
-                            : `${resolved.dates.length} días naturales • Retorna ${returnFormatted}`
+                          if (resolved.start && resolved.end && resolved.returnDate) {
+                            const startFormatted = format(parseLocalDate(resolved.start), "dd 'de' MMMM", { locale: es })
+                            const endFormatted = format(parseLocalDate(resolved.end), "dd 'de' MMMM", { locale: es })
+                            const returnFormatted = format(parseLocalDate(resolved.returnDate), "dd 'de' MMMM", { locale: es })
+
+                            dateLabel = `${i.type === 'VACACIONES' ? 'Vacaciones' : 'Licencia'} del ${startFormatted} al ${endFormatted}`
+                            workingDaysInfo = i.type === 'VACACIONES'
+                              ? `${resolved.dates.length} días laborables • Retorna ${returnFormatted}`
+                              : `${resolved.dates.length} días naturales • Retorna ${returnFormatted}`
+                          }
                         } else {
                           dateLabel = i.startDate
                             ? format(parseLocalDate(i.startDate), "EEEE, dd 'de' MMMM", { locale: es })

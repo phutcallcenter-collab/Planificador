@@ -8,8 +8,8 @@
  * It must remain free of state, UI, or any external dependencies.
  */
 import { getDay } from 'date-fns'
-import type { Representative, ShiftType } from '../representatives/types'
-import type { ISODate } from '../calendar/types'
+import type { Representative } from '../representatives/types'
+import type { ISODate, ShiftType } from '../calendar/types'
 
 /**
  * Determines the shift(s) a representative is capable of covering on a specific date,

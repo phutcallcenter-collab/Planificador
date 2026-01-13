@@ -74,6 +74,10 @@ export function getBaseAssignmentForDay(params: {
 
   // Convertir ShiftAssignment a ShiftType | 'OFF'
   const assignment = resolvedDay.assignment
+  if (!assignment) {
+    return 'OFF'
+  }
+
   if (assignment.type === 'NONE') {
     return 'OFF'
   } else if (assignment.type === 'SINGLE') {
