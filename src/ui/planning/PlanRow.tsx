@@ -22,6 +22,7 @@ interface PlanRowProps {
   weekDays: DayInfo[]
   activeShift: ShiftType
   assignmentsMap: PlannerAssignmentsMap
+  isAlternate?: boolean
   onCellClick: (repId: string, date: ISODate) => void
   onCellContextMenu: (repId: string, date: ISODate, e: React.MouseEvent) => void
 }
@@ -31,6 +32,7 @@ export const PlanRow = React.memo(function PlanRow({
   weekDays,
   activeShift,
   assignmentsMap,
+  isAlternate,
   onCellClick,
   onCellContextMenu,
 }: PlanRowProps) {
@@ -45,6 +47,7 @@ export const PlanRow = React.memo(function PlanRow({
         alignItems: 'stretch',
         borderBottom: '1px solid #eee',
         minHeight: '45px',
+        background: isAlternate ? '#f9fafb' : 'white', // Zebra Horizontal
       }}
     >
       <div
@@ -59,8 +62,8 @@ export const PlanRow = React.memo(function PlanRow({
       >
         {agent.name}
       </div>
-      <div style={{ flex: 1, display: 'flex' }}>
-        {weekDays.map((day, index) => {
+      <div style={{ flex: 1, display: 'flex', gap: '4px', paddingRight: '4px' }}>
+        {weekDays.map((day) => {
           // Lookup effective duty from adapter map
           const effectiveDuty = assignmentsMap[agent.id]?.[day.date]?.[activeShift]
 
@@ -78,7 +81,6 @@ export const PlanRow = React.memo(function PlanRow({
               resolved={resolvedCell}
               repId={agent.id}
               date={day.date}
-              isEven={index % 2 === 0}
               onClick={() => onCellClick(agent.id, day.date)}
               onContextMenu={(e) => onCellContextMenu(agent.id, day.date, e)}
             />

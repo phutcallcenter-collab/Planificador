@@ -51,6 +51,9 @@ function Row({
   const { agents, weeklyPlan, weekDays, activeShift, assignmentsMap, onCellClick, onCellContextMenu } = data
   const agent = agents[index]
 
+  if (!agent) return null
+
+
   return (
     <div style={style}>
       <PlanRow
@@ -59,6 +62,7 @@ function Row({
         weekDays={weekDays}
         activeShift={activeShift}
         assignmentsMap={assignmentsMap}
+        isAlternate={index % 2 !== 0} // Zebra by row (agent)
         onCellClick={onCellClick}
         onCellContextMenu={onCellContextMenu}
       />

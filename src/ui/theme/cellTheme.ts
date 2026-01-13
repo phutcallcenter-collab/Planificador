@@ -1,5 +1,5 @@
-import { VisualVariant } from '@/application/ui-adapters/cellState'
-import { XCircle, Sun, LucideIcon } from 'lucide-react'
+import type { VisualVariant } from '@/application/ui-adapters/cellState'
+import { Check, Sun, XCircle, LucideIcon } from 'lucide-react'
 
 export interface CellTheme {
     bg: string
@@ -17,16 +17,21 @@ export interface CellTheme {
  * 🟣 Violeta→ licencia
  * 🟢 Verde → feriado trabajado (con label)
  * 🔴 Rojo   → ausencia (única alerta)
+ * 
+ * UPDATE V15: "Surgeon Mode"
+ * - Working → Blanco + Checkmark (Descanso visual)
  */
 export const CELL_THEME: Record<VisualVariant, CellTheme> = {
     WORKING: {
-        bg: '#f6fdf8', // Soft Mint (Micro-tweak for reduced fatigue)
-        fg: '#166534',
+        bg: '#ffffff',
+        fg: '#15803d',
+        icon: Check,
     },
 
     OFF: {
-        bg: 'hsl(220, 10%, 96%)',
-        fg: 'hsl(220, 10%, 45%)',
+        bg: 'transparent', // Neutral, no attention
+        fg: '#9ca3af',     // Muted gray
+        border: 'none',
     },
 
     VACATION: {
