@@ -1,57 +1,54 @@
 /**
- * 🔒 VALIDACIÓN DE OPERACIONES DE CAMBIO DE TURNO (v4 - ESTADO EFECTIVO)
+ * 🔒 VALIDACIÓN DE OPERACIONES DE CAMBIO DE TURNO
  *
  * Este módulo implementa las reglas DURAS del dominio para swaps.
- * 
- * CAMBIO CRÍTICO v4:
- * La validación ahora opera sobre ESTADO EFECTIVO (base + swaps existentes),
- * no solo sobre el estado base. Esto previene bugs como doble cobertura.
+ * Validación basada en estado diario efectivo (assignment-based).
  *
  * Ver SWAP_RULES.md para la especificación completa.
  */
 
-import { SwapType, ShiftType, RepresentativeId } from '../types'
+import { SwapType, ShiftType, ShiftAssignment } from '../types'
 
 /**
- * Contexto efectivo para validación de swaps.
- * 
- * IMPORTANTE: Este contexto refleja el estado REAL después de aplicar swaps existentes.
- * - effectiveShifts: Turnos que la persona REALMENTE trabaja (después de swaps)
- * - baseShifts: Turnos del plan base (antes de swaps)
- * - isBlocked: Bloqueado por VACACIONES/LICENCIA
+ * Contexto de validación para swaps.
+ * Refleja el estado efectivo de cada representante en un día específico.
  */
-export interface EffectiveSwapContext {
+export interface SwapValidationContext {
   daily: Record<
-    RepresentativeId,
+    string,
     {
-      effectiveShifts: Set<ShiftType>
-      baseShifts: Set<ShiftType>
-      isBlocked: boolean
+      shouldWork: boolean
+      assignment: ShiftAssignment | null
+      incidentType?: 'VACATION' | 'LEAVE'
     }
   >
 }
 
 export type ValidationError = string | null
 
-// -------------------------
-// VALIDADOR PRINCIPAL
-// -------------------------
+/**
+ * Helper: Verifica si un representante trabaja un turno específico
+ */
+function worksShift(assignment: ShiftAssignment | null, shift: ShiftType): boolean {
+  if (!assignment) return false
+  if (assignment.type === 'BOTH') return true
+  if (assignment.type === 'SINGLE' && assignment.shift === shift) return true
+  return false
+}
 
 /**
- * 🎯 VALIDACIÓN BLINDADA DE OPERACIONES DE SWAP (v4)
+ * 🎯 VALIDACIÓN DE OPERACIONES DE SWAP
  *
- * Fuente de verdad única, basada en estado efectivo.
- * Si esta función pasa, la operación es legal en el dominio.
- * 
- * CRÍTICO: El contexto DEBE ser construido con buildDailyEffectiveContext()
- * para incluir swaps ya existentes.
+ * Fuente de verdad única basada en estado efectivo.
+ * Si esta función retorna null, la operación es válida.
+ * Si retorna string, es el mensaje de error.
  */
 export function validateSwapOperation(
   type: SwapType,
   fromId: string | undefined,
   toId: string | undefined,
   shift: ShiftType,
-  ctx: EffectiveSwapContext
+  ctx: SwapValidationContext
 ): ValidationError {
   const get = (id?: string) => (id ? ctx.daily[id] : undefined)
 
@@ -79,22 +76,32 @@ export function validateSwapOperation(
     if (!from || !to) return 'Representante inválido.'
 
     // Bloqueos duros
-    if (from.isBlocked) {
-      return 'No se puede cubrir a alguien de vacaciones o licencia.'
+    if (from.incidentType === 'VACATION') {
+      return 'No se puede cubrir a alguien de vacaciones.'
     }
-    if (to.isBlocked) {
-      return 'No se puede cubrir con alguien de vacaciones o licencia.'
+    if (from.incidentType === 'LEAVE') {
+      return 'No se puede cubrir a alguien de licencia.'
+    }
+    if (to.incidentType === 'VACATION') {
+      return 'No se puede cubrir con alguien de vacaciones.'
+    }
+    if (to.incidentType === 'LEAVE') {
+      return 'No se puede cubrir con alguien de licencia.'
     }
 
-    // El cubierto debe trabajar ese turno (base)
-    if (!from.baseShifts.has(shift)) {
+    // El cubierto debe trabajar ese día
+    if (!from.shouldWork) {
+      return 'No se puede cubrir a alguien que no trabaja ese día.'
+    }
+
+    // El cubierto debe trabajar ese turno específico
+    if (!worksShift(from.assignment, shift)) {
       return 'No se puede cubrir a alguien que no trabaja ese turno.'
     }
 
-    // 🔥 REGLA CRÍTICA: El que cubre NO puede estar ocupado en ese turno (efectivo)
-    // Esto previene doble cobertura del mismo turno
-    if (to.effectiveShifts.has(shift)) {
-      return 'Ya está cubriendo ese turno.'
+    // El que cubre NO puede estar ocupado en ese turno
+    if (worksShift(to.assignment, shift)) {
+      return 'El representante que cubre no está disponible en ese horario.'
     }
 
     return null
@@ -106,21 +113,24 @@ export function validateSwapOperation(
   if (type === 'SWAP') {
     if (!from || !to) return 'Representante inválido.'
 
-    if (from.isBlocked || to.isBlocked) {
+    if (from.incidentType === 'VACATION' || from.incidentType === 'LEAVE') {
+      return 'No se puede intercambiar con alguien de vacaciones o licencia.'
+    }
+    if (to.incidentType === 'VACATION' || to.incidentType === 'LEAVE') {
       return 'No se puede intercambiar con alguien de vacaciones o licencia.'
     }
 
-    // Ambos deben trabajar (efectivo)
-    if (from.effectiveShifts.size === 0 || to.effectiveShifts.size === 0) {
+    // Ambos deben trabajar
+    if (!from.shouldWork || !to.shouldWork) {
       return 'Ambos representantes deben trabajar ese día para intercambiar.'
     }
 
-    // Detectar turnos efectivos
-    const fromShifts = Array.from(from.effectiveShifts)
-    const toShifts = Array.from(to.effectiveShifts)
-
-    // Si ambos trabajan el mismo turno, el swap no tiene efecto
-    if (fromShifts.length === 1 && toShifts.length === 1 && fromShifts[0] === toShifts[0]) {
+    // Si ambos trabajan el mismo turno único, el swap no tiene efecto
+    if (
+      from.assignment?.type === 'SINGLE' &&
+      to.assignment?.type === 'SINGLE' &&
+      from.assignment.shift === to.assignment.shift
+    ) {
       return 'El intercambio no tiene efecto: ambos trabajan el mismo turno.'
     }
 
@@ -133,22 +143,22 @@ export function validateSwapOperation(
   if (type === 'DOUBLE') {
     if (!to) return 'Representante inválido.'
 
-    if (to.isBlocked) {
+    if (to.incidentType === 'VACATION' || to.incidentType === 'LEAVE') {
       return 'No se puede asignar doble turno a alguien de vacaciones o licencia.'
     }
 
-    // Debe trabajar (efectivo)
-    if (to.effectiveShifts.size === 0) {
+    // Debe trabajar
+    if (!to.shouldWork) {
       return 'No se puede asignar doble turno a alguien que no trabaja.'
     }
 
-    // Ya trabaja ambos turnos (efectivo)
-    if (to.effectiveShifts.size === 2) {
+    // Ya trabaja ambos turnos
+    if (to.assignment?.type === 'BOTH') {
       return 'Este representante ya trabaja ambos turnos.'
     }
 
-    // Ya trabaja ESE turno (efectivo)
-    if (to.effectiveShifts.has(shift)) {
+    // Ya trabaja ESE turno
+    if (worksShift(to.assignment, shift)) {
       return 'El representante ya trabaja ese turno.'
     }
 
@@ -157,6 +167,3 @@ export function validateSwapOperation(
 
   return 'Operación no válida.'
 }
-
-// Re-exportar para compatibilidad con código existente
-export type SwapValidationContext = EffectiveSwapContext

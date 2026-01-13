@@ -1,0 +1,2720 @@
+﻿
+> control-de-puntos@0.1.0 test
+> jest --config jest.config.cjs --runInBand
+
+node.exe : FAIL src
+/application/stats/
+__tests__/getCovera
+geRiskSummary.test.
+ts
+En línea: 1 
+Carácter: 1
++ & "C:\Program Fil
+es\nodejs/node.exe"
+ "C:\Program Files\
+nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~
+    + CategoryInfo 
+             : No  
+  tSpecified: (F   
+ AIL src/applic    
+...Summary.tes    
+t.ts:String) [    
+], RemoteExcep    
+tion
+    + FullyQualifi 
+   edErrorId : Na  
+  tiveCommandErr   
+ or
+ 
+  ÔùÅ getCoverageRi
+skSummary ÔÇ║ 
+calculates critical
+DeficitDays for 
+deficits > 2
+
+    expect(received
+).toBe(expected) 
+// Object.is 
+equality
+
+    Expected: 2
+    Received: 3
+
+    [0m [90m 76 
+|[39m     [90m// 
+Day 2: DAY deficit 
+1, NIGHT deficit 
+2. Total 3 -> 
+CRITICAL[39m
+     [90m 77 
+|[39m     
+[36mconst[39m 
+result [33m=[39m 
+getCoverageRiskSumm
+ary({ [33m...[39m
+baseInput[33m,[39
+m coverageRules[33
+m:[39m rules })
+    [31m[1m>[22m
+[39m[90m 78 
+|[39m     expect(r
+esult[33m.[39mcri
+ticalDeficitDays)[
+33m.[39mtoBe([35m
+2[39m)
+     [90m    
+|[39m             
+                   
+        [31m[1m^
+[22m[39m
+     [90m 79 
+|[39m   })
+     [90m 80 
+|[39m   
+     [90m 81 
+|[39m   it([32m'c
+alculates 
+totalDeficit as 
+sum of all shift de
+ficits'[39m[33m,
+[39m () 
+[33m=>[39m {[0m
+
+      at 
+Object.<anonymous> 
+(src/application/st
+ats/__tests__/getCo
+verageRiskSummary.t
+est.ts:78:40)
+
+  ÔùÅ getCoverageRi
+skSummary ÔÇ║ 
+[CRITICAL] 
+aggregates 
+deficits across 
+multiple weekly 
+plans and only 
+evaluates days 
+with plans
+
+    expect(received
+).toBe(expected) 
+// Object.is 
+equality
+
+    Expected: 14
+    Received: 2
+
+    [0m [90m 198 
+|[39m
+     [90m 199 
+|[39m     [90m// 
+Total days with 
+deficit is 14 
+because every 
+evaluated day has 
+at least one 
+deficit.[39m
+    [31m[1m>[22m
+[39m[90m 200 
+|[39m     expect(r
+esult[33m.[39mday
+sWithDeficit)[33m.
+[39mtoBe([35m14[
+39m)
+     [90m     
+|[39m             
+                   
+    [31m[1m^[22m
+[39m
+     [90m 201 
+|[39m
+     [90m 202 
+|[39m     
+[36mconst[39m exp
+ectedTotalDeficit 
+[33m=[39m
+     [90m 203 
+|[39m       
+deficitWk1Day1 
+[33m+[39m 
+otherDeficitsWk1 
+[33m+[39m 
+deficitWk2Day1 
+[33m+[39m otherDe
+ficitsWk2[0m
+
+      at 
+Object.<anonymous> 
+(src/application/st
+ats/__tests__/getCo
+verageRiskSummary.t
+est.ts:200:36)
+
+FAIL src/applicatio
+n/stats/__tests__/g
+etStatsOverview.tes
+t.ts
+  ÔùÅ 
+getStatsOverview 
+ÔÇ║ should count 
+days with deficit 
+in any shift only 
+once
+
+    expect(received
+).toBe(expected) 
+// Object.is 
+equality
+
+    Expected: 2
+    Received: 7
+
+    [0m [90m 127 
+|[39m     
+     [90m 128 
+|[39m     [90m// 
+Expect 2 deficit 
+days, even though 
+there are 4 shift 
+deficits in 
+total.[39m
+    [31m[1m>[22m
+[39m[90m 129 
+|[39m     expect(r
+esult[33m.[39mdef
+icitDays)[33m.[39
+mtoBe([35m2[39m)
+[33m;[39m
+     [90m     
+|[39m             
+                   
+[31m[1m^[22m[39
+m
+     [90m 130 
+|[39m   })
+     [90m 131 
+|[39m })
+     [90m 132 
+|[39m[0m
+
+      at 
+Object.<anonymous> 
+(src/application/st
+ats/__tests__/getSt
+atsOverview.test.ts
+:129:32)
+
+FAIL src/domain/inc
+idents/__tests__/re
+solvePunitiveRespon
+sibility.test.ts
+  ÔùÅ resolvePuniti
+veResponsibility 
+ÔÇ║ punishes BASE 
+worker normally
+
+    TypeError: 
+Cannot read 
+properties of 
+undefined (reading 
+'find')
+
+    [0m [90m 58 
+|[39m   [90m// 
+2. INCIDENCIAS 
+BLOQUEANTES: 
+Verificar 
+disponibilidad[39m
+     [90m 59 
+|[39m   [90m// ==
+===================
+===================
+=======[39m
+    [31m[1m>[22m
+[39m[90m 60 
+|[39m   
+[36mconst[39m 
+representative 
+[33m=[39m represe
+ntatives[33m.[39m
+find(r 
+[33m=>[39m 
+r[33m.[39mid 
+[33m===[39m 
+representativeId)
+     [90m    
+|[39m             
+                   
+          [31m[1m
+^[22m[39m
+     [90m 61 
+|[39m
+     [90m 62 
+|[39m   [90m// 
+ƒöÆ DEFENSIVE: Si 
+no encontramos el 
+representante, 
+algo est├í mal[39m
+     [90m 63 
+|[39m   
+[36mif[39m ([33m
+![39mrepresentativ
+e) {[0m
+
+      at resolveEff
+ectiveDuty (src/dom
+ain/swaps/resolveEf
+fectiveDuty.ts:60:4
+2)
+      at resolvePun
+itiveResponsibility
+ (src/domain/incide
+nts/resolvePunitive
+Responsibility.ts:2
+0:40)
+      at 
+Object.<anonymous> 
+(src/domain/inciden
+ts/__tests__/resolv
+ePunitiveResponsibi
+lity.test.ts:23:53)
+
+  ÔùÅ resolvePuniti
+veResponsibility 
+ÔÇ║ does NOT 
+punish COVERED 
+worker
+
+    TypeError: 
+Cannot read 
+properties of 
+undefined (reading 
+'find')
+
+    [0m [90m 58 
+|[39m   [90m// 
+2. INCIDENCIAS 
+BLOQUEANTES: 
+Verificar 
+disponibilidad[39m
+     [90m 59 
+|[39m   [90m// ==
+===================
+===================
+=======[39m
+    [31m[1m>[22m
+[39m[90m 60 
+|[39m   
+[36mconst[39m 
+representative 
+[33m=[39m represe
+ntatives[33m.[39m
+find(r 
+[33m=>[39m 
+r[33m.[39mid 
+[33m===[39m 
+representativeId)
+     [90m    
+|[39m             
+                   
+          [31m[1m
+^[22m[39m
+     [90m 61 
+|[39m
+     [90m 62 
+|[39m   [90m// 
+ƒöÆ DEFENSIVE: Si 
+no encontramos el 
+representante, 
+algo est├í mal[39m
+     [90m 63 
+|[39m   
+[36mif[39m ([33m
+![39mrepresentativ
+e) {[0m
+
+      at resolveEff
+ectiveDuty (src/dom
+ain/swaps/resolveEf
+fectiveDuty.ts:60:4
+2)
+      at resolvePun
+itiveResponsibility
+ (src/domain/incide
+nts/resolvePunitive
+Responsibility.ts:2
+0:40)
+      at 
+Object.<anonymous> 
+(src/domain/inciden
+ts/__tests__/resolv
+ePunitiveResponsibi
+lity.test.ts:34:53)
+
+  ÔùÅ resolvePuniti
+veResponsibility 
+ÔÇ║ punishes 
+COVERING worker
+
+    TypeError: 
+Cannot read 
+properties of 
+undefined (reading 
+'find')
+
+    [0m [90m 58 
+|[39m   [90m// 
+2. INCIDENCIAS 
+BLOQUEANTES: 
+Verificar 
+disponibilidad[39m
+     [90m 59 
+|[39m   [90m// ==
+===================
+===================
+=======[39m
+    [31m[1m>[22m
+[39m[90m 60 
+|[39m   
+[36mconst[39m 
+representative 
+[33m=[39m represe
+ntatives[33m.[39m
+find(r 
+[33m=>[39m 
+r[33m.[39mid 
+[33m===[39m 
+representativeId)
+     [90m    
+|[39m             
+                   
+          [31m[1m
+^[22m[39m
+     [90m 61 
+|[39m
+     [90m 62 
+|[39m   [90m// 
+ƒöÆ DEFENSIVE: Si 
+no encontramos el 
+representante, 
+algo est├í mal[39m
+     [90m 63 
+|[39m   
+[36mif[39m ([33m
+![39mrepresentativ
+e) {[0m
+
+      at resolveEff
+ectiveDuty (src/dom
+ain/swaps/resolveEf
+fectiveDuty.ts:60:4
+2)
+      at resolvePun
+itiveResponsibility
+ (src/domain/incide
+nts/resolvePunitive
+Responsibility.ts:2
+0:40)
+      at 
+Object.<anonymous> 
+(src/domain/inciden
+ts/__tests__/resolv
+ePunitiveResponsibi
+lity.test.ts:45:53)
+
+  ÔùÅ resolvePuniti
+veResponsibility 
+ÔÇ║ punishes 
+SWAPPED_IN worker
+
+    TypeError: 
+Cannot read 
+properties of 
+undefined (reading 
+'find')
+
+    [0m [90m 58 
+|[39m   [90m// 
+2. INCIDENCIAS 
+BLOQUEANTES: 
+Verificar 
+disponibilidad[39m
+     [90m 59 
+|[39m   [90m// ==
+===================
+===================
+=======[39m
+    [31m[1m>[22m
+[39m[90m 60 
+|[39m   
+[36mconst[39m 
+representative 
+[33m=[39m represe
+ntatives[33m.[39m
+find(r 
+[33m=>[39m 
+r[33m.[39mid 
+[33m===[39m 
+representativeId)
+     [90m    
+|[39m             
+                   
+          [31m[1m
+^[22m[39m
+     [90m 61 
+|[39m
+     [90m 62 
+|[39m   [90m// 
+ƒöÆ DEFENSIVE: Si 
+no encontramos el 
+representante, 
+algo est├í mal[39m
+     [90m 63 
+|[39m   
+[36mif[39m ([33m
+![39mrepresentativ
+e) {[0m
+
+      at resolveEff
+ectiveDuty (src/dom
+ain/swaps/resolveEf
+fectiveDuty.ts:60:4
+2)
+      at resolvePun
+itiveResponsibility
+ (src/domain/incide
+nts/resolvePunitive
+Responsibility.ts:2
+0:40)
+      at 
+Object.<anonymous> 
+(src/domain/inciden
+ts/__tests__/resolv
+ePunitiveResponsibi
+lity.test.ts:58:53)
+
+FAIL __tests__/doma
+in/incidents/valida
+teIncident.test.ts
+  ÔùÅ Domain 
+Rules: Incident 
+Validation ÔÇ║ 
+validateIncident 
+(Interaction 
+Rules) ÔÇ║ should 
+fail if there is 
+an overlap with 
+existing VACACIONES
+
+    expect(received
+).toBe(expected) 
+// Object.is 
+equality
+
+    Expected: false
+    Received: true
+
+    [0m [90m 160 
+|[39m         
+     [90m 161 
+|[39m         
+[36mconst[39m 
+result [33m=[39m 
+validateIncident(ne
+wIncident[33m,[39
+m existing[33m,[3
+9m biggerCalendar[
+33m,[39m 
+mockRep[33m,[39m 
+mockAllReps)[33m;
+[39m
+    [31m[1m>[22m
+[39m[90m 162 
+|[39m         expe
+ct(result[33m.[39
+mok)[33m.[39mtoBe
+([36mfalse[39m)[
+33m;[39m
+     [90m     
+|[39m             
+              [31m
+[1m^[22m[39m
+     [90m 163 
+|[39m         expe
+ct(result[33m.[39
+mcode)[33m.[39mto
+Be([32m'OVERLAP_WI
+TH_FORMAL_INCIDENT'
+[39m)[33m;[39m
+     [90m 164 
+|[39m     
+})[33m;[39m
+     [90m 165 
+|[39m   })[0m
+
+      at 
+Object.<anonymous> 
+(__tests__/domain/i
+ncidents/validateIn
+cident.test.ts:162:
+27)
+
+FAIL src/applicatio
+n/ui-adapters/__tes
+ts__/getEffectiveDa
+ilyCoverage.test.ts
+  ÔùÅ getEffectiveD
+ailyCoverage ÔÇ║ 
+calculates base 
+coverage correctly 
+(OK status)
+
+    TypeError: 
+incidents is not 
+iterable
+
+    [0m [90m 35 
+|[39m     
+[36mconst[39m 
+blocked 
+[33m=[39m 
+[36mnew[39m [33m
+Set[39m[33m<[39m
+[33mstring[39m[3
+3m>[39m()
+     [90m 36 
+|[39m
+    [31m[1m>[22m
+[39m[90m 37 
+|[39m     
+[36mfor[39m 
+([36mconst[39m 
+incident 
+[36mof[39m 
+incidents) {
+     [90m    
+|[39m             
+               [31
+m[1m^[22m[39m
+     [90m 38 
+|[39m         
+[90m// Only 
+blocking 
+incidents[39m
+     [90m 39 
+|[39m         
+[36mif[39m ([33m
+![39m[[32m'VACACI
+ONES'[39m[33m,[3
+9m [32m'LICENCIA'
+[39m][33m.[39minc
+ludes(incident[33m
+.[39mtype)) 
+[36mcontinue[39m
+     [90m 40 
+|[39m[0m
+
+      at buildBlock
+edRepresentativesSe
+t (src/application/
+ui-adapters/getEffe
+ctiveDailyCoverage.
+ts:37:28)
+      at getEffecti
+veDailyCoverage (sr
+c/application/ui-ad
+apters/getEffective
+DailyCoverage.ts:74
+:25)
+      at 
+Object.<anonymous> 
+(src/application/ui
+-adapters/__tests__
+/getEffectiveDailyC
+overage.test.ts:31:
+46)
+
+  ÔùÅ getEffectiveD
+ailyCoverage ÔÇ║ 
+reflects DOUBLE 
+swap increment 
+(SURPLUS)
+
+    TypeError: 
+incidents is not 
+iterable
+
+    [0m [90m 35 
+|[39m     
+[36mconst[39m 
+blocked 
+[33m=[39m 
+[36mnew[39m [33m
+Set[39m[33m<[39m
+[33mstring[39m[3
+3m>[39m()
+     [90m 36 
+|[39m
+    [31m[1m>[22m
+[39m[90m 37 
+|[39m     
+[36mfor[39m 
+([36mconst[39m 
+incident 
+[36mof[39m 
+incidents) {
+     [90m    
+|[39m             
+               [31
+m[1m^[22m[39m
+     [90m 38 
+|[39m         
+[90m// Only 
+blocking 
+incidents[39m
+     [90m 39 
+|[39m         
+[36mif[39m ([33m
+![39m[[32m'VACACI
+ONES'[39m[33m,[3
+9m [32m'LICENCIA'
+[39m][33m.[39minc
+ludes(incident[33m
+.[39mtype)) 
+[36mcontinue[39m
+     [90m 40 
+|[39m[0m
+
+      at buildBlock
+edRepresentativesSe
+t (src/application/
+ui-adapters/getEffe
+ctiveDailyCoverage.
+ts:37:28)
+      at getEffecti
+veDailyCoverage (sr
+c/application/ui-ad
+apters/getEffective
+DailyCoverage.ts:74
+:25)
+      at 
+Object.<anonymous> 
+(src/application/ui
+-adapters/__tests__
+/getEffectiveDailyC
+overage.test.ts:42:
+46)
+
+  ÔùÅ getEffectiveD
+ailyCoverage ÔÇ║ 
+reflects COVER as 
+net zero
+
+    TypeError: 
+incidents is not 
+iterable
+
+    [0m [90m 35 
+|[39m     
+[36mconst[39m 
+blocked 
+[33m=[39m 
+[36mnew[39m [33m
+Set[39m[33m<[39m
+[33mstring[39m[3
+3m>[39m()
+     [90m 36 
+|[39m
+    [31m[1m>[22m
+[39m[90m 37 
+|[39m     
+[36mfor[39m 
+([36mconst[39m 
+incident 
+[36mof[39m 
+incidents) {
+     [90m    
+|[39m             
+               [31
+m[1m^[22m[39m
+     [90m 38 
+|[39m         
+[90m// Only 
+blocking 
+incidents[39m
+     [90m 39 
+|[39m         
+[36mif[39m ([33m
+![39m[[32m'VACACI
+ONES'[39m[33m,[3
+9m [32m'LICENCIA'
+[39m][33m.[39minc
+ludes(incident[33m
+.[39mtype)) 
+[36mcontinue[39m
+     [90m 40 
+|[39m[0m
+
+      at buildBlock
+edRepresentativesSe
+t (src/application/
+ui-adapters/getEffe
+ctiveDailyCoverage.
+ts:37:28)
+      at getEffecti
+veDailyCoverage (sr
+c/application/ui-ad
+apters/getEffective
+DailyCoverage.ts:74
+:25)
+      at 
+Object.<anonymous> 
+(src/application/ui
+-adapters/__tests__
+/getEffectiveDailyC
+overage.test.ts:52:
+46)
+
+FAIL src/domain/pla
+nning/__tests__/app
+lySwapsToCoverage.t
+est.ts
+  ÔùÅ applySwapsToC
+overage ÔÇ║ COVER: 
+net change is 0 (1 
+leaves, 1 enters)
+
+    TypeError: 
+Cannot read 
+properties of 
+undefined (reading 
+'DAY')
+
+    [0m [90m 20 
+|[39m     
+date[33m:[39m bas
+eCoverage[33m.[39
+mdate[33m,[39m
+     [90m 21 
+|[39m     
+shifts[33m:[39m {
+    [31m[1m>[22m
+[39m[90m 22 
+|[39m       [33mD
+AY[39m[33m:[39m 
+baseCoverage[33m.
+[39mshifts[33m.[3
+9m[33mDAY[39m[33
+m,[39m
+     [90m    
+|[39m             
+                   
+[31m[1m^[22m[39
+m
+     [90m 23 
+|[39m       [33mN
+IGHT[39m[33m:[39
+m baseCoverage[33m
+.[39mshifts[33m.
+[39m[33mNIGHT[39m
+[33m,[39m
+     [90m 24 
+|[39m     
+}[33m,[39m
+     [90m 25 
+|[39m   }[0m
+
+      at applySwaps
+ToCoverage (src/dom
+ain/planning/applyS
+wapsToCoverage.ts:2
+2:32)
+      at 
+Object.<anonymous> 
+(src/domain/plannin
+g/__tests__/applySw
+apsToCoverage.test.
+ts:19:41)
+
+  ÔùÅ applySwapsToC
+overage ÔÇ║ 
+DOUBLE: increases 
+coverage by 1
+
+    TypeError: 
+Cannot read 
+properties of 
+undefined (reading 
+'DAY')
+
+    [0m [90m 20 
+|[39m     
+date[33m:[39m bas
+eCoverage[33m.[39
+mdate[33m,[39m
+     [90m 21 
+|[39m     
+shifts[33m:[39m {
+    [31m[1m>[22m
+[39m[90m 22 
+|[39m       [33mD
+AY[39m[33m:[39m 
+baseCoverage[33m.
+[39mshifts[33m.[3
+9m[33mDAY[39m[33
+m,[39m
+     [90m    
+|[39m             
+                   
+[31m[1m^[22m[39
+m
+     [90m 23 
+|[39m       [33mN
+IGHT[39m[33m:[39
+m baseCoverage[33m
+.[39mshifts[33m.
+[39m[33mNIGHT[39m
+[33m,[39m
+     [90m 24 
+|[39m     
+}[33m,[39m
+     [90m 25 
+|[39m   }[0m
+
+      at applySwaps
+ToCoverage (src/dom
+ain/planning/applyS
+wapsToCoverage.ts:2
+2:32)
+      at 
+Object.<anonymous> 
+(src/domain/plannin
+g/__tests__/applySw
+apsToCoverage.test.
+ts:31:41)
+
+  ÔùÅ applySwapsToC
+overage ÔÇ║ SWAP: 
+net change is 0 
+for both shifts
+
+    TypeError: 
+Cannot read 
+properties of 
+undefined (reading 
+'DAY')
+
+    [0m [90m 20 
+|[39m     
+date[33m:[39m bas
+eCoverage[33m.[39
+mdate[33m,[39m
+     [90m 21 
+|[39m     
+shifts[33m:[39m {
+    [31m[1m>[22m
+[39m[90m 22 
+|[39m       [33mD
+AY[39m[33m:[39m 
+baseCoverage[33m.
+[39mshifts[33m.[3
+9m[33mDAY[39m[33
+m,[39m
+     [90m    
+|[39m             
+                   
+[31m[1m^[22m[39
+m
+     [90m 23 
+|[39m       [33mN
+IGHT[39m[33m:[39
+m baseCoverage[33m
+.[39mshifts[33m.
+[39m[33mNIGHT[39m
+[33m,[39m
+     [90m 24 
+|[39m     
+}[33m,[39m
+     [90m 25 
+|[39m   }[0m
+
+      at applySwaps
+ToCoverage (src/dom
+ain/planning/applyS
+wapsToCoverage.ts:2
+2:32)
+      at 
+Object.<anonymous> 
+(src/domain/plannin
+g/__tests__/applySw
+apsToCoverage.test.
+ts:43:41)
+
+  ÔùÅ applySwapsToC
+overage ÔÇ║ 
+ignores swaps on 
+other dates
+
+    TypeError: 
+Cannot read 
+properties of 
+undefined (reading 
+'DAY')
+
+    [0m [90m 20 
+|[39m     
+date[33m:[39m bas
+eCoverage[33m.[39
+mdate[33m,[39m
+     [90m 21 
+|[39m     
+shifts[33m:[39m {
+    [31m[1m>[22m
+[39m[90m 22 
+|[39m       [33mD
+AY[39m[33m:[39m 
+baseCoverage[33m.
+[39mshifts[33m.[3
+9m[33mDAY[39m[33
+m,[39m
+     [90m    
+|[39m             
+                   
+[31m[1m^[22m[39
+m
+     [90m 23 
+|[39m       [33mN
+IGHT[39m[33m:[39
+m baseCoverage[33m
+.[39mshifts[33m.
+[39m[33mNIGHT[39m
+[33m,[39m
+     [90m 24 
+|[39m     
+}[33m,[39m
+     [90m 25 
+|[39m   }[0m
+
+      at applySwaps
+ToCoverage (src/dom
+ain/planning/applyS
+wapsToCoverage.ts:2
+2:32)
+      at 
+Object.<anonymous> 
+(src/domain/plannin
+g/__tests__/applySw
+apsToCoverage.test.
+ts:54:41)
+
+PASS src/domain/pla
+nning/buildWeeklySc
+hedule.test.ts
+PASS __tests__/doma
+in/planning/shiftCa
+pability.test.ts
+PASS src/applicatio
+n/ui-adapters/__tes
+ts__/getEffectiveDa
+ilyLogData.test.ts
+PASS __tests__/doma
+in/planning/effecti
+veShiftAssignment.t
+est.ts
+PASS __tests__/inte
+gration/vacations-w
+ith-holidays.test.t
+s
+  ÔùÅ Console
+
+    console.log
+      === 
+Resultado del 
+C├ílculo de 
+Vacaciones ===
+
+      at 
+Object.<anonymous> 
+(__tests__/integrat
+ion/vacations-with-
+holidays.test.ts:76
+:13)
+
+    console.log
+      Fecha 
+inicio: 2025-01-10
+
+      at 
+Object.<anonymous> 
+(__tests__/integrat
+ion/vacations-with-
+holidays.test.ts:77
+:13)
+
+    console.log
+      Fecha fin: 
+2025-01-27
+
+      at 
+Object.<anonymous> 
+(__tests__/integrat
+ion/vacations-with-
+holidays.test.ts:78
+:13)
+
+    console.log
+      Total d├¡as: 
+14
+
+      at 
+Object.<anonymous> 
+(__tests__/integrat
+ion/vacations-with-
+holidays.test.ts:79
+:13)
+
+    console.log
+      Fechas: [
+        
+'2025-01-10', 
+'2025-01-11',
+        
+'2025-01-13', 
+'2025-01-14',
+        
+'2025-01-16', 
+'2025-01-17',
+        
+'2025-01-18', 
+'2025-01-20',
+        
+'2025-01-21', 
+'2025-01-22',
+        
+'2025-01-23', 
+'2025-01-24',
+        
+'2025-01-25', 
+'2025-01-27'
+      ]
+
+      at 
+Object.<anonymous> 
+(__tests__/integrat
+ion/vacations-with-
+holidays.test.ts:80
+:13)
+
+    console.log
+      Ô£ô El 
+feriado 2025-01-15 
+fue EXCLUIDO 
+correctamente
+
+      at 
+Object.<anonymous> 
+(__tests__/integrat
+ion/vacations-with-
+holidays.test.ts:89
+:13)
+
+    console.log
+      Ô£ô Los 
+domingos fueron 
+EXCLUIDOS 
+correctamente
+
+      at 
+Object.<anonymous> 
+(__tests__/integrat
+ion/vacations-with-
+holidays.test.ts:97
+:13)
+
+    console.log
+      Ô£ô 
+Duraci├│n 
+calendario: 18 
+d├¡as (mayor que 
+14 d├¡as laborales)
+
+      at 
+Object.<anonymous> 
+(__tests__/integrat
+ion/vacations-with-
+holidays.test.ts:11
+0:13)
+
+    console.log
+      Fechas de 
+vacaciones con 3 
+feriados: [
+        
+'2025-01-10', 
+'2025-01-11',
+        
+'2025-01-13', 
+'2025-01-14',
+        
+'2025-01-16', 
+'2025-01-17',
+        
+'2025-01-18', 
+'2025-01-21',
+        
+'2025-01-22', 
+'2025-01-23',
+        
+'2025-01-24', 
+'2025-01-25',
+        
+'2025-01-28', 
+'2025-01-29'
+      ]
+
+      at 
+Object.<anonymous> 
+(__tests__/integrat
+ion/vacations-with-
+holidays.test.ts:14
+7:13)
+
+    console.log
+      Ô£ô Los 3 
+feriados fueron 
+EXCLUIDOS 
+correctamente
+
+      at 
+Object.<anonymous> 
+(__tests__/integrat
+ion/vacations-with-
+holidays.test.ts:15
+7:13)
+
+    console.log
+      Vacaciones 
+con feriado en 
+medio:
+
+      at 
+Object.<anonymous> 
+(__tests__/integrat
+ion/vacations-with-
+holidays.test.ts:18
+8:13)
+
+    console.log
+      Inicio: 
+2025-02-10
+
+      at 
+Object.<anonymous> 
+(__tests__/integrat
+ion/vacations-with-
+holidays.test.ts:18
+9:13)
+
+    console.log
+      Fin: 
+2025-02-26
+
+      at 
+Object.<anonymous> 
+(__tests__/integrat
+ion/vacations-with-
+holidays.test.ts:19
+0:13)
+
+    console.log
+      Fechas: [
+        
+'2025-02-10', 
+'2025-02-11',
+        
+'2025-02-12', 
+'2025-02-13',
+        
+'2025-02-15', 
+'2025-02-17',
+        
+'2025-02-18', 
+'2025-02-19',
+        
+'2025-02-20', 
+'2025-02-21',
+        
+'2025-02-22', 
+'2025-02-24',
+        
+'2025-02-25', 
+'2025-02-26'
+      ]
+
+      at 
+Object.<anonymous> 
+(__tests__/integrat
+ion/vacations-with-
+holidays.test.ts:19
+1:13)
+
+    console.log
+      Ô£ô El 
+feriado fue 
+saltado y el 
+conteo continu├│ 
+correctamente
+
+      at 
+Object.<anonymous> 
+(__tests__/integrat
+ion/vacations-with-
+holidays.test.ts:20
+3:13)
+
+    console.log
+      Ô£ô Sin 
+feriados, solo se 
+excluyen los d├¡as 
+base OFF (domingos)
+
+      at 
+Object.<anonymous> 
+(__tests__/integrat
+ion/vacations-with-
+holidays.test.ts:24
+2:13)
+
+PASS __tests__/doma
+in/planning/buildWe
+eklySchedule.test.t
+s
+PASS __tests__/doma
+in/incidents/resolv
+eIncidentDates.test
+.ts
+  ÔùÅ Console
+
+    console.log
+      Fechas 
+resultantes: [
+        
+'2025-01-10', 
+'2025-01-11',
+        
+'2025-01-13', 
+'2025-01-14',
+        
+'2025-01-16', 
+'2025-01-17',
+        
+'2025-01-18', 
+'2025-01-21',
+        
+'2025-01-22', 
+'2025-01-23',
+        
+'2025-01-24', 
+'2025-01-25',
+        
+'2025-01-27', 
+'2025-01-28'
+      ]
+
+      at 
+Object.<anonymous> 
+(__tests__/domain/i
+ncidents/resolveInc
+identDates.test.ts:
+56:13)
+
+    console.log
+      Total de 
+d├¡as: 14
+
+      at 
+Object.<anonymous> 
+(__tests__/domain/i
+ncidents/resolveInc
+identDates.test.ts:
+57:13)
+
+    console.log
+      Fecha 
+inicio: 2025-01-10
+
+      at 
+Object.<anonymous> 
+(__tests__/domain/i
+ncidents/resolveInc
+identDates.test.ts:
+58:13)
+
+    console.log
+      Fecha fin: 
+2025-01-28
+
+      at 
+Object.<anonymous> 
+(__tests__/domain/i
+ncidents/resolveInc
+identDates.test.ts:
+59:13)
+
+    console.log
+      Fechas de 
+vacaciones: [
+        
+'2025-02-03', 
+'2025-02-04',
+        
+'2025-02-06', 
+'2025-02-07',
+        
+'2025-02-08', 
+'2025-02-10',
+        
+'2025-02-11', 
+'2025-02-12',
+        
+'2025-02-13', 
+'2025-02-14',
+        
+'2025-02-15', 
+'2025-02-17',
+        
+'2025-02-18', 
+'2025-02-19'
+      ]
+
+      at 
+Object.<anonymous> 
+(__tests__/domain/i
+ncidents/resolveInc
+identDates.test.ts:
+89:13)
+
+    console.log
+      Caso real - 
+Fechas de 
+vacaciones: [
+        
+'2025-01-02', 
+'2025-01-03',
+        
+'2025-01-04', 
+'2025-01-07',
+        
+'2025-01-08', 
+'2025-01-09',
+        
+'2025-01-10', 
+'2025-01-11',
+        
+'2025-01-13', 
+'2025-01-14',
+        
+'2025-01-15', 
+'2025-01-16',
+        
+'2025-01-17', 
+'2025-01-18'
+      ]
+
+      at 
+Object.<anonymous> 
+(__tests__/domain/i
+ncidents/resolveInc
+identDates.test.ts:
+149:13)
+
+    console.log
+      Caso real - 
+Inicio: 2025-01-02 
+Fin: 2025-01-18
+
+      at 
+Object.<anonymous> 
+(__tests__/domain/i
+ncidents/resolveInc
+identDates.test.ts:
+150:13)
+
+PASS __tests__/doma
+in/swaps/buildDaily
+EffectiveContext.te
+st.ts
+PASS __tests__/doma
+in/incidents/checkI
+ncidentConflicts.te
+st.ts
+PASS src/domain/swa
+ps/__tests__/resolv
+eEffectiveDuty.test
+.ts
+PASS src/applicatio
+n/ui-adapters/__tes
+ts__/getEffectiveAs
+signmentsForPlanner
+.test.ts
+PASS __tests__/doma
+in/planning/compute
+DailyCoverage.test.
+ts
+PASS __tests__/pers
+istence/storage.tes
+t.ts
+  ÔùÅ Console
+
+    console.log
+      No valid 
+state found or old 
+version detected, 
+creating initial 
+state.
+
+      at loadState 
+(persistence/storag
+e.ts:90:15)
+
+    console.log
+      Legacy 
+localStorage data 
+discarded due to 
+new data model.
+
+      at migrateFro
+mLocalStorage (pers
+istence/storage.ts:
+58:13)
+
+    console.log
+      No valid 
+state found or old 
+version detected, 
+creating initial 
+state.
+
+      at loadState 
+(persistence/storag
+e.ts:90:15)
+
+    console.log
+      No valid 
+state found or old 
+version detected, 
+creating initial 
+state.
+
+      at loadState 
+(persistence/storag
+e.ts:90:15)
+
+PASS src/domain/swa
+ps/__tests__/valida
+teSwapDoesNotCauseC
+onflict.test.ts
+PASS src/domain/sel
+ectors/__tests__/ge
+tSwapForCell.test.t
+s
+PASS __tests__/pers
+istence/localStorag
+e.test.ts
+PASS __tests__/doma
+in/swaps/validateSw
+apOperation.test.ts
+PASS __tests__/doma
+in/planning/applySw
+apsToAssignment.tes
+t.ts
+PASS src/domain/pla
+nning/__tests__/get
+EffectiveAssignment
+ForDay.test.ts
+PASS __tests__/doma
+in/planning/applySw
+apsToCoverage.test.
+ts
+PASS __tests__/doma
+in/planning/compute
+CoverageDeficit.tes
+t.ts
+FAIL __tests__/doma
+in/audit/auditRecor
+der.test.ts
+  ÔùÅ Test suite 
+failed to run
+
+    Configuration 
+error:
+
+    Could not 
+locate module 
+@/src/domain/state 
+mapped as:
+    
+C:\Users\Junior Ull
+oa\Documents\GitHub
+\PLANNING ENGINE  
+V 15\src\$1.
+
+    Please check 
+your configuration 
+for these entries:
+    {
+      "moduleNameMa
+pper": {
+        
+"/^@\/(.*)$/": 
+"C:\Users\Junior Ul
+loa\Documents\GitHu
+b\PLANNING ENGINE  
+V 15\src\$1"
+      },
+      "resolver": 
+undefined
+    }
+
+    [0m [90m 3 
+|[39m 
+[36mimport[39m { 
+produce } 
+[36mfrom[39m 
+[32m'immer'[39m
+     [90m 4 
+|[39m 
+[36mimport[39m 
+type { [33mPlannin
+gBaseState[39m } 
+[36mfrom[39m [32
+m'@/src/domain/type
+s'[39m
+    [31m[1m>[22m
+[39m[90m 5 
+|[39m 
+[36mimport[39m { 
+createInitialState 
+} [36mfrom[39m [
+32m'@/src/domain/st
+ate'[39m
+     [90m   
+|[39m [31m[1m^[
+22m[39m
+     [90m 6 |[39m
+     [90m 7 
+|[39m describe([3
+2m'Domain Rules: 
+Audit Recorder'[39
+m[33m,[39m () 
+[33m=>[39m {
+     [90m 8 
+|[39m   
+[36mlet[39m baseS
+tate[33m:[39m [3
+3mPlanningBaseState
+[39m[0m
+
+      at createNoMa
+ppedModuleFoundErro
+r (node_modules/jes
+t-resolve/build/res
+olver.js:759:17)
+      at 
+Object.<anonymous> 
+(__tests__/domain/a
+udit/auditRecorder.
+test.ts:5:1)
+
+Summary of all 
+failing tests
+FAIL src/applicatio
+n/stats/__tests__/g
+etCoverageRiskSumma
+ry.test.ts
+  ÔùÅ getCoverageRi
+skSummary ÔÇ║ 
+calculates critical
+DeficitDays for 
+deficits > 2
+
+    expect(received
+).toBe(expected) 
+// Object.is 
+equality
+
+    Expected: 2
+    Received: 3
+
+    [0m [90m 76 
+|[39m     [90m// 
+Day 2: DAY deficit 
+1, NIGHT deficit 
+2. Total 3 -> 
+CRITICAL[39m
+     [90m 77 
+|[39m     
+[36mconst[39m 
+result [33m=[39m 
+getCoverageRiskSumm
+ary({ [33m...[39m
+baseInput[33m,[39
+m coverageRules[33
+m:[39m rules })
+    [31m[1m>[22m
+[39m[90m 78 
+|[39m     expect(r
+esult[33m.[39mcri
+ticalDeficitDays)[
+33m.[39mtoBe([35m
+2[39m)
+     [90m    
+|[39m             
+                   
+        [31m[1m^
+[22m[39m
+     [90m 79 
+|[39m   })
+     [90m 80 
+|[39m   
+     [90m 81 
+|[39m   it([32m'c
+alculates 
+totalDeficit as 
+sum of all shift de
+ficits'[39m[33m,
+[39m () 
+[33m=>[39m {[0m
+
+      at 
+Object.<anonymous> 
+(src/application/st
+ats/__tests__/getCo
+verageRiskSummary.t
+est.ts:78:40)
+
+  ÔùÅ getCoverageRi
+skSummary ÔÇ║ 
+[CRITICAL] 
+aggregates 
+deficits across 
+multiple weekly 
+plans and only 
+evaluates days 
+with plans
+
+    expect(received
+).toBe(expected) 
+// Object.is 
+equality
+
+    Expected: 14
+    Received: 2
+
+    [0m [90m 198 
+|[39m
+     [90m 199 
+|[39m     [90m// 
+Total days with 
+deficit is 14 
+because every 
+evaluated day has 
+at least one 
+deficit.[39m
+    [31m[1m>[22m
+[39m[90m 200 
+|[39m     expect(r
+esult[33m.[39mday
+sWithDeficit)[33m.
+[39mtoBe([35m14[
+39m)
+     [90m     
+|[39m             
+                   
+    [31m[1m^[22m
+[39m
+     [90m 201 
+|[39m
+     [90m 202 
+|[39m     
+[36mconst[39m exp
+ectedTotalDeficit 
+[33m=[39m
+     [90m 203 
+|[39m       
+deficitWk1Day1 
+[33m+[39m 
+otherDeficitsWk1 
+[33m+[39m 
+deficitWk2Day1 
+[33m+[39m otherDe
+ficitsWk2[0m
+
+      at 
+Object.<anonymous> 
+(src/application/st
+ats/__tests__/getCo
+verageRiskSummary.t
+est.ts:200:36)
+
+FAIL src/applicatio
+n/stats/__tests__/g
+etStatsOverview.tes
+t.ts
+  ÔùÅ 
+getStatsOverview 
+ÔÇ║ should count 
+days with deficit 
+in any shift only 
+once
+
+    expect(received
+).toBe(expected) 
+// Object.is 
+equality
+
+    Expected: 2
+    Received: 7
+
+    [0m [90m 127 
+|[39m     
+     [90m 128 
+|[39m     [90m// 
+Expect 2 deficit 
+days, even though 
+there are 4 shift 
+deficits in 
+total.[39m
+    [31m[1m>[22m
+[39m[90m 129 
+|[39m     expect(r
+esult[33m.[39mdef
+icitDays)[33m.[39
+mtoBe([35m2[39m)
+[33m;[39m
+     [90m     
+|[39m             
+                   
+[31m[1m^[22m[39
+m
+     [90m 130 
+|[39m   })
+     [90m 131 
+|[39m })
+     [90m 132 
+|[39m[0m
+
+      at 
+Object.<anonymous> 
+(src/application/st
+ats/__tests__/getSt
+atsOverview.test.ts
+:129:32)
+
+FAIL src/domain/inc
+idents/__tests__/re
+solvePunitiveRespon
+sibility.test.ts
+  ÔùÅ resolvePuniti
+veResponsibility 
+ÔÇ║ punishes BASE 
+worker normally
+
+    TypeError: 
+Cannot read 
+properties of 
+undefined (reading 
+'find')
+
+    [0m [90m 58 
+|[39m   [90m// 
+2. INCIDENCIAS 
+BLOQUEANTES: 
+Verificar 
+disponibilidad[39m
+     [90m 59 
+|[39m   [90m// ==
+===================
+===================
+=======[39m
+    [31m[1m>[22m
+[39m[90m 60 
+|[39m   
+[36mconst[39m 
+representative 
+[33m=[39m represe
+ntatives[33m.[39m
+find(r 
+[33m=>[39m 
+r[33m.[39mid 
+[33m===[39m 
+representativeId)
+     [90m    
+|[39m             
+                   
+          [31m[1m
+^[22m[39m
+     [90m 61 
+|[39m
+     [90m 62 
+|[39m   [90m// 
+´┐¢´┐¢ DEFENSIVE: 
+Si no encontramos 
+el representante, 
+algo est├í mal[39m
+     [90m 63 
+|[39m   
+[36mif[39m ([33m
+![39mrepresentativ
+e) {[0m
+
+      at resolveEff
+ectiveDuty (src/dom
+ain/swaps/resolveEf
+fectiveDuty.ts:60:4
+2)
+      at resolvePun
+itiveResponsibility
+ (src/domain/incide
+nts/resolvePunitive
+Responsibility.ts:2
+0:40)
+      at 
+Object.<anonymous> 
+(src/domain/inciden
+ts/__tests__/resolv
+ePunitiveResponsibi
+lity.test.ts:23:53)
+
+  ÔùÅ resolvePuniti
+veResponsibility 
+ÔÇ║ does NOT 
+punish COVERED 
+worker
+
+    TypeError: 
+Cannot read 
+properties of 
+undefined (reading 
+'find')
+
+    [0m [90m 58 
+|[39m   [90m// 
+2. INCIDENCIAS 
+BLOQUEANTES: 
+Verificar 
+disponibilidad[39m
+     [90m 59 
+|[39m   [90m// ==
+===================
+===================
+=======[39m
+    [31m[1m>[22m
+[39m[90m 60 
+|[39m   
+[36mconst[39m 
+representative 
+[33m=[39m represe
+ntatives[33m.[39m
+find(r 
+[33m=>[39m 
+r[33m.[39mid 
+[33m===[39m 
+representativeId)
+     [90m    
+|[39m             
+                   
+          [31m[1m
+^[22m[39m
+     [90m 61 
+|[39m
+     [90m 62 
+|[39m   [90m// 
+´┐¢´┐¢ DEFENSIVE: 
+Si no encontramos 
+el representante, 
+algo est├í mal[39m
+     [90m 63 
+|[39m   
+[36mif[39m ([33m
+![39mrepresentativ
+e) {[0m
+
+      at resolveEff
+ectiveDuty (src/dom
+ain/swaps/resolveEf
+fectiveDuty.ts:60:4
+2)
+      at resolvePun
+itiveResponsibility
+ (src/domain/incide
+nts/resolvePunitive
+Responsibility.ts:2
+0:40)
+      at 
+Object.<anonymous> 
+(src/domain/inciden
+ts/__tests__/resolv
+ePunitiveResponsibi
+lity.test.ts:34:53)
+
+  ÔùÅ resolvePuniti
+veResponsibility 
+ÔÇ║ punishes 
+COVERING worker
+
+    TypeError: 
+Cannot read 
+properties of 
+undefined (reading 
+'find')
+
+    [0m [90m 58 
+|[39m   [90m// 
+2. INCIDENCIAS 
+BLOQUEANTES: 
+Verificar 
+disponibilidad[39m
+     [90m 59 
+|[39m   [90m// ==
+===================
+===================
+=======[39m
+    [31m[1m>[22m
+[39m[90m 60 
+|[39m   
+[36mconst[39m 
+representative 
+[33m=[39m represe
+ntatives[33m.[39m
+find(r 
+[33m=>[39m 
+r[33m.[39mid 
+[33m===[39m 
+representativeId)
+     [90m    
+|[39m             
+                   
+          [31m[1m
+^[22m[39m
+     [90m 61 
+|[39m
+     [90m 62 
+|[39m   [90m// 
+´┐¢´┐¢ DEFENSIVE: 
+Si no encontramos 
+el representante, 
+algo est├í mal[39m
+     [90m 63 
+|[39m   
+[36mif[39m ([33m
+![39mrepresentativ
+e) {[0m
+
+      at resolveEff
+ectiveDuty (src/dom
+ain/swaps/resolveEf
+fectiveDuty.ts:60:4
+2)
+      at resolvePun
+itiveResponsibility
+ (src/domain/incide
+nts/resolvePunitive
+Responsibility.ts:2
+0:40)
+      at 
+Object.<anonymous> 
+(src/domain/inciden
+ts/__tests__/resolv
+ePunitiveResponsibi
+lity.test.ts:45:53)
+
+  ÔùÅ resolvePuniti
+veResponsibility 
+ÔÇ║ punishes 
+SWAPPED_IN worker
+
+    TypeError: 
+Cannot read 
+properties of 
+undefined (reading 
+'find')
+
+    [0m [90m 58 
+|[39m   [90m// 
+2. INCIDENCIAS 
+BLOQUEANTES: 
+Verificar 
+disponibilidad[39m
+     [90m 59 
+|[39m   [90m// ==
+===================
+===================
+=======[39m
+    [31m[1m>[22m
+[39m[90m 60 
+|[39m   
+[36mconst[39m 
+representative 
+[33m=[39m represe
+ntatives[33m.[39m
+find(r 
+[33m=>[39m 
+r[33m.[39mid 
+[33m===[39m 
+representativeId)
+     [90m    
+|[39m             
+                   
+          [31m[1m
+^[22m[39m
+     [90m 61 
+|[39m
+     [90m 62 
+|[39m   [90m// 
+´┐¢´┐¢ DEFENSIVE: 
+Si no encontramos 
+el representante, 
+algo est├í mal[39m
+     [90m 63 
+|[39m   
+[36mif[39m ([33m
+![39mrepresentativ
+e) {[0m
+
+      at resolveEff
+ectiveDuty (src/dom
+ain/swaps/resolveEf
+fectiveDuty.ts:60:4
+2)
+      at resolvePun
+itiveResponsibility
+ (src/domain/incide
+nts/resolvePunitive
+Responsibility.ts:2
+0:40)
+      at 
+Object.<anonymous> 
+(src/domain/inciden
+ts/__tests__/resolv
+ePunitiveResponsibi
+lity.test.ts:58:53)
+
+FAIL __tests__/doma
+in/incidents/valida
+teIncident.test.ts
+  ÔùÅ Domain 
+Rules: Incident 
+Validation ÔÇ║ 
+validateIncident 
+(Interaction 
+Rules) ÔÇ║ should 
+fail if there is 
+an overlap with 
+existing VACACIONES
+
+    expect(received
+).toBe(expected) 
+// Object.is 
+equality
+
+    Expected: false
+    Received: true
+
+    [0m [90m 160 
+|[39m         
+     [90m 161 
+|[39m         
+[36mconst[39m 
+result [33m=[39m 
+validateIncident(ne
+wIncident[33m,[39
+m existing[33m,[3
+9m biggerCalendar[
+33m,[39m 
+mockRep[33m,[39m 
+mockAllReps)[33m;
+[39m
+    [31m[1m>[22m
+[39m[90m 162 
+|[39m         expe
+ct(result[33m.[39
+mok)[33m.[39mtoBe
+([36mfalse[39m)[
+33m;[39m
+     [90m     
+|[39m             
+              [31m
+[1m^[22m[39m
+     [90m 163 
+|[39m         expe
+ct(result[33m.[39
+mcode)[33m.[39mto
+Be([32m'OVERLAP_WI
+TH_FORMAL_INCIDENT'
+[39m)[33m;[39m
+     [90m 164 
+|[39m     
+})[33m;[39m
+     [90m 165 
+|[39m   })[0m
+
+      at 
+Object.<anonymous> 
+(__tests__/domain/i
+ncidents/validateIn
+cident.test.ts:162:
+27)
+
+FAIL src/applicatio
+n/ui-adapters/__tes
+ts__/getEffectiveDa
+ilyCoverage.test.ts
+  ÔùÅ getEffectiveD
+ailyCoverage ÔÇ║ 
+calculates base 
+coverage correctly 
+(OK status)
+
+    TypeError: 
+incidents is not 
+iterable
+
+    [0m [90m 35 
+|[39m     
+[36mconst[39m 
+blocked 
+[33m=[39m 
+[36mnew[39m [33m
+Set[39m[33m<[39m
+[33mstring[39m[3
+3m>[39m()
+     [90m 36 
+|[39m
+    [31m[1m>[22m
+[39m[90m 37 
+|[39m     
+[36mfor[39m 
+([36mconst[39m 
+incident 
+[36mof[39m 
+incidents) {
+     [90m    
+|[39m             
+               [31
+m[1m^[22m[39m
+     [90m 38 
+|[39m         
+[90m// Only 
+blocking 
+incidents[39m
+     [90m 39 
+|[39m         
+[36mif[39m ([33m
+![39m[[32m'VACACI
+ONES'[39m[33m,[3
+9m [32m'LICENCIA'
+[39m][33m.[39minc
+ludes(incident[33m
+.[39mtype)) 
+[36mcontinue[39m
+     [90m 40 
+|[39m[0m
+
+      at buildBlock
+edRepresentativesSe
+t (src/application/
+ui-adapters/getEffe
+ctiveDailyCoverage.
+ts:37:28)
+      at getEffecti
+veDailyCoverage (sr
+c/application/ui-ad
+apters/getEffective
+DailyCoverage.ts:74
+:25)
+      at 
+Object.<anonymous> 
+(src/application/ui
+-adapters/__tests__
+/getEffectiveDailyC
+overage.test.ts:31:
+46)
+
+  ÔùÅ getEffectiveD
+ailyCoverage ÔÇ║ 
+reflects DOUBLE 
+swap increment 
+(SURPLUS)
+
+    TypeError: 
+incidents is not 
+iterable
+
+    [0m [90m 35 
+|[39m     
+[36mconst[39m 
+blocked 
+[33m=[39m 
+[36mnew[39m [33m
+Set[39m[33m<[39m
+[33mstring[39m[3
+3m>[39m()
+     [90m 36 
+|[39m
+    [31m[1m>[22m
+[39m[90m 37 
+|[39m     
+[36mfor[39m 
+([36mconst[39m 
+incident 
+[36mof[39m 
+incidents) {
+     [90m    
+|[39m             
+               [31
+m[1m^[22m[39m
+     [90m 38 
+|[39m         
+[90m// Only 
+blocking 
+incidents[39m
+     [90m 39 
+|[39m         
+[36mif[39m ([33m
+![39m[[32m'VACACI
+ONES'[39m[33m,[3
+9m [32m'LICENCIA'
+[39m][33m.[39minc
+ludes(incident[33m
+.[39mtype)) 
+[36mcontinue[39m
+     [90m 40 
+|[39m[0m
+
+      at buildBlock
+edRepresentativesSe
+t (src/application/
+ui-adapters/getEffe
+ctiveDailyCoverage.
+ts:37:28)
+      at getEffecti
+veDailyCoverage (sr
+c/application/ui-ad
+apters/getEffective
+DailyCoverage.ts:74
+:25)
+      at 
+Object.<anonymous> 
+(src/application/ui
+-adapters/__tests__
+/getEffectiveDailyC
+overage.test.ts:42:
+46)
+
+  ÔùÅ getEffectiveD
+ailyCoverage ÔÇ║ 
+reflects COVER as 
+net zero
+
+    TypeError: 
+incidents is not 
+iterable
+
+    [0m [90m 35 
+|[39m     
+[36mconst[39m 
+blocked 
+[33m=[39m 
+[36mnew[39m [33m
+Set[39m[33m<[39m
+[33mstring[39m[3
+3m>[39m()
+     [90m 36 
+|[39m
+    [31m[1m>[22m
+[39m[90m 37 
+|[39m     
+[36mfor[39m 
+([36mconst[39m 
+incident 
+[36mof[39m 
+incidents) {
+     [90m    
+|[39m             
+               [31
+m[1m^[22m[39m
+     [90m 38 
+|[39m         
+[90m// Only 
+blocking 
+incidents[39m
+     [90m 39 
+|[39m         
+[36mif[39m ([33m
+![39m[[32m'VACACI
+ONES'[39m[33m,[3
+9m [32m'LICENCIA'
+[39m][33m.[39minc
+ludes(incident[33m
+.[39mtype)) 
+[36mcontinue[39m
+     [90m 40 
+|[39m[0m
+
+      at buildBlock
+edRepresentativesSe
+t (src/application/
+ui-adapters/getEffe
+ctiveDailyCoverage.
+ts:37:28)
+      at getEffecti
+veDailyCoverage (sr
+c/application/ui-ad
+apters/getEffective
+DailyCoverage.ts:74
+:25)
+      at 
+Object.<anonymous> 
+(src/application/ui
+-adapters/__tests__
+/getEffectiveDailyC
+overage.test.ts:52:
+46)
+
+FAIL src/domain/pla
+nning/__tests__/app
+lySwapsToCoverage.t
+est.ts
+  ÔùÅ applySwapsToC
+overage ÔÇ║ COVER: 
+net change is 0 (1 
+leaves, 1 enters)
+
+    TypeError: 
+Cannot read 
+properties of 
+undefined (reading 
+'DAY')
+
+    [0m [90m 20 
+|[39m     
+date[33m:[39m bas
+eCoverage[33m.[39
+mdate[33m,[39m
+     [90m 21 
+|[39m     
+shifts[33m:[39m {
+    [31m[1m>[22m
+[39m[90m 22 
+|[39m       [33mD
+AY[39m[33m:[39m 
+baseCoverage[33m.
+[39mshifts[33m.[3
+9m[33mDAY[39m[33
+m,[39m
+     [90m    
+|[39m             
+                   
+[31m[1m^[22m[39
+m
+     [90m 23 
+|[39m       [33mN
+IGHT[39m[33m:[39
+m baseCoverage[33m
+.[39mshifts[33m.
+[39m[33mNIGHT[39m
+[33m,[39m
+     [90m 24 
+|[39m     
+}[33m,[39m
+     [90m 25 
+|[39m   }[0m
+
+      at applySwaps
+ToCoverage (src/dom
+ain/planning/applyS
+wapsToCoverage.ts:2
+2:32)
+      at 
+Object.<anonymous> 
+(src/domain/plannin
+g/__tests__/applySw
+apsToCoverage.test.
+ts:19:41)
+
+  ÔùÅ applySwapsToC
+overage ÔÇ║ 
+DOUBLE: increases 
+coverage by 1
+
+    TypeError: 
+Cannot read 
+properties of 
+undefined (reading 
+'DAY')
+
+    [0m [90m 20 
+|[39m     
+date[33m:[39m bas
+eCoverage[33m.[39
+mdate[33m,[39m
+     [90m 21 
+|[39m     
+shifts[33m:[39m {
+    [31m[1m>[22m
+[39m[90m 22 
+|[39m       [33mD
+AY[39m[33m:[39m 
+baseCoverage[33m.
+[39mshifts[33m.[3
+9m[33mDAY[39m[33
+m,[39m
+     [90m    
+|[39m             
+                   
+[31m[1m^[22m[39
+m
+     [90m 23 
+|[39m       [33mN
+IGHT[39m[33m:[39
+m baseCoverage[33m
+.[39mshifts[33m.
+[39m[33mNIGHT[39m
+[33m,[39m
+     [90m 24 
+|[39m     
+}[33m,[39m
+     [90m 25 
+|[39m   }[0m
+
+      at applySwaps
+ToCoverage (src/dom
+ain/planning/applyS
+wapsToCoverage.ts:2
+2:32)
+      at 
+Object.<anonymous> 
+(src/domain/plannin
+g/__tests__/applySw
+apsToCoverage.test.
+ts:31:41)
+
+  ÔùÅ applySwapsToC
+overage ÔÇ║ SWAP: 
+net change is 0 
+for both shifts
+
+    TypeError: 
+Cannot read 
+properties of 
+undefined (reading 
+'DAY')
+
+    [0m [90m 20 
+|[39m     
+date[33m:[39m bas
+eCoverage[33m.[39
+mdate[33m,[39m
+     [90m 21 
+|[39m     
+shifts[33m:[39m {
+    [31m[1m>[22m
+[39m[90m 22 
+|[39m       [33mD
+AY[39m[33m:[39m 
+baseCoverage[33m.
+[39mshifts[33m.[3
+9m[33mDAY[39m[33
+m,[39m
+     [90m    
+|[39m             
+                   
+[31m[1m^[22m[39
+m
+     [90m 23 
+|[39m       [33mN
+IGHT[39m[33m:[39
+m baseCoverage[33m
+.[39mshifts[33m.
+[39m[33mNIGHT[39m
+[33m,[39m
+     [90m 24 
+|[39m     
+}[33m,[39m
+     [90m 25 
+|[39m   }[0m
+
+      at applySwaps
+ToCoverage (src/dom
+ain/planning/applyS
+wapsToCoverage.ts:2
+2:32)
+      at 
+Object.<anonymous> 
+(src/domain/plannin
+g/__tests__/applySw
+apsToCoverage.test.
+ts:43:41)
+
+  ÔùÅ applySwapsToC
+overage ÔÇ║ 
+ignores swaps on 
+other dates
+
+    TypeError: 
+Cannot read 
+properties of 
+undefined (reading 
+'DAY')
+
+    [0m [90m 20 
+|[39m     
+date[33m:[39m bas
+eCoverage[33m.[39
+mdate[33m,[39m
+     [90m 21 
+|[39m     
+shifts[33m:[39m {
+    [31m[1m>[22m
+[39m[90m 22 
+|[39m       [33mD
+AY[39m[33m:[39m 
+baseCoverage[33m.
+[39mshifts[33m.[3
+9m[33mDAY[39m[33
+m,[39m
+     [90m    
+|[39m             
+                   
+[31m[1m^[22m[39
+m
+     [90m 23 
+|[39m       [33mN
+IGHT[39m[33m:[39
+m baseCoverage[33m
+.[39mshifts[33m.
+[39m[33mNIGHT[39m
+[33m,[39m
+     [90m 24 
+|[39m     
+}[33m,[39m
+     [90m 25 
+|[39m   }[0m
+
+      at applySwaps
+ToCoverage (src/dom
+ain/planning/applyS
+wapsToCoverage.ts:2
+2:32)
+      at 
+Object.<anonymous> 
+(src/domain/plannin
+g/__tests__/applySw
+apsToCoverage.test.
+ts:54:41)
+
+FAIL __tests__/doma
+in/audit/auditRecor
+der.test.ts
+  ÔùÅ Test suite 
+failed to run
+
+    Configuration 
+error:
+
+    Could not 
+locate module 
+@/src/domain/state 
+mapped as:
+    
+C:\Users\Junior Ull
+oa\Documents\GitHub
+\PLANNING ENGINE  
+V 15\src\$1.
+
+    Please check 
+your configuration 
+for these entries:
+    {
+      "moduleNameMa
+pper": {
+        
+"/^@\/(.*)$/": 
+"C:\Users\Junior Ul
+loa\Documents\GitHu
+b\PLANNING ENGINE  
+V 15\src\$1"
+      },
+      "resolver": 
+undefined
+    }
+
+    [0m [90m 3 
+|[39m 
+[36mimport[39m { 
+produce } 
+[36mfrom[39m 
+[32m'immer'[39m
+     [90m 4 
+|[39m 
+[36mimport[39m 
+type { [33mPlannin
+gBaseState[39m } 
+[36mfrom[39m [32
+m'@/src/domain/type
+s'[39m
+    [31m[1m>[22m
+[39m[90m 5 
+|[39m 
+[36mimport[39m { 
+createInitialState 
+} [36mfrom[39m [
+32m'@/src/domain/st
+ate'[39m
+     [90m   
+|[39m [31m[1m^[
+22m[39m
+     [90m 6 |[39m
+     [90m 7 
+|[39m describe([3
+2m'Domain Rules: 
+Audit Recorder'[39
+m[33m,[39m () 
+[33m=>[39m {
+     [90m 8 
+|[39m   
+[36mlet[39m baseS
+tate[33m:[39m [3
+3mPlanningBaseState
+[39m[0m
+
+      at createNoMa
+ppedModuleFoundErro
+r (node_modules/jes
+t-resolve/build/res
+olver.js:759:17)
+      at 
+Object.<anonymous> 
+(__tests__/domain/a
+udit/auditRecorder.
+test.ts:5:1)
+
+
+Test Suites: 7 
+failed, 21 passed, 
+28 total
+Tests:       15 
+failed, 160 
+passed, 175 total
+Snapshots:   0 
+total
+Time:        4.835 
+s, estimated 6 s
+Ran all test 
+suites.

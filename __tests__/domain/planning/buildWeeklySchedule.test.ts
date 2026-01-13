@@ -63,7 +63,7 @@ describe('buildWeeklySchedule – reglas de planificación', () => {
       },
     ]
 
-    const result = buildWeeklySchedule(baseAgents, incidents, week, fullCalendar)
+    const result = buildWeeklySchedule(baseAgents, incidents, [], week, fullCalendar)
     const agentPlan = result.agents.find(a => a.representativeId === 'a1')
     const day = agentPlan!.days['2024-04-01']
 
@@ -84,7 +84,7 @@ describe('buildWeeklySchedule – reglas de planificación', () => {
       },
     ]
 
-    const result = buildWeeklySchedule(baseAgents, incidents, week, fullCalendar)
+    const result = buildWeeklySchedule(baseAgents, incidents, [], week, fullCalendar)
     const agentPlan = result.agents.find(a => a.representativeId === 'a2')
     const day = agentPlan!.days['2024-04-01']
 
@@ -108,7 +108,7 @@ describe('buildWeeklySchedule – reglas de planificación', () => {
       },
     ]
 
-    const result = buildWeeklySchedule(baseAgents, incidents, week, fullCalendar)
+    const result = buildWeeklySchedule(baseAgents, incidents, [], week, fullCalendar)
     const agentPlan = result.agents.find(a => a.representativeId === 'a1')
     const day = agentPlan!.days['2024-04-06'] // Sábado
 
@@ -132,7 +132,7 @@ describe('buildWeeklySchedule – reglas de planificación', () => {
       },
     ]
 
-    const result = buildWeeklySchedule(baseAgents, incidents, week, fullCalendar)
+    const result = buildWeeklySchedule(baseAgents, incidents, [], week, fullCalendar)
     const agentPlan = result.agents.find(a => a.representativeId === 'a1')
     const day = agentPlan!.days['2024-04-01'] // Lunes
 
@@ -173,7 +173,7 @@ describe('buildWeeklySchedule – Lógica de Turnos Mixtos (HARDENED)', () => {
       },
     ]
 
-    const plan = buildWeeklySchedule(reps, [], week, fullCalendar)
+    const plan = buildWeeklySchedule(reps, [], [], week, fullCalendar)
     const days = plan.agents[0].days
 
     expect(days['2024-04-01'].assignment).toEqual({ type: 'BOTH' })
@@ -193,7 +193,7 @@ describe('buildWeeklySchedule – Lógica de Turnos Mixtos (HARDENED)', () => {
       },
     ]
 
-    const plan = buildWeeklySchedule(reps, [], week, fullCalendar)
+    const plan = buildWeeklySchedule(reps, [], [], week, fullCalendar)
     const days = plan.agents[0].days
 
     expect(days['2024-04-05'].assignment).toEqual({
@@ -221,7 +221,7 @@ describe('buildWeeklySchedule – Lógica de Turnos Mixtos (HARDENED)', () => {
       },
     ]
 
-    const plan = buildWeeklySchedule(reps, [], week, fullCalendar)
+    const plan = buildWeeklySchedule(reps, [], [], week, fullCalendar)
     const monday = plan.agents[0].days['2024-04-01']
 
     expect(monday.status).toBe('OFF')
@@ -251,14 +251,14 @@ describe('buildWeeklySchedule – Lógica de Turnos Mixtos (HARDENED)', () => {
       },
     ]
 
-    const plan = buildWeeklySchedule(reps, incidents, week, fullCalendar)
+    const plan = buildWeeklySchedule(reps, incidents, [], week, fullCalendar)
     const monday = plan.agents[0].days['2024-04-01']
 
     expect(monday.source).toBe('OVERRIDE')
     expect(monday.status).toBe('OFF')
     expect(monday.assignment).toEqual({ type: 'NONE' })
   })
-  
+
   it('[MIXED][OVERRIDE] OVERRIDE fuerza SINGLE(NIGHT) en día BOTH', () => {
     const reps: Representative[] = [{
       id: 'r1',
@@ -279,7 +279,7 @@ describe('buildWeeklySchedule – Lógica de Turnos Mixtos (HARDENED)', () => {
       assignment: forcedAssignment,
     }]
 
-    const plan = buildWeeklySchedule(reps, incidents, week, fullCalendar)
+    const plan = buildWeeklySchedule(reps, incidents, [], week, fullCalendar)
     const monday = plan.agents[0].days['2024-04-01']
 
     expect(monday.source).toBe('OVERRIDE')
@@ -310,7 +310,7 @@ describe('buildWeeklySchedule – Lógica de Turnos Mixtos (HARDENED)', () => {
       },
     ]
 
-    const plan = buildWeeklySchedule(reps, incidents, week, fullCalendar)
+    const plan = buildWeeklySchedule(reps, incidents, [], week, fullCalendar)
     const monday = plan.agents[0].days['2024-04-01']
 
     expect(monday.status).toBe('OFF')
@@ -341,7 +341,7 @@ describe('buildWeeklySchedule – Lógica de Turnos Mixtos (HARDENED)', () => {
       },
     ]
 
-    const plan = buildWeeklySchedule(reps, incidents, week, fullCalendar)
+    const plan = buildWeeklySchedule(reps, incidents, [], week, fullCalendar);
     const friday = plan.agents[0].days['2024-04-05']
 
     expect(friday.source).toBe('OVERRIDE')
@@ -379,7 +379,7 @@ describe('buildWeeklySchedule – Lógica de Turnos Mixtos (HARDENED)', () => {
       },
     ]
 
-    const plan = buildWeeklySchedule(reps, incidents, week, fullCalendar)
+    const plan = buildWeeklySchedule(reps, incidents, [], week, fullCalendar);
     const day = plan.agents[0].days['2024-04-01']
 
     expect(day.source).toBe('INCIDENT')
@@ -413,7 +413,7 @@ describe('buildWeeklySchedule – Lógica de Turnos Mixtos (HARDENED)', () => {
       },
     ]
 
-    const plan = buildWeeklySchedule(reps, incidents, week, fullCalendar)
+    const plan = buildWeeklySchedule(reps, incidents, [], week, fullCalendar);
     const day = plan.agents[0].days[wednesday.date]
 
     expect(day.source).toBe('OVERRIDE')
@@ -446,7 +446,7 @@ describe('buildWeeklySchedule – Lógica de Turnos Mixtos (HARDENED)', () => {
       },
     ];
 
-    const plan = buildWeeklySchedule(reps, incidents, week, fullCalendar);
+    const plan = buildWeeklySchedule(reps, incidents, [], week, fullCalendar);;
     const day = plan.agents.find(a => a.representativeId === 'irene')?.days[mondayDate];
 
     expect(day).toBeDefined();

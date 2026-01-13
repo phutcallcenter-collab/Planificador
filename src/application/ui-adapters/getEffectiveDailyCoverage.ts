@@ -103,7 +103,15 @@ export function getEffectiveDailyCoverage(
     }
 
     // 2. Apply Swaps
-    const swapAdjustedCounts = applySwapsToCoverage(baseCounts, swaps, date)
+    // Convert baseCounts to DailyShiftCoverage structure
+    const baseCoverage = {
+        date,
+        shifts: {
+            DAY: baseCounts.DAY.actual,
+            NIGHT: baseCounts.NIGHT.actual
+        }
+    }
+    const swapAdjustedCoverage = applySwapsToCoverage(baseCoverage, swaps)
 
     // 3. Resolve Requirements (Rules)
     const dayReq = resolveCoverage(date, 'DAY', coverageRules)
@@ -112,15 +120,15 @@ export function getEffectiveDailyCoverage(
     // 4. Assemble Result
     return {
         DAY: {
-            actual: swapAdjustedCounts.DAY.actual,
+            actual: swapAdjustedCoverage.shifts.DAY,
             required: dayReq.required,
-            status: getStatus(swapAdjustedCounts.DAY.actual, dayReq.required),
+            status: getStatus(swapAdjustedCoverage.shifts.DAY, dayReq.required),
             reason: dayReq.reason
         },
         NIGHT: {
-            actual: swapAdjustedCounts.NIGHT.actual,
+            actual: swapAdjustedCoverage.shifts.NIGHT,
             required: nightReq.required,
-            status: getStatus(swapAdjustedCounts.NIGHT.actual, nightReq.required),
+            status: getStatus(swapAdjustedCoverage.shifts.NIGHT, nightReq.required),
             reason: nightReq.reason
         }
     }

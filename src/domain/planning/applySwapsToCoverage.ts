@@ -1,47 +1,39 @@
-import { SwapEvent, ShiftType, ISODate } from '../types'
-
-type CoverageMap = Record<ShiftType, { actual: number }>
+import { DailyShiftCoverage } from './dailyCoverage'
+import { SwapEvent } from './swap'
 
 /**
- * Adjusts coverage counts based on swaps.
- * Pure arithmetic operations.
+ * Applies swaps to coverage counts.
  * 
- * Logic:
- * - COVER: Coverer works (+1), Covered stops (-1). Net 0.
- * - DOUBLE: Extra worker (+1). Net +1.
- * - SWAP: Exchange of shifts. Net 0 for both shifts involved.
+ * IMPORTANT: Swaps are 1:1 exchanges, they do NOT change total coverage.
+ * - COVER: Person A stops working (-1), Person B starts working (+1). Net: 0
+ * - SWAP: Exchange shifts. Net: 0 for both shifts
+ * - DOUBLE: Not handled here (should be in base coverage already)
+ * 
+ * This function returns a NEW object (immutable).
  */
 export function applySwapsToCoverage(
-  baseCoverage: CoverageMap,
-  swaps: SwapEvent[],
-  date: ISODate
-): CoverageMap {
-  // Deep clone to ensure immutability
-  const result: CoverageMap = {
-    DAY: { ...baseCoverage.DAY },
-    NIGHT: { ...baseCoverage.NIGHT },
+  baseCoverage: DailyShiftCoverage,
+  swaps: SwapEvent[]
+): DailyShiftCoverage {
+  // Clone to ensure immutability
+  const result: DailyShiftCoverage = {
+    date: baseCoverage.date,
+    shifts: {
+      DAY: baseCoverage.shifts.DAY,
+      NIGHT: baseCoverage.shifts.NIGHT,
+    },
   }
 
-  const relevantSwaps = swaps.filter(s => s.date === date)
+  // Filter swaps for this date
+  const relevantSwaps = swaps.filter(s => s.date === baseCoverage.date)
 
-  for (const s of relevantSwaps) {
-    if (s.type === 'COVER') {
-      // 'from' stops working the shift
-      result[s.shift].actual -= 1
-      // 'to' starts working the shift
-      result[s.shift].actual += 1
-    } else if (s.type === 'DOUBLE') {
-      // Extra shift
-      result[s.shift].actual += 1
-    } else if (s.type === 'SWAP') {
-      // From moves from fromShift -> toShift
-      result[s.fromShift].actual -= 1
-      result[s.toShift].actual += 1
-
-      // To moves from toShift -> fromShift
-      result[s.toShift].actual -= 1
-      result[s.fromShift].actual += 1
+  // Apply swaps
+  for (const swap of relevantSwaps) {
+    if (swap.type === 'DOUBLE' && swap.shift) {
+      // DOUBLE: Person works an additional shift beyond their base
+      result.shifts[swap.shift]++
     }
+    // COVER and SWAP are 1:1 exchanges, they don't change totals
   }
 
   return result

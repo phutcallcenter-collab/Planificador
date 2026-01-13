@@ -60,7 +60,7 @@ describe('buildWeeklySchedule – reglas de planificación', () => {
       },
     ]
 
-    const result = buildWeeklySchedule(baseAgents, incidents, week, fullCalendar)
+    const result = buildWeeklySchedule(baseAgents, incidents, [], week, fullCalendar)
     const agentPlan = result.agents.find(a => a.representativeId === 'a1')
     const day = agentPlan!.days['2024-04-01']
 
@@ -81,7 +81,7 @@ describe('buildWeeklySchedule – reglas de planificación', () => {
       },
     ]
 
-    const result = buildWeeklySchedule(baseAgents, incidents, week, fullCalendar)
+    const result = buildWeeklySchedule(baseAgents, incidents, [], week, fullCalendar)
     const agentPlan = result.agents.find(a => a.representativeId === 'a2')
     const day = agentPlan!.days['2024-04-01']
 
@@ -100,10 +100,11 @@ describe('buildWeeklySchedule – reglas de planificación', () => {
         startDate: '2024-04-06',
         duration: 1,
         createdAt: new Date().toISOString(),
+        assignment: { type: 'SINGLE', shift: 'DAY' },
       },
     ]
 
-    const result = buildWeeklySchedule(baseAgents, incidents, week, fullCalendar)
+    const result = buildWeeklySchedule(baseAgents, incidents, [], week, fullCalendar)
     const agentPlan = result.agents.find(a => a.representativeId === 'a1')
     const day = agentPlan!.days['2024-04-06'] // Sábado
 
@@ -123,10 +124,11 @@ describe('buildWeeklySchedule – reglas de planificación', () => {
         startDate: '2024-04-01',
         duration: 1,
         createdAt: new Date().toISOString(),
+        assignment: { type: 'NONE' },
       },
     ]
 
-    const result = buildWeeklySchedule(baseAgents, incidents, week, fullCalendar)
+    const result = buildWeeklySchedule(baseAgents, incidents, [], week, fullCalendar)
     const agentPlan = result.agents.find(a => a.representativeId === 'a1')
     const day = agentPlan!.days['2024-04-01'] // Lunes
 

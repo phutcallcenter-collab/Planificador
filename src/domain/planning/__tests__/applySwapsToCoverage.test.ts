@@ -1,14 +1,15 @@
 import { applySwapsToCoverage } from '../applySwapsToCoverage'
-import { SwapEvent, ShiftType } from '@/domain/types'
-
-type CoverageMap = Record<ShiftType, { actual: number }>
+import { SwapEvent, DailyShiftCoverage } from '@/domain/types'
 
 describe('applySwapsToCoverage', () => {
-    const base: CoverageMap = {
-        DAY: { actual: 3 },
-        NIGHT: { actual: 2 }
-    }
     const date = '2026-01-10'
+    const base: DailyShiftCoverage = {
+        date,
+        shifts: {
+            DAY: 3,
+            NIGHT: 2
+        }
+    }
 
     it('COVER: net change is 0 (1 leaves, 1 enters)', () => {
         const swap: SwapEvent = {
@@ -16,10 +17,10 @@ describe('applySwapsToCoverage', () => {
             fromRepresentativeId: 'A', toRepresentativeId: 'B',
             createdAt: ''
         }
-        const res = applySwapsToCoverage(base, [swap], date)
-        expect(res.DAY.actual).toBe(3)
+        const res = applySwapsToCoverage(base, [swap])
+        expect(res.shifts.DAY).toBe(3)
         // Ensure Night is untouched
-        expect(res.NIGHT.actual).toBe(2)
+        expect(res.shifts.NIGHT).toBe(2)
     })
 
     it('DOUBLE: increases coverage by 1', () => {
@@ -28,9 +29,9 @@ describe('applySwapsToCoverage', () => {
             representativeId: 'A',
             createdAt: ''
         }
-        const res = applySwapsToCoverage(base, [swap], date)
-        expect(res.NIGHT.actual).toBe(3) // 2 + 1
-        expect(res.DAY.actual).toBe(3)
+        const res = applySwapsToCoverage(base, [swap])
+        expect(res.shifts.NIGHT).toBe(3) // 2 + 1
+        expect(res.shifts.DAY).toBe(3)
     })
 
     it('SWAP: net change is 0 for both shifts', () => {
@@ -40,9 +41,9 @@ describe('applySwapsToCoverage', () => {
             toRepresentativeId: 'B', toShift: 'NIGHT',
             createdAt: ''
         }
-        const res = applySwapsToCoverage(base, [swap], date)
-        expect(res.DAY.actual).toBe(3) // (3 - 1 + 1)
-        expect(res.NIGHT.actual).toBe(2) // (2 - 1 + 1)
+        const res = applySwapsToCoverage(base, [swap])
+        expect(res.shifts.DAY).toBe(3) // (3 - 1 + 1)
+        expect(res.shifts.NIGHT).toBe(2) // (2 - 1 + 1)
     })
 
     it('ignores swaps on other dates', () => {
@@ -51,7 +52,7 @@ describe('applySwapsToCoverage', () => {
             representativeId: 'A',
             createdAt: ''
         }
-        const res = applySwapsToCoverage(base, [swap], date)
-        expect(res.DAY.actual).toBe(3)
+        const res = applySwapsToCoverage(base, [swap])
+        expect(res.shifts.DAY).toBe(3)
     })
 })

@@ -139,21 +139,21 @@ export function resolveEffectiveDuty(
         return {
           shouldWork: false,
           role: 'COVERED',
-          partnerId: s.toRepresentativeId,
+          reason: `Cubierto por ${s.toRepresentativeId}`,
         }
       }
       if (s.toRepresentativeId === representativeId) {
         return {
           shouldWork: true,
           role: 'COVERING',
-          partnerId: s.fromRepresentativeId,
+          reason: `Cubriendo a ${s.fromRepresentativeId}`,
         }
       }
     }
 
     if (s.type === 'DOUBLE' && s.shift === shift) {
       if (s.representativeId === representativeId) {
-        return { shouldWork: true, role: 'DOUBLE' }
+        return { shouldWork: true, role: 'DOUBLE', reason: 'Turno adicional' }
       }
     }
 
@@ -163,14 +163,14 @@ export function resolveEffectiveDuty(
           return {
             shouldWork: false,
             role: 'SWAPPED_OUT',
-            partnerId: s.toRepresentativeId,
+            reason: `Intercambio con ${s.toRepresentativeId}`,
           }
         }
         if (s.toShift === shift) {
           return {
             shouldWork: true,
             role: 'SWAPPED_IN',
-            partnerId: s.toRepresentativeId,
+            reason: `Intercambio con ${s.toRepresentativeId}`,
           }
         }
       }
@@ -179,14 +179,14 @@ export function resolveEffectiveDuty(
           return {
             shouldWork: false,
             role: 'SWAPPED_OUT',
-            partnerId: s.fromRepresentativeId,
+            reason: `Intercambio con ${s.fromRepresentativeId}`,
           }
         }
         if (s.fromShift === shift) {
           return {
             shouldWork: true,
             role: 'SWAPPED_IN',
-            partnerId: s.fromRepresentativeId,
+            reason: `Intercambio con ${s.fromRepresentativeId}`,
           }
         }
       }

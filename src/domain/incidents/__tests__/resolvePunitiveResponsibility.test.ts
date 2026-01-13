@@ -20,7 +20,7 @@ describe('resolvePunitiveResponsibility', () => {
 
     it('punishes BASE worker normally', () => {
         // A works DAY. Not swapped. Should be punished if incident occurs (i.e. is responsible).
-        const result = resolvePunitiveResponsibility(mockPlan, [], [], date, 'DAY', 'A')
+        const result = resolvePunitiveResponsibility(mockPlan, [], [], date, 'DAY', 'A', [], [])
         expect(result).toBe(true)
     })
 
@@ -31,7 +31,7 @@ describe('resolvePunitiveResponsibility', () => {
             fromRepresentativeId: 'A', toRepresentativeId: 'B',
             createdAt: ''
         }
-        const result = resolvePunitiveResponsibility(mockPlan, [swap], [], date, 'DAY', 'A')
+        const result = resolvePunitiveResponsibility(mockPlan, [swap], [], date, 'DAY', 'A', [], [])
         expect(result).toBe(false)
     })
 
@@ -42,7 +42,7 @@ describe('resolvePunitiveResponsibility', () => {
             fromRepresentativeId: 'A', toRepresentativeId: 'B',
             createdAt: ''
         }
-        const result = resolvePunitiveResponsibility(mockPlan, [swap], [], date, 'DAY', 'B')
+        const result = resolvePunitiveResponsibility(mockPlan, [swap], [], date, 'DAY', 'B', [], [])
         expect(result).toBe(true)
     })
 
@@ -55,7 +55,7 @@ describe('resolvePunitiveResponsibility', () => {
             toRepresentativeId: 'B', toShift: 'NIGHT',
             createdAt: ''
         }
-        const result = resolvePunitiveResponsibility(mockPlan, [swap], [], date, 'DAY', 'B')
+        const result = resolvePunitiveResponsibility(mockPlan, [swap], [], date, 'DAY', 'B', [], [])
         expect(result).toBe(true)
     })
 })

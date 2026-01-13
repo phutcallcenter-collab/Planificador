@@ -27,8 +27,17 @@ export function getShiftCapabilities(
   try {
     const dayOfWeek = getDay(new Date(date + 'T12:00:00Z')) // Use a fixed time to avoid TZ issues
 
-    // Rule 1: If the base schedule says OFF, the rep has no capabilities for the day.
-    const isWorkingBaseDay = representative.baseSchedule?.[dayOfWeek] === 'WORKING'
+    // Validate that we got a valid day of week (0-6)
+    if (isNaN(dayOfWeek)) {
+      console.error(`[getShiftCapabilities] Invalid date provided: ${date}`)
+      return []
+    }
+
+    // Rule 1: Check if base schedule explicitly says OFF
+    // If baseSchedule is empty or doesn't have an entry for this day, assume WORKING (fallback)
+    const baseScheduleEntry = representative.baseSchedule?.[dayOfWeek]
+    const isWorkingBaseDay = baseScheduleEntry !== 'OFF'
+
     if (!isWorkingBaseDay) {
       return []
     }

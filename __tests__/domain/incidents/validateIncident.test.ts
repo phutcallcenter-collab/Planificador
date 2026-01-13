@@ -24,15 +24,21 @@ describe('Domain Rules: Incident Validation', () => {
     { date: futureDate, dayOfWeek: 1, kind: 'WORKING', isSpecial: false },
     { date: pastDate, dayOfWeek: 5, kind: 'WORKING', isSpecial: false },
   ]
-  
+
   beforeEach(() => {
     // Reset mocks before each test
     (canRegisterOnDate as jest.Mock).mockClear();
     (canRegisterOnDate as jest.Mock).mockReturnValue({ ok: true });
   });
 
+  afterEach(() => {
+    // Restore all mocks to prevent test interference
+    jest.restoreAllMocks();
+  });
+
   describe('canRegisterOnDate (Date-based Rules)', () => {
     // We un-mock the function for this specific test suite
+    jest.unmock('../../../src/domain/incidents/canRegisterOnDate');
     const { canRegisterOnDate: originalCanRegisterOnDate } = jest.requireActual('../../../src/domain/incidents/canRegisterOnDate');
 
     it('[HARDENING] should NOT allow registering punitive incidents in the future', () => {
@@ -63,29 +69,29 @@ describe('Domain Rules: Incident Validation', () => {
 
   describe('validateIncident (Interaction Rules)', () => {
     it('[HARDENING] should always allow an OVERRIDE incident', () => {
-        // Setup a scenario that would normally fail (e.g., overlap with vacation)
-        const existing: Incident[] = [{
-            id: 'vac-1',
-            representativeId: 'rep-1',
-            type: 'VACACIONES',
-            startDate: today,
-            duration: 5,
-            createdAt: '2024-01-01T00:00:00Z'
-        }];
-        
-        const newIncident: Incident = {
-            id: 'ov-1',
-            type: 'OVERRIDE',
-            representativeId: 'rep-1',
-            startDate: today,
-            duration: 1,
-            createdAt: new Date().toISOString(),
-        }
-        
-        const result = validateIncident(newIncident, existing, mockCalendar, mockRep, mockAllReps);
+      // Setup a scenario that would normally fail (e.g., overlap with vacation)
+      const existing: Incident[] = [{
+        id: 'vac-1',
+        representativeId: 'rep-1',
+        type: 'VACACIONES',
+        startDate: today,
+        duration: 5,
+        createdAt: '2024-01-01T00:00:00Z'
+      }];
 
-        // Even with the overlap, OVERRIDE should be considered valid by this function.
-        expect(result.ok).toBe(true)
+      const newIncident: Incident = {
+        id: 'ov-1',
+        type: 'OVERRIDE',
+        representativeId: 'rep-1',
+        startDate: today,
+        duration: 1,
+        createdAt: new Date().toISOString(),
+      }
+
+      const result = validateIncident(newIncident, existing, mockCalendar, mockRep, mockAllReps);
+
+      // Even with the overlap, OVERRIDE should be considered valid by this function.
+      expect(result.ok).toBe(true)
     });
 
     it('should fail if canRegisterOnDate fails', () => {
@@ -101,66 +107,66 @@ describe('Domain Rules: Incident Validation', () => {
       }
 
       const result = validateIncident(newIncident, [], mockCalendar, mockRep, mockAllReps);
-      
+
       expect(canRegisterOnDate).toHaveBeenCalledWith('AUSENCIA', futureDate, expect.any(String))
       expect(result.ok).toBe(false)
       expect(result.code).toBe('TEST_FAIL')
     });
-    
+
     it('should fail if trying to add an incident on a day with an existing AUSENCIA', () => {
-        const existing: Incident[] = [{
-            id: 'abs-1',
-            representativeId: 'rep-1',
-            type: 'AUSENCIA',
-            startDate: today,
-            duration: 1,
-            createdAt: '2024-01-01T00:00:00Z'
-        }];
+      const existing: Incident[] = [{
+        id: 'abs-1',
+        representativeId: 'rep-1',
+        type: 'AUSENCIA',
+        startDate: today,
+        duration: 1,
+        createdAt: '2024-01-01T00:00:00Z'
+      }];
 
-        const newIncident: Incident = {
-            id: 'tardy-1',
-            type: 'TARDANZA',
-            representativeId: 'rep-1',
-            startDate: today,
-            duration: 1,
-            createdAt: new Date().toISOString(),
-        }
+      const newIncident: Incident = {
+        id: 'tardy-1',
+        type: 'TARDANZA',
+        representativeId: 'rep-1',
+        startDate: today,
+        duration: 1,
+        createdAt: new Date().toISOString(),
+      }
 
-        const result = validateIncident(newIncident, existing, mockCalendar, mockRep, mockAllReps);
-        expect(result.ok).toBe(false);
-        expect(result.code).toBe('BLOCKED_BY_ABSENCE');
+      const result = validateIncident(newIncident, existing, mockCalendar, mockRep, mockAllReps);
+      expect(result.ok).toBe(false);
+      expect(result.code).toBe('BLOCKED_BY_ABSENCE');
     });
 
     it('should fail if there is an overlap with existing VACACIONES', () => {
-       const existing: Incident[] = [{
-            id: 'vac-1',
-            representativeId: 'rep-1',
-            type: 'VACACIONES',
-            startDate: pastDate, // Starts on the 10th
-            duration: 10,
-            createdAt: '2024-01-01T00:00:00Z'
-        }];
+      const existing: Incident[] = [{
+        id: 'vac-1',
+        representativeId: 'rep-1',
+        type: 'VACACIONES',
+        startDate: pastDate, // Starts on the 10th
+        duration: 10,
+        createdAt: '2024-01-01T00:00:00Z'
+      }];
 
-        const newIncident: Incident = {
-            id: 'tardy-1',
-            type: 'TARDANZA',
-            representativeId: 'rep-1',
-            startDate: today, // Tries to add on the 15th
-            duration: 1,
-            createdAt: new Date().toISOString(),
-        }
-        
-        // We need a larger calendar for date resolution
-        const biggerCalendar = Array.from({length: 30}, (_, i) => ({
-            date: `2024-05-${(i+1).toString().padStart(2, '0')}`,
-            dayOfWeek: (i+2)%7,
-            kind: 'WORKING' as 'WORKING',
-            isSpecial: false,
-        }));
-        
-        const result = validateIncident(newIncident, existing, biggerCalendar, mockRep, mockAllReps);
-        expect(result.ok).toBe(false);
-        expect(result.code).toBe('OVERLAP_WITH_FORMAL_INCIDENT');
+      const newIncident: Incident = {
+        id: 'tardy-1',
+        type: 'TARDANZA',
+        representativeId: 'rep-1',
+        startDate: today, // Tries to add on the 15th
+        duration: 1,
+        createdAt: new Date().toISOString(),
+      }
+
+      // We need a larger calendar for date resolution
+      const biggerCalendar = Array.from({ length: 30 }, (_, i) => ({
+        date: `2024-05-${(i + 1).toString().padStart(2, '0')}`,
+        dayOfWeek: (i + 2) % 7,
+        kind: 'WORKING' as 'WORKING',
+        isSpecial: false,
+      }));
+
+      const result = validateIncident(newIncident, existing, biggerCalendar, mockRep, mockAllReps);
+      expect(result.ok).toBe(false);
+      expect(result.code).toBe('OVERLAP_WITH_FORMAL_INCIDENT');
     });
   })
 })

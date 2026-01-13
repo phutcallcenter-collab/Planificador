@@ -68,7 +68,7 @@ export function getEffectiveDailyLogData(
                     if (duty.reason === 'AUSENCIA') {
                         logStatus = 'ABSENT'
                     } else if (duty.reason && ['VACACIONES', 'LICENCIA'].includes(duty.reason)) {
-                        logStatus = 'OFF'
+                        logStatus = 'ABSENT'  // Justified absences are still absences
                     } else {
                         logStatus = 'OFF'
                     }

@@ -6,15 +6,15 @@ const mockPlan: WeeklyPlan = {
     agents: [
         {
             representativeId: 'A',
-            days: { '2026-01-10': { assignment: { type: 'SINGLE', shift: 'DAY' } } }
+            days: { '2026-01-10': { status: 'WORKING', source: 'BASE', assignment: { type: 'SINGLE', shift: 'DAY' } } }
         },
         {
             representativeId: 'B',
-            days: { '2026-01-10': { assignment: { type: 'SINGLE', shift: 'DAY' } } }
+            days: { '2026-01-10': { status: 'WORKING', source: 'BASE', assignment: { type: 'SINGLE', shift: 'DAY' } } }
         },
         {
             representativeId: 'C',
-            days: { '2026-01-10': { assignment: { type: 'NONE' } } }
+            days: { '2026-01-10': { status: 'OFF', source: 'BASE', assignment: { type: 'NONE' } } }
         }
     ]
 }
@@ -28,9 +28,9 @@ describe('getEffectiveDailyCoverage', () => {
 
     it('calculates base coverage correctly (OK status)', () => {
         // 2 agents working DAY. Rule requires 2.
-        const res = getEffectiveDailyCoverage(mockPlan, [], mockRules, date)
-        expect(res.DAY).toEqual({ actual: 2, required: 2, status: 'OK' })
-        expect(res.NIGHT).toEqual({ actual: 0, required: 2, status: 'DEFICIT' })
+        const res = getEffectiveDailyCoverage(mockPlan, [], mockRules, date, [], [], [])
+        expect(res.DAY).toEqual({ actual: 2, required: 2, status: 'OK', reason: 'Regla global: r1' })
+        expect(res.NIGHT).toEqual({ actual: 0, required: 2, status: 'DEFICIT', reason: 'Regla global: r1' })
     })
 
     it('reflects DOUBLE swap increment (SURPLUS)', () => {
@@ -39,8 +39,8 @@ describe('getEffectiveDailyCoverage', () => {
             id: 'd1', type: 'DOUBLE', date, shift: 'DAY', representativeId: 'C',
             createdAt: ''
         }
-        const res = getEffectiveDailyCoverage(mockPlan, [swap], mockRules, date)
-        expect(res.DAY).toEqual({ actual: 3, required: 2, status: 'SURPLUS' })
+        const res = getEffectiveDailyCoverage(mockPlan, [swap], mockRules, date, [], [], [])
+        expect(res.DAY).toEqual({ actual: 3, required: 2, status: 'SURPLUS', reason: 'Regla global: r1' })
     })
 
     it('reflects COVER as net zero', () => {
@@ -49,7 +49,7 @@ describe('getEffectiveDailyCoverage', () => {
             id: 'c1', type: 'COVER', date, shift: 'DAY',
             fromRepresentativeId: 'A', toRepresentativeId: 'C', createdAt: ''
         }
-        const res = getEffectiveDailyCoverage(mockPlan, [swap], mockRules, date)
+        const res = getEffectiveDailyCoverage(mockPlan, [swap], mockRules, date, [], [], [])
         expect(res.DAY.actual).toBe(2)
         expect(res.DAY.status).toBe('OK')
     })
