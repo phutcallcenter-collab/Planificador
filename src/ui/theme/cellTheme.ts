@@ -20,8 +20,8 @@ export interface CellTheme {
  */
 export const CELL_THEME: Record<VisualVariant, CellTheme> = {
     WORKING: {
-        bg: 'hsl(142, 60%, 94%)',
-        fg: 'hsl(142, 45%, 25%)',
+        bg: '#f6fdf8', // Soft Mint (Micro-tweak for reduced fatigue)
+        fg: '#166534',
     },
 
     OFF: {

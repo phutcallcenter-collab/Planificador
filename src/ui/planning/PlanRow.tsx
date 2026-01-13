@@ -60,7 +60,7 @@ export const PlanRow = React.memo(function PlanRow({
         {agent.name}
       </div>
       <div style={{ flex: 1, display: 'flex' }}>
-        {weekDays.map(day => {
+        {weekDays.map((day, index) => {
           // Lookup effective duty from adapter map
           const effectiveDuty = assignmentsMap[agent.id]?.[day.date]?.[activeShift]
 
@@ -78,6 +78,7 @@ export const PlanRow = React.memo(function PlanRow({
               resolved={resolvedCell}
               repId={agent.id}
               date={day.date}
+              isEven={index % 2 === 0}
               onClick={() => onCellClick(agent.id, day.date)}
               onContextMenu={(e) => onCellContextMenu(agent.id, day.date, e)}
             />

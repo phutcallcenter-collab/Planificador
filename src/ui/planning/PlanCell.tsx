@@ -8,6 +8,7 @@ interface PlanCellProps {
   resolved: ResolvedCellState
   repId: string
   date: ISODate
+  isEven?: boolean
   onClick: () => void
   onContextMenu: (e: React.MouseEvent) => void
 }
@@ -23,6 +24,7 @@ interface PlanCellProps {
  */
 export const PlanCell = React.memo(function PlanCell({
   resolved,
+  isEven,
   onClick,
   onContextMenu,
 }: PlanCellProps) {
@@ -41,7 +43,11 @@ export const PlanCell = React.memo(function PlanCell({
     alignItems: 'center',
     justifyContent: 'center',
     gap: '4px',
-    background: theme.bg,
+    // Zebra pattern logic:
+    // Only apply to WORKING variant to reduce visual fatigue.
+    // WORKING default is #f6fdf8 (Soft Mint). 
+    // Alternate is #eefaf2 (slightly darker/saturated) for odd columns.
+    background: (resolved.variant === 'WORKING' && !isEven) ? '#eefaf2' : theme.bg,
     color: theme.fg,
     border: theme.border ? `1px solid ${theme.border}` : '1px solid #eee',
     borderLeft: '1px solid #eee',
