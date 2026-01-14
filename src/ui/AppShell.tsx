@@ -41,7 +41,7 @@ function AppShellInner() {
     closeVacationConfirmation: s.closeVacationConfirmation,
   }))
 
-  const [activeView, setActiveView] = useState<'PLANNING' | 'DAILY_LOG' | 'STATS' | 'SETTINGS'>('PLANNING')
+  const [activeView, setActiveView] = useState<'PLANNING' | 'DAILY_LOG' | 'STATS' | 'SETTINGS'>('DAILY_LOG')
 
   // Pre-fetch the summary for the modal
   const monthlySummary = useMonthlySummary(detailModalState.month)
@@ -107,16 +107,16 @@ function AppShellInner() {
         }}
       >
         <button
-          style={viewTabStyle(activeView === 'PLANNING')}
-          onClick={() => setActiveView('PLANNING')}
-        >
-          Planificación Semanal
-        </button>
-        <button
           style={viewTabStyle(activeView === 'DAILY_LOG')}
           onClick={() => setActiveView('DAILY_LOG')}
         >
           Registro Diario
+        </button>
+        <button
+          style={viewTabStyle(activeView === 'PLANNING')}
+          onClick={() => setActiveView('PLANNING')}
+        >
+          Planificación Semanal
         </button>
         <button
           style={viewTabStyle(activeView === 'STATS')}

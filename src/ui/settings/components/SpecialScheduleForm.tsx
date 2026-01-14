@@ -80,24 +80,24 @@ export function SpecialScheduleForm({ repId, onSave }: { repId: string, onSave: 
                 background: '#f9fafb',
                 padding: '20px',
                 borderRadius: '8px',
-                border: '1px solid #e5e7eb',
+                border: '1px solid var(--border-subtle)',
                 margin: '16px 0',
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '16px',
             }}
         >
-            <h4 style={{ margin: 0, fontSize: '14px', color: '#374151', fontWeight: 600 }}>
+            <h4 style={{ margin: 0, fontSize: '14px', color: 'var(--text-main)', fontWeight: 600 }}>
                 Añadir Horario Especial
             </h4>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                 <div>
                     <label style={{ display: 'block', fontSize: '13px', fontWeight: 500, marginBottom: '6px' }}>Fecha Inicio</label>
-                    <input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} style={{ width: '100%', padding: '8px', border: '1px solid #d1d5db', borderRadius: '6px' }} />
+                    <input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} style={{ width: '100%', padding: '8px', border: '1px solid var(--border-strong)', borderRadius: '6px' }} />
                 </div>
                 <div>
                     <label style={{ display: 'block', fontSize: '13px', fontWeight: 500, marginBottom: '6px' }}>Fecha Fin</label>
-                    <input type="date" value={endDate} onChange={e => setEndDate(e.target.value)} style={{ width: '100%', padding: '8px', border: '1px solid #d1d5db', borderRadius: '6px' }} />
+                    <input type="date" value={endDate} onChange={e => setEndDate(e.target.value)} style={{ width: '100%', padding: '8px', border: '1px solid var(--border-strong)', borderRadius: '6px' }} />
                 </div>
             </div>
             <div>
@@ -106,7 +106,7 @@ export function SpecialScheduleForm({ repId, onSave }: { repId: string, onSave: 
             </div>
             <div>
                 <label style={{ display: 'block', fontSize: '13px', fontWeight: 500, marginBottom: '6px' }}>Asignación</label>
-                <select onChange={(e) => handleAssignmentChange(e.target.value as any)} style={{ width: '100%', padding: '8px', border: '1px solid #d1d5db', borderRadius: '6px', background: 'white' }}>
+                <select onChange={(e) => handleAssignmentChange(e.target.value as any)} style={{ width: '100%', padding: '8px', border: '1px solid var(--border-strong)', borderRadius: '6px', background: 'var(--bg-panel)' }}>
                     <option value="DAY">Día</option>
                     <option value="NIGHT">Noche</option>
                     <option value="BOTH">Mixto (Ambos)</option>
@@ -115,12 +115,13 @@ export function SpecialScheduleForm({ repId, onSave }: { repId: string, onSave: 
             </div>
             <div>
                 <label style={{ display: 'block', fontSize: '13px', fontWeight: 500, marginBottom: '6px' }}>Motivo (opcional)</label>
-                <input type="text" value={reason} onChange={e => setReason(e.target.value)} placeholder="Ej: Universidad, Capacitación" style={{ width: '100%', padding: '8px', border: '1px solid #d1d5db', borderRadius: '6px' }} />
+                <input type="text" value={reason} onChange={e => setReason(e.target.value)} placeholder="Ej: Universidad, Capacitación" style={{ width: '100%', padding: '8px', border: '1px solid var(--border-strong)', borderRadius: '6px' }} />
             </div>
             <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px' }}>
-                <button type="button" onClick={onSave} style={{ padding: '8px 12px', border: '1px solid #d1d5db', borderRadius: '6px', background: 'white', cursor: 'pointer' }}>Cancelar</button>
+                <button type="button" onClick={onSave} style={{ padding: '8px 12px', border: '1px solid var(--border-strong)', borderRadius: '6px', background: 'var(--bg-panel)', cursor: 'pointer' }}>Cancelar</button>
                 <button type="submit" style={{ padding: '8px 16px', background: '#111827', color: 'white', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: 600 }}>Guardar Horario</button>
             </div>
         </form>
     )
 }
+

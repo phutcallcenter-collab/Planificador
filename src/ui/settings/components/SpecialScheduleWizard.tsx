@@ -163,10 +163,10 @@ export function SpecialScheduleWizard({
         <form
             onSubmit={handleSubmit}
             style={{
-                background: 'white',
+                background: 'var(--bg-panel)',
                 padding: '24px',
                 borderRadius: '12px',
-                border: '1px solid #e5e7eb',
+                border: '1px solid var(--border-subtle)',
                 margin: '16px 0',
                 display: 'flex',
                 flexDirection: 'column',
@@ -175,17 +175,17 @@ export function SpecialScheduleWizard({
         >
             {/* Header */}
             <div>
-                <h3 style={{ margin: 0, fontSize: '18px', fontWeight: 600, color: '#111827' }}>
+                <h3 style={{ margin: 0, fontSize: '18px', fontWeight: 600, color: 'var(--text-main)' }}>
                     Ajuste temporal de horario
                 </h3>
-                <p style={{ margin: '4px 0 0 0', fontSize: '14px', color: '#6b7280' }}>
+                <p style={{ margin: '4px 0 0 0', fontSize: '14px', color: 'var(--text-muted)' }}>
                     Define excepciones al horario habitual durante un período
                 </p>
             </div>
 
             {/* Step 1: Intent */}
             <div>
-                <label style={{ display: 'block', fontSize: '15px', fontWeight: 600, marginBottom: '12px', color: '#111827' }}>
+                <label style={{ display: 'block', fontSize: '15px', fontWeight: 600, marginBottom: '12px', color: 'var(--text-main)' }}>
                     ¿Qué cambio necesitas?
                 </label>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -225,7 +225,7 @@ export function SpecialScheduleWizard({
             {/* Step 1.5: Mixed shift replacement question (conditional) */}
             {state.intent === 'WORK_BOTH_SHIFTS' && isBaseMixed && (
                 <div>
-                    <label style={{ display: 'block', fontSize: '15px', fontWeight: 600, marginBottom: '12px', color: '#111827' }}>
+                    <label style={{ display: 'block', fontSize: '15px', fontWeight: 600, marginBottom: '12px', color: 'var(--text-main)' }}>
                         ¿Este ajuste reemplaza los días mixtos habituales?
                     </label>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -256,7 +256,7 @@ export function SpecialScheduleWizard({
             {/* Step 2: Shift selection (conditional) */}
             {state.intent === 'WORK_SINGLE_SHIFT' && (
                 <div>
-                    <label style={{ display: 'block', fontSize: '15px', fontWeight: 600, marginBottom: '12px', color: '#111827' }}>
+                    <label style={{ display: 'block', fontSize: '15px', fontWeight: 600, marginBottom: '12px', color: 'var(--text-main)' }}>
                         ¿En qué turno trabajará?
                     </label>
                     <div style={{ display: 'flex', gap: '12px' }}>
@@ -299,7 +299,7 @@ export function SpecialScheduleWizard({
             {/* Step 3: Days of week */}
             {state.intent && (
                 <div>
-                    <label style={{ display: 'block', fontSize: '15px', fontWeight: 600, marginBottom: '8px', color: '#111827' }}>
+                    <label style={{ display: 'block', fontSize: '15px', fontWeight: 600, marginBottom: '8px', color: 'var(--text-main)' }}>
                         ¿Qué días se verán afectados?
                     </label>
                     <DaysOfWeekSelector
@@ -312,18 +312,18 @@ export function SpecialScheduleWizard({
                         }}
                     />
                     <div style={{ marginTop: '12px', display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                        <button type="button" onClick={selectWeekdays} style={{ padding: '6px 12px', fontSize: '13px', border: '1px solid #d1d5db', borderRadius: '6px', background: 'white', cursor: 'pointer' }}>
+                        <button type="button" onClick={selectWeekdays} style={{ padding: '6px 12px', fontSize: '13px', border: '1px solid var(--border-strong)', borderRadius: '6px', background: 'var(--bg-panel)', cursor: 'pointer' }}>
                             Lunes a Viernes
                         </button>
-                        <button type="button" onClick={selectWeekend} style={{ padding: '6px 12px', fontSize: '13px', border: '1px solid #d1d5db', borderRadius: '6px', background: 'white', cursor: 'pointer' }}>
+                        <button type="button" onClick={selectWeekend} style={{ padding: '6px 12px', fontSize: '13px', border: '1px solid var(--border-strong)', borderRadius: '6px', background: 'var(--bg-panel)', cursor: 'pointer' }}>
                             Fin de semana
                         </button>
-                        <button type="button" onClick={selectAllDays} style={{ padding: '6px 12px', fontSize: '13px', border: '1px solid #d1d5db', borderRadius: '6px', background: 'white', cursor: 'pointer' }}>
+                        <button type="button" onClick={selectAllDays} style={{ padding: '6px 12px', fontSize: '13px', border: '1px solid var(--border-strong)', borderRadius: '6px', background: 'var(--bg-panel)', cursor: 'pointer' }}>
                             Todos
                         </button>
                     </div>
                     {state.days.length > 0 && (
-                        <p style={{ marginTop: '8px', fontSize: '14px', color: '#6b7280' }}>
+                        <p style={{ marginTop: '8px', fontSize: '14px', color: 'var(--text-muted)' }}>
                             Se aplicará los <strong>{selectedDayNames}</strong>
                         </p>
                     )}
@@ -333,35 +333,35 @@ export function SpecialScheduleWizard({
             {/* Step 4: Date range */}
             {state.intent && state.days.length > 0 && (
                 <div>
-                    <label style={{ display: 'block', fontSize: '15px', fontWeight: 600, marginBottom: '12px', color: '#111827' }}>
+                    <label style={{ display: 'block', fontSize: '15px', fontWeight: 600, marginBottom: '12px', color: 'var(--text-main)' }}>
                         ¿Durante qué período aplica este ajuste?
                     </label>
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                         <div>
-                            <label style={{ display: 'block', fontSize: '13px', fontWeight: 500, marginBottom: '6px', color: '#6b7280' }}>
+                            <label style={{ display: 'block', fontSize: '13px', fontWeight: 500, marginBottom: '6px', color: 'var(--text-muted)' }}>
                                 Desde
                             </label>
                             <input
                                 type="date"
                                 value={state.startDate || ''}
                                 onChange={e => updateState({ startDate: e.target.value })}
-                                style={{ width: '100%', padding: '10px', border: '1px solid #d1d5db', borderRadius: '6px', fontSize: '14px' }}
+                                style={{ width: '100%', padding: '10px', border: '1px solid var(--border-strong)', borderRadius: '6px', fontSize: '14px' }}
                             />
                         </div>
                         <div>
-                            <label style={{ display: 'block', fontSize: '13px', fontWeight: 500, marginBottom: '6px', color: '#6b7280' }}>
+                            <label style={{ display: 'block', fontSize: '13px', fontWeight: 500, marginBottom: '6px', color: 'var(--text-muted)' }}>
                                 Hasta
                             </label>
                             <input
                                 type="date"
                                 value={state.endDate || ''}
                                 onChange={e => updateState({ endDate: e.target.value })}
-                                style={{ width: '100%', padding: '10px', border: '1px solid #d1d5db', borderRadius: '6px', fontSize: '14px' }}
+                                style={{ width: '100%', padding: '10px', border: '1px solid var(--border-strong)', borderRadius: '6px', fontSize: '14px' }}
                             />
                         </div>
                     </div>
                     {weeksDuration !== null && weeksDuration >= 0 && (
-                        <p style={{ marginTop: '8px', fontSize: '14px', color: '#6b7280' }}>
+                        <p style={{ marginTop: '8px', fontSize: '14px', color: 'var(--text-muted)' }}>
                             Este ajuste estará activo durante <strong>{weeksDuration} semana{weeksDuration !== 1 ? 's' : ''}</strong>
                         </p>
                     )}
@@ -371,10 +371,10 @@ export function SpecialScheduleWizard({
             {/* Step 5: Summary (The Guardian) */}
             {summaryText && (
                 <div style={{ padding: '16px', background: '#f9fafb', border: '2px solid #e5e7eb', borderRadius: '8px' }}>
-                    <div style={{ fontSize: '13px', fontWeight: 600, color: '#6b7280', marginBottom: '8px' }}>
+                    <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '8px' }}>
                         🧾 Resumen del ajuste
                     </div>
-                    <div style={{ fontSize: '15px', color: '#111827', lineHeight: 1.6 }}>
+                    <div style={{ fontSize: '15px', color: 'var(--text-main)', lineHeight: 1.6 }}>
                         <div style={{ fontWeight: 600, marginBottom: '4px' }}>{repName}</div>
                         <div>Durante el período <strong>{summaryText.period}</strong></div>
                         <div><strong>{summaryText.action}</strong></div>
@@ -386,7 +386,7 @@ export function SpecialScheduleWizard({
             {/* Optional note */}
             {state.intent && (
                 <div>
-                    <label style={{ display: 'block', fontSize: '13px', fontWeight: 500, marginBottom: '6px', color: '#6b7280' }}>
+                    <label style={{ display: 'block', fontSize: '13px', fontWeight: 500, marginBottom: '6px', color: 'var(--text-muted)' }}>
                         Motivo (opcional)
                     </label>
                     <input
@@ -394,7 +394,7 @@ export function SpecialScheduleWizard({
                         value={state.note || ''}
                         onChange={e => updateState({ note: e.target.value })}
                         placeholder="Ej: Universidad, Capacitación, Familiar enfermo"
-                        style={{ width: '100%', padding: '10px', border: '1px solid #d1d5db', borderRadius: '6px', fontSize: '14px' }}
+                        style={{ width: '100%', padding: '10px', border: '1px solid var(--border-strong)', borderRadius: '6px', fontSize: '14px' }}
                     />
                 </div>
             )}
@@ -404,7 +404,7 @@ export function SpecialScheduleWizard({
                 <button
                     type="button"
                     onClick={onSave}
-                    style={{ padding: '10px 16px', border: '1px solid #d1d5db', borderRadius: '8px', background: 'white', cursor: 'pointer', fontSize: '14px', fontWeight: 500 }}
+                    style={{ padding: '10px 16px', border: '1px solid var(--border-strong)', borderRadius: '8px', background: 'var(--bg-panel)', cursor: 'pointer', fontSize: '14px', fontWeight: 500 }}
                 >
                     Cancelar
                 </button>
@@ -428,3 +428,4 @@ export function SpecialScheduleWizard({
         </form>
     )
 }
+

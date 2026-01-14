@@ -25,7 +25,7 @@ export const StatCard = ({
   const card = (
     <div
       style={{
-        background: 'white',
+        background: 'var(--bg-panel)',
         border: `1px solid #e5e7eb`,
         borderRadius: '8px',
         padding: '16px',
@@ -47,7 +47,7 @@ export const StatCard = ({
         <div
           style={{
             fontSize: '14px',
-            color: '#6b7280',
+            color: 'var(--text-muted)',
             marginBottom: '4px',
             fontWeight: 500,
           }}
@@ -69,3 +69,4 @@ export const StatCard = ({
 
   return tooltipContent ? <Tooltip content={tooltipContent}>{card}</Tooltip> : card
 }
+

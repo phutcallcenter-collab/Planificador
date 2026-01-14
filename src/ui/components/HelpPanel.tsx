@@ -17,7 +17,7 @@ export function HelpPanel({ title, points }: HelpPanelProps) {
                 style={{
                     background: 'none',
                     border: 'none',
-                    color: '#6b7280',
+                    color: 'var(--text-muted)',
                     fontSize: '13px',
                     cursor: 'pointer',
                     display: 'flex',
@@ -64,7 +64,7 @@ export function HelpPanel({ title, points }: HelpPanelProps) {
                             top: '50%',
                             left: '50%',
                             transform: 'translate(-50%, -50%)',
-                            background: 'white',
+                            background: 'var(--bg-panel)',
                             borderRadius: '12px',
                             padding: '24px',
                             maxWidth: '400px',
@@ -74,7 +74,7 @@ export function HelpPanel({ title, points }: HelpPanelProps) {
                         }}
                     >
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                            <h3 style={{ margin: 0, fontSize: '18px', fontWeight: 600, color: '#111827' }}>
+                            <h3 style={{ margin: 0, fontSize: '18px', fontWeight: 600, color: 'var(--text-main)' }}>
                                 {title}
                             </h3>
                             <button
@@ -83,7 +83,7 @@ export function HelpPanel({ title, points }: HelpPanelProps) {
                                     background: 'none',
                                     border: 'none',
                                     cursor: 'pointer',
-                                    color: '#6b7280',
+                                    color: 'var(--text-muted)',
                                     padding: '4px',
                                 }}
                             >
@@ -99,7 +99,7 @@ export function HelpPanel({ title, points }: HelpPanelProps) {
                                         display: 'flex',
                                         gap: '8px',
                                         fontSize: '14px',
-                                        color: '#374151',
+                                        color: 'var(--text-main)',
                                         lineHeight: '1.5',
                                     }}
                                 >
@@ -114,3 +114,4 @@ export function HelpPanel({ title, points }: HelpPanelProps) {
         </>
     )
 }
+

@@ -23,8 +23,8 @@ const HistoryEventCard = ({ event }: { event: HistoryEvent }) => {
   return (
     <div
       style={{
-        background: 'white',
-        border: '1px solid #e5e7eb',
+        background: 'var(--bg-panel)',
+        border: '1px solid var(--border-subtle)',
         borderRadius: '8px',
         padding: '12px 16px',
         display: 'flex',
@@ -39,7 +39,7 @@ const HistoryEventCard = ({ event }: { event: HistoryEvent }) => {
           alignItems: 'center',
         }}
       >
-        <div style={{ fontSize: '12px', color: '#6b7280', fontWeight: 500 }}>
+        <div style={{ fontSize: '12px', color: 'var(--text-muted)', fontWeight: 500 }}>
           {format(parseISO(event.timestamp), "dd/MM/yy' 'HH:mm:ss", {
             locale: es,
           })}
@@ -51,7 +51,7 @@ const HistoryEventCard = ({ event }: { event: HistoryEvent }) => {
         )}
       </div>
 
-      <div style={{ fontWeight: 600, color: '#1f2937' }}>{event.title}</div>
+      <div style={{ fontWeight: 600, color: 'var(--text-main)' }}>{event.title}</div>
 
       {event.subject && (
         <div style={{ fontWeight: 500, color: '#4b5563' }}>
@@ -63,7 +63,7 @@ const HistoryEventCard = ({ event }: { event: HistoryEvent }) => {
         <div
           style={{
             fontSize: '14px',
-            color: '#6b7280',
+            color: 'var(--text-muted)',
             fontStyle: 'italic',
             paddingTop: '4px',
           }}
@@ -133,7 +133,7 @@ export function HistoryView() {
           <h2 style={{ margin: 0, fontSize: '20px', fontWeight: 600 }}>
             Historial de Actividad
           </h2>
-          <p style={{ margin: '4px 0 0', color: '#6b7280', fontSize: '14px' }}>
+          <p style={{ margin: '4px 0 0', color: 'var(--text-muted)', fontSize: '14px' }}>
             Bitácora de eventos relevantes del sistema.
           </p>
         </div>
@@ -143,7 +143,7 @@ export function HistoryView() {
           value={searchTerm}
           onChange={e => setSearchTerm(e.target.value)}
           style={{
-            border: '1px solid #d1d5db',
+            border: '1px solid var(--border-strong)',
             borderRadius: '6px',
             padding: '8px 12px',
             fontSize: '14px',
@@ -162,7 +162,7 @@ export function HistoryView() {
         </div>
       ) : (
         <div
-          style={{ textAlign: 'center', padding: '40px', color: '#6b7280' }}
+          style={{ textAlign: 'center', padding: '40px', color: 'var(--text-muted)' }}
         >
           No hay eventos para mostrar.
         </div>
@@ -170,3 +170,4 @@ export function HistoryView() {
     </div>
   )
 }
+

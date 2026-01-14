@@ -61,7 +61,7 @@ export function CalendarDayModal({
   }
 
   const modalContentStyle: React.CSSProperties = {
-    background: 'white',
+    background: 'var(--bg-panel)',
     padding: '25px',
     borderRadius: '12px',
     width: '400px',
@@ -72,7 +72,7 @@ export function CalendarDayModal({
     width: '100%',
     padding: '10px',
     fontSize: '14px',
-    border: '1px solid #d1d5db',
+    border: '1px solid var(--border-strong)',
     borderRadius: '6px',
     boxSizing: 'border-box',
   }
@@ -89,7 +89,7 @@ export function CalendarDayModal({
   return (
     <div style={modalOverlayStyle} onClick={onClose}>
       <div style={modalContentStyle} onClick={e => e.stopPropagation()}>
-        <h2 style={{ marginTop: 0, marginBottom: '20px', color: '#1F2937' }}>
+        <h2 style={{ marginTop: 0, marginBottom: '20px', color: 'var(--text-main)' }}>
           Editar Día:{' '}
           {new Date(day.date + 'T12:00:00Z').toLocaleDateString('es-ES', {
             year: 'numeric',
@@ -100,7 +100,7 @@ export function CalendarDayModal({
 
         <div style={{ marginBottom: '15px' }}>
           <label
-            style={{ display: 'block', marginBottom: '8px', fontWeight: 500, color: '#1F2937' }}
+            style={{ display: 'block', marginBottom: '8px', fontWeight: 500, color: 'var(--text-main)' }}
           >
             Tipo de Día
           </label>
@@ -112,14 +112,14 @@ export function CalendarDayModal({
             <option value="WORKING">Laborable</option>
             <option value="HOLIDAY">Feriado (Laborable)</option>
           </select>
-          <p style={{ fontSize: 12, color: '#6b7280', marginTop: '5px' }}>
+          <p style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: '5px' }}>
             El estado base de este día es: <strong>{baseKindLabel}</strong>.
           </p>
         </div>
 
         <div style={{ marginBottom: '25px' }}>
           <label
-            style={{ display: 'block', marginBottom: '8px', fontWeight: 500, color: '#1F2937' }}
+            style={{ display: 'block', marginBottom: '8px', fontWeight: 500, color: 'var(--text-main)' }}
           >
             Etiqueta (opcional)
           </label>
@@ -150,7 +150,7 @@ export function CalendarDayModal({
           <div style={{ display: 'flex', gap: '10px' }}>
             <button
               onClick={onClose}
-              style={{ ...buttonStyle, background: '#f3f4f6', color: '#374151' }}
+              style={{ ...buttonStyle, background: '#f3f4f6', color: 'var(--text-main)' }}
             >
               Cancelar
             </button>
@@ -170,3 +170,4 @@ export function CalendarDayModal({
     </div>
   )
 }
+

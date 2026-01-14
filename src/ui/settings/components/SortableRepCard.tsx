@@ -41,8 +41,8 @@ export function SortableRepCard({ rep, onEdit, onAddSchedule, addingScheduleFor,
             style={{
                 ...style,
                 padding: '16px',
-                background: 'white',
-                border: '1px solid #e5e7eb',
+                background: 'var(--bg-panel)',
+                border: '1px solid var(--border-subtle)',
                 borderRadius: '8px',
             }}
         >
@@ -71,10 +71,10 @@ export function SortableRepCard({ rep, onEdit, onAddSchedule, addingScheduleFor,
 
                     {/* Contenido */}
                     <div>
-                        <div style={{ fontWeight: 600, fontSize: '14px', color: '#1F2937' }}>
+                        <div style={{ fontWeight: 600, fontSize: '14px', color: 'var(--text-main)' }}>
                             {rep.name}
                         </div>
-                        <div style={{ fontSize: '13px', color: '#6b7280', marginTop: '2px' }}>
+                        <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '2px' }}>
                             Rol: {rep.role === 'CUSTOMER_SERVICE' ? 'Servicio al Cliente' : 'Ventas'} | Turno: {rep.baseShift === 'DAY' ? 'Día' : 'Noche'}{' '}
                             {rep.mixProfile && `(Mixto ${rep.mixProfile.type === 'WEEKDAY' ? 'L-J' : 'V-D'})`}
                         </div>
@@ -85,7 +85,7 @@ export function SortableRepCard({ rep, onEdit, onAddSchedule, addingScheduleFor,
                 <div style={{ display: 'flex', gap: '8px' }}>
                     <button
                         onClick={() => onEdit(rep)}
-                        style={{ padding: '8px', background: '#f3f4f6', border: '1px solid #e5e7eb', borderRadius: '4px', cursor: 'pointer', color: '#374151' }}
+                        style={{ padding: '8px', background: '#f3f4f6', border: '1px solid var(--border-subtle)', borderRadius: '4px', cursor: 'pointer', color: 'var(--text-main)' }}
                         title="Editar"
                     >
                         <Edit size={16} />
@@ -113,3 +113,4 @@ export function SortableRepCard({ rep, onEdit, onAddSchedule, addingScheduleFor,
         </div>
     )
 }
+

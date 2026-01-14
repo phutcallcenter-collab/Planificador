@@ -41,9 +41,9 @@ const OverviewHeader = ({
         onClick={onPrev}
         style={{
           padding: '8px',
-          border: '1px solid #d1d5db',
+          border: '1px solid var(--border-strong)',
           borderRadius: '6px',
-          background: 'white',
+          background: 'var(--bg-panel)',
           cursor: 'pointer',
         }}
       >
@@ -65,9 +65,9 @@ const OverviewHeader = ({
         onClick={onNext}
         style={{
           padding: '8px',
-          border: '1px solid #d1d5db',
+          border: '1px solid var(--border-strong)',
           borderRadius: '6px',
-          background: 'white',
+          background: 'var(--bg-panel)',
           cursor: 'pointer',
         }}
       >
@@ -187,7 +187,7 @@ export function StatsOverview() {
           textAlign: 'center',
           background: '#f9fafb',
           borderRadius: '12px',
-          border: '1px solid #e5e7eb',
+          border: '1px solid var(--border-subtle)',
           color: '#4b5563',
         }}
       >
@@ -197,3 +197,4 @@ export function StatsOverview() {
     </div>
   )
 }
+

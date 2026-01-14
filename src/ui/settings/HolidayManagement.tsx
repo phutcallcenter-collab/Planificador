@@ -68,10 +68,10 @@ export function HolidayManagement() {
   return (
     <div style={{ maxWidth: '800px', margin: '0 auto' }}>
       <div style={{ marginBottom: '30px' }}>
-        <h2 style={{ margin: 0, marginBottom: '8px', fontSize: '20px', color: '#1F2937' }}>
+        <h2 style={{ margin: 0, marginBottom: '8px', fontSize: '20px', color: 'var(--text-main)' }}>
           Feriados del Año
         </h2>
-        <p style={{ margin: 0, fontSize: '14px', color: '#6b7280' }}>
+        <p style={{ margin: 0, fontSize: '14px', color: 'var(--text-muted)' }}>
           Los días marcados como feriados serán excluidos automáticamente del cálculo de vacaciones.
         </p>
       </div>
@@ -82,11 +82,11 @@ export function HolidayManagement() {
           background: '#f9fafb',
           padding: '20px',
           borderRadius: '8px',
-          border: '1px solid #e5e7eb',
+          border: '1px solid var(--border-subtle)',
           marginBottom: '24px',
         }}
       >
-        <h3 style={{ margin: '0 0 16px 0', fontSize: '16px', color: '#374151' }}>
+        <h3 style={{ margin: '0 0 16px 0', fontSize: '16px', color: 'var(--text-main)' }}>
           Agregar Feriado
         </h3>
         <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-end' }}>
@@ -97,7 +97,7 @@ export function HolidayManagement() {
                 fontSize: '13px',
                 fontWeight: 500,
                 marginBottom: '6px',
-                color: '#374151',
+                color: 'var(--text-main)',
               }}
             >
               Fecha
@@ -109,7 +109,7 @@ export function HolidayManagement() {
               style={{
                 width: '100%',
                 padding: '8px 10px',
-                border: '1px solid #d1d5db',
+                border: '1px solid var(--border-strong)',
                 borderRadius: '6px',
                 fontSize: '14px',
                 boxSizing: 'border-box',
@@ -123,7 +123,7 @@ export function HolidayManagement() {
                 fontSize: '13px',
                 fontWeight: 500,
                 marginBottom: '6px',
-                color: '#374151',
+                color: 'var(--text-main)',
               }}
             >
               Nombre del Feriado
@@ -136,7 +136,7 @@ export function HolidayManagement() {
               style={{
                 width: '100%',
                 padding: '8px 10px',
-                border: '1px solid #d1d5db',
+                border: '1px solid var(--border-strong)',
                 borderRadius: '6px',
                 fontSize: '14px',
                 boxSizing: 'border-box',
@@ -170,7 +170,7 @@ export function HolidayManagement() {
 
       {/* Lista de feriados */}
       <div>
-        <h3 style={{ margin: '0 0 12px 0', fontSize: '16px', color: '#374151' }}>
+        <h3 style={{ margin: '0 0 12px 0', fontSize: '16px', color: 'var(--text-main)' }}>
           Feriados Configurados ({holidays.length})
         </h3>
 
@@ -181,11 +181,11 @@ export function HolidayManagement() {
               textAlign: 'center',
               background: '#f9fafb',
               borderRadius: '8px',
-              border: '1px solid #e5e7eb',
+              border: '1px solid var(--border-subtle)',
             }}
           >
             <CalendarIcon size={48} style={{ color: '#d1d5db', margin: '0 auto 12px' }} />
-            <p style={{ margin: 0, color: '#6b7280', fontSize: '14px' }}>
+            <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '14px' }}>
               No hay feriados configurados
             </p>
             <p style={{ margin: '8px 0 0 0', color: '#9ca3af', fontSize: '13px' }}>
@@ -202,8 +202,8 @@ export function HolidayManagement() {
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   padding: '12px 16px',
-                  background: 'white',
-                  border: '1px solid #e5e7eb',
+                  background: 'var(--bg-panel)',
+                  border: '1px solid var(--border-subtle)',
                   borderRadius: '6px',
                 }}
               >
@@ -217,10 +217,10 @@ export function HolidayManagement() {
                     }}
                   />
                   <div>
-                    <div style={{ fontWeight: 600, fontSize: '14px', color: '#1F2937' }}>
+                    <div style={{ fontWeight: 600, fontSize: '14px', color: 'var(--text-main)' }}>
                       {holiday.label}
                     </div>
-                    <div style={{ fontSize: '13px', color: '#6b7280', marginTop: '2px' }}>
+                    <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '2px' }}>
                       {formatDate(holiday.date)}
                     </div>
                   </div>
@@ -251,3 +251,4 @@ export function HolidayManagement() {
     </div>
   )
 }
+

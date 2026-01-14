@@ -48,9 +48,9 @@ const RiskHeader = ({
         onClick={onPrev}
         style={{
           padding: '8px',
-          border: '1px solid #d1d5db',
+          border: '1px solid var(--border-strong)',
           borderRadius: '6px',
-          background: 'white',
+          background: 'var(--bg-panel)',
           cursor: 'pointer',
         }}
       >
@@ -72,9 +72,9 @@ const RiskHeader = ({
         onClick={onNext}
         style={{
           padding: '8px',
-          border: '1px solid #d1d5db',
+          border: '1px solid var(--border-strong)',
           borderRadius: '6px',
-          background: 'white',
+          background: 'var(--bg-panel)',
           cursor: 'pointer',
         }}
       >
@@ -220,7 +220,7 @@ export function CoverageRiskView() {
           style={{
             fontSize: '16px',
             fontWeight: 600,
-            color: '#1f2937',
+            color: 'var(--text-main)',
             marginBottom: '12px',
           }}
         >
@@ -235,8 +235,8 @@ export function CoverageRiskView() {
               textAlign: 'center',
               background: '#f9fafb',
               borderRadius: '12px',
-              border: '1px solid #e5e7eb',
-              color: '#6b7280',
+              border: '1px solid var(--border-subtle)',
+              color: 'var(--text-muted)',
             }}
           >
             <p style={{ margin: 0, fontSize: '14px', fontStyle: 'italic' }}>
@@ -248,3 +248,4 @@ export function CoverageRiskView() {
     </div>
   )
 }
+

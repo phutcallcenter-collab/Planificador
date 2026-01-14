@@ -53,7 +53,7 @@ const ReportHeader = ({
       >
         Reporte Ejecutivo de Desempeño
       </h2>
-      <p style={{ margin: '4px 0 0', color: '#6b7280', fontSize: '14px' }}>
+      <p style={{ margin: '4px 0 0', color: 'var(--text-muted)', fontSize: '14px' }}>
         Vista panorámica de incidencias y rendimiento del equipo.
       </p>
     </div>
@@ -63,9 +63,9 @@ const ReportHeader = ({
         defaultValue={30}
         style={{
           padding: '8px 12px',
-          border: '1px solid #d1d5db',
+          border: '1px solid var(--border-strong)',
           borderRadius: '6px',
-          background: 'white',
+          background: 'var(--bg-panel)',
           cursor: 'pointer',
           fontSize: '14px',
         }}
@@ -91,8 +91,8 @@ const KPICard = ({
 }) => (
   <div
     style={{
-      background: 'white',
-      border: '1px solid #e5e7eb',
+      background: 'var(--bg-panel)',
+      border: '1px solid var(--border-subtle)',
       borderRadius: '8px',
       padding: '16px',
     }}
@@ -102,7 +102,7 @@ const KPICard = ({
         display: 'flex',
         alignItems: 'center',
         gap: '8px',
-        color: '#6b7280',
+        color: 'var(--text-muted)',
         fontSize: '14px',
         fontWeight: 500,
       }}
@@ -110,7 +110,7 @@ const KPICard = ({
       <Icon size={16} />
       <span>{label}</span>
     </div>
-    <div style={{ marginTop: '8px', fontSize: '28px', fontWeight: 700, color: '#1f2937' }}>
+    <div style={{ marginTop: '8px', fontSize: '28px', fontWeight: 700, color: 'var(--text-main)' }}>
       {value}
     </div>
   </div>
@@ -125,8 +125,8 @@ const ShiftCard = ({
 }) => (
   <div
     style={{
-      background: 'white',
-      border: '1px solid #e5e7eb',
+      background: 'var(--bg-panel)',
+      border: '1px solid var(--border-subtle)',
       borderRadius: '8px',
       padding: '16px',
     }}
@@ -146,15 +146,15 @@ const ShiftCard = ({
     </div>
     <div style={{ marginTop: '12px', display: 'flex', justifyContent: 'space-around' }}>
       <div style={{ textAlign: 'center' }}>
-        <div style={{ fontSize: 12, color: '#6b7280' }}>Incidencias</div>
+        <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>Incidencias</div>
         <div style={{ fontSize: 20, fontWeight: 700 }}>{stats.incidents}</div>
       </div>
       <div style={{ textAlign: 'center' }}>
-        <div style={{ fontSize: 12, color: '#6b7280' }}>Puntos</div>
+        <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>Puntos</div>
         <div style={{ fontSize: 20, fontWeight: 700 }}>{stats.points}</div>
       </div>
       <div style={{ textAlign: 'center' }}>
-        <div style={{ fontSize: 12, color: '#6b7280' }}>Ptos/Rep</div>
+        <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>Ptos/Rep</div>
         <div style={{ fontSize: 20, fontWeight: 700 }}>{stats.avgPointsPerRep}</div>
       </div>
     </div>
@@ -181,9 +181,9 @@ const PersonList = ({
   return (
     <div
       style={{
-        border: '1px solid #e5e7eb',
+        border: '1px solid var(--border-subtle)',
         borderRadius: '12px',
-        background: 'white',
+        background: 'var(--bg-panel)',
         height: '100%',
       }}
     >
@@ -220,7 +220,7 @@ const PersonList = ({
             ))}
             {data.length === 0 && (
               <tr>
-                <td colSpan={2} style={{ ...cellStyle, textAlign: 'center', color: '#6b7280', fontStyle: 'italic' }}>
+                <td colSpan={2} style={{ ...cellStyle, textAlign: 'center', color: 'var(--text-muted)', fontStyle: 'italic' }}>
                   No hay representantes en esta categoría.
                 </td>
               </tr>
@@ -236,9 +236,9 @@ const IncidentTypeBreakdown = ({ data }: { data: IncidentTypeStats[] }) => {
   return (
     <div
       style={{
-        border: '1px solid #e5e7eb',
+        border: '1px solid var(--border-subtle)',
         borderRadius: '12px',
-        background: 'white',
+        background: 'var(--bg-panel)',
       }}
     >
       <header
@@ -258,7 +258,7 @@ const IncidentTypeBreakdown = ({ data }: { data: IncidentTypeStats[] }) => {
           const style = INCIDENT_STYLES[item.type] || INCIDENT_STYLES.OTRO
           return (
             <div key={item.type} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontWeight: 500, color: '#374151', fontSize: '14px' }}>{style.label}</span>
+              <span style={{ fontWeight: 500, color: 'var(--text-main)', fontSize: '14px' }}>{style.label}</span>
               <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
                 <span style={{ fontSize: '14px' }}><strong>{item.count}</strong> evento(s)</span>
                 <span style={{ fontSize: '14px', fontWeight: 700, color: '#b91c1c' }}>{item.points} pts</span>
@@ -267,7 +267,7 @@ const IncidentTypeBreakdown = ({ data }: { data: IncidentTypeStats[] }) => {
           )
         })}
         {data.length === 0 && (
-          <div style={{ textAlign: 'center', color: '#6b7280', fontStyle: 'italic', padding: '20px 0' }}>
+          <div style={{ textAlign: 'center', color: 'var(--text-muted)', fontStyle: 'italic', padding: '20px 0' }}>
             No hay incidencias punitivas en este período.
           </div>
         )}
@@ -347,3 +347,4 @@ export function ExecutiveReportView() {
     </div>
   )
 }
+

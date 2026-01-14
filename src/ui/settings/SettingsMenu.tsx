@@ -15,9 +15,9 @@ export function SettingsMenu() {
   const buttonStyle: React.CSSProperties = {
     padding: '8px 16px',
     fontSize: '14px',
-    border: '1px solid #d1d5db',
+    border: '1px solid var(--border-strong)',
     borderRadius: '6px',
-    background: 'white',
+    background: 'var(--bg-panel)',
     cursor: 'pointer',
   }
 
@@ -58,7 +58,7 @@ export function SettingsMenu() {
             style={{
               marginTop: '10px',
               fontSize: '12px',
-              color: '#6b7280',
+              color: 'var(--text-muted)',
             }}
           >
             Esta acción no se puede deshacer.
@@ -90,8 +90,8 @@ export function SettingsMenu() {
             top: '100%',
             right: 0,
             marginTop: '8px',
-            background: 'white',
-            border: '1px solid #e5e7eb',
+            background: 'var(--bg-panel)',
+            border: '1px solid var(--border-subtle)',
             borderRadius: '8px',
             boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
             zIndex: 10,
@@ -175,3 +175,4 @@ export function SettingsMenu() {
     </div>
   )
 }
+

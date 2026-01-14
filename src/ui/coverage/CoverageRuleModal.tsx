@@ -65,7 +65,7 @@ export function CoverageRuleModal({ rule, onSave, onClose }: Props) {
   }
 
   const modalContentStyle: React.CSSProperties = {
-    background: 'white',
+    background: 'var(--bg-panel)',
     padding: '25px',
     borderRadius: '12px',
     width: '450px',
@@ -76,7 +76,7 @@ export function CoverageRuleModal({ rule, onSave, onClose }: Props) {
     width: '100%',
     padding: '10px',
     fontSize: '14px',
-    border: '1px solid #d1d5db',
+    border: '1px solid var(--border-strong)',
     borderRadius: '6px',
     boxSizing: 'border-box',
     marginTop: '8px',
@@ -94,12 +94,12 @@ export function CoverageRuleModal({ rule, onSave, onClose }: Props) {
   return (
     <div style={modalOverlayStyle} onClick={onClose}>
       <div style={modalContentStyle} onClick={e => e.stopPropagation()}>
-        <h2 style={{ marginTop: 0, marginBottom: '20px', color: '#111827' }}>
+        <h2 style={{ marginTop: 0, marginBottom: '20px', color: 'var(--text-main)' }}>
           {rule ? 'Editar Regla' : 'Nueva Regla'} de Cobertura
         </h2>
 
         <div style={{ marginBottom: '15px' }}>
-          <label style={{ display: 'block', fontWeight: 500, color: '#1F2937' }}>
+          <label style={{ display: 'block', fontWeight: 500, color: 'var(--text-main)' }}>
             Ámbito de la Regla
           </label>
           <select
@@ -115,7 +115,7 @@ export function CoverageRuleModal({ rule, onSave, onClose }: Props) {
 
         {type === 'SHIFT' && (
           <div style={{ marginBottom: '15px' }}>
-            <label style={{ display: 'block', fontWeight: 500, color: '#1F2937' }}>Turno</label>
+            <label style={{ display: 'block', fontWeight: 500, color: 'var(--text-main)' }}>Turno</label>
             <select
               value={shift}
               onChange={e => setShift(e.target.value as ShiftType)}
@@ -129,7 +129,7 @@ export function CoverageRuleModal({ rule, onSave, onClose }: Props) {
 
         {type === 'DATE' && (
           <div style={{ marginBottom: '15px' }}>
-            <label style={{ display: 'block', fontWeight: 500, color: '#1F2937' }}>Fecha</label>
+            <label style={{ display: 'block', fontWeight: 500, color: 'var(--text-main)' }}>Fecha</label>
             <input
               type="date"
               value={date}
@@ -140,7 +140,7 @@ export function CoverageRuleModal({ rule, onSave, onClose }: Props) {
         )}
 
         <div style={{ marginBottom: '15px' }}>
-          <label style={{ display: 'block', fontWeight: 500, color: '#1F2937' }}>
+          <label style={{ display: 'block', fontWeight: 500, color: 'var(--text-main)' }}>
             Mínimo de Personas Requeridas
           </label>
           <input
@@ -153,7 +153,7 @@ export function CoverageRuleModal({ rule, onSave, onClose }: Props) {
         </div>
 
         <div style={{ marginBottom: '25px' }}>
-          <label style={{ display: 'block', fontWeight: 500, color: '#1F2937' }}>
+          <label style={{ display: 'block', fontWeight: 500, color: 'var(--text-main)' }}>
             Etiqueta (opcional)
           </label>
           <input
@@ -170,7 +170,7 @@ export function CoverageRuleModal({ rule, onSave, onClose }: Props) {
         >
           <button
             onClick={onClose}
-            style={{ ...buttonStyle, background: '#f3f4f6', color: '#374151' }}
+            style={{ ...buttonStyle, background: '#f3f4f6', color: 'var(--text-main)' }}
           >
             Cancelar
           </button>
@@ -189,3 +189,4 @@ export function CoverageRuleModal({ rule, onSave, onClose }: Props) {
     </div>
   )
 }
+

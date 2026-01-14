@@ -23,7 +23,7 @@ export function MixedShiftConfirmModal({
     width: '100%',
     padding: '16px',
     fontSize: '16px',
-    border: '1px solid #e5e7eb',
+    border: '1px solid var(--border-subtle)',
     borderRadius: '8px',
     background: '#f9fafb',
     cursor: 'pointer',
@@ -63,7 +63,7 @@ export function MixedShiftConfirmModal({
         exit={{ opacity: 0, scale: 0.95 }}
         transition={{ duration: 0.15 }}
         style={{
-          background: 'white',
+          background: 'var(--bg-panel)',
           padding: '24px',
           borderRadius: '12px',
           width: '420px',
@@ -74,7 +74,7 @@ export function MixedShiftConfirmModal({
         <h2 style={{ marginTop: 0, marginBottom: '8px', fontSize: '18px' }}>
           ⚠️ Modificación de Turno Mixto
         </h2>
-        <p style={{ color: '#6b7280', marginTop: 0, marginBottom: '24px', lineHeight: 1.5 }}>
+        <p style={{ color: 'var(--text-muted)', marginTop: 0, marginBottom: '24px', lineHeight: 1.5 }}>
           Este representante está programado para <b>DÍA y NOCHE</b> hoy.
           <br />
           Tu acción afectará su planificación. ¿Qué deseas hacer?
@@ -118,7 +118,7 @@ export function MixedShiftConfirmModal({
               border: 'none',
               borderRadius: '8px',
               background: '#e5e7eb',
-              color: '#374151',
+              color: 'var(--text-main)',
               cursor: 'pointer',
               fontWeight: 500,
             }}
@@ -130,3 +130,4 @@ export function MixedShiftConfirmModal({
     </div>
   )
 }
+

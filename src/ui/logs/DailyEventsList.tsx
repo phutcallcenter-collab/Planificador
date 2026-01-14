@@ -49,12 +49,12 @@ const PersonRow = memo(function PersonRow({
         background: '#f9fafb',
       }}
     >
-      <span style={{ fontWeight: 500, color: '#374151' }}>
+      <span style={{ fontWeight: 500, color: 'var(--text-main)' }}>
         {person.repName}
       </span>
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
         {person.count > 1 && (
-          <span style={{ fontSize: '12px', fontWeight: 600, color: '#6b7280' }}>
+          <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-muted)' }}>
             ×{person.count}
           </span>
         )}
@@ -98,7 +98,7 @@ const OtherIncidentRow = memo(function OtherIncidentRow({
       }}
     >
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <span style={{ fontWeight: 500, color: '#374151' }}>
+        <span style={{ fontWeight: 500, color: 'var(--text-main)' }}>
           {incident.repName}
         </span>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -128,7 +128,7 @@ const OtherIncidentRow = memo(function OtherIncidentRow({
             margin: 0,
             fontSize: '12px',
             fontStyle: 'italic',
-            color: '#6b7280',
+            color: 'var(--text-muted)',
           }}
         >
           {incident.note}
@@ -162,9 +162,9 @@ const RangeIncidentCard = memo(function RangeIncidentCard({
       transition={{ duration: 0.2, ease: 'easeOut' }}
       style={{
         marginBottom: '1rem',
-        border: '1px solid #e5e7eb',
+        border: '1px solid var(--border-subtle)',
         borderRadius: '10px',
-        background: 'white',
+        background: 'var(--bg-panel)',
         overflow: 'hidden',
       }}
     >
@@ -188,7 +188,7 @@ const RangeIncidentCard = memo(function RangeIncidentCard({
         )}
       </header>
       <div style={{ padding: '12px 15px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-        <div style={{ fontWeight: 600, color: '#1f2937' }}>{incident.repName}</div>
+        <div style={{ fontWeight: 600, color: 'var(--text-main)' }}>{incident.repName}</div>
         <div style={{ position: 'relative', width: '100%', background: '#f3f4f6', height: '8px', borderRadius: '4px' }}>
           <div style={{
             position: 'absolute',
@@ -201,7 +201,7 @@ const RangeIncidentCard = memo(function RangeIncidentCard({
             transition: 'width 0.3s ease-out',
           }} />
         </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', color: '#6b7280' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', color: 'var(--text-muted)' }}>
           <span>Día {incident.dayCount} de {incident.totalDuration}</span>
           {incident.returnDate && (
             <span style={{ fontWeight: 500 }}>
@@ -236,9 +236,9 @@ const PunctualIncidentGroup = memo(function PunctualIncidentGroup({
       transition={{ duration: 0.2, ease: 'easeOut' }}
       style={{
         marginBottom: '1rem',
-        border: '1px solid #e5e7eb',
+        border: '1px solid var(--border-subtle)',
         borderRadius: '10px',
-        background: 'white',
+        background: 'var(--bg-panel)',
       }}
     >
       <header
@@ -251,7 +251,7 @@ const PunctualIncidentGroup = memo(function PunctualIncidentGroup({
         }}
       >
         <StatusPill label={styleInfo.label} variant={styleInfo.variant} />
-        <span style={{ fontWeight: 700, fontSize: 18, color: '#1f2937' }}>
+        <span style={{ fontWeight: 700, fontSize: 18, color: 'var(--text-main)' }}>
           {group.totalCount}
         </span>
       </header>
@@ -387,7 +387,7 @@ export function DailyEventsList({
           marginBottom: '0.75rem',
           fontSize: '1rem',
           fontWeight: 600,
-          color: '#374151',
+          color: 'var(--text-main)',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
@@ -395,7 +395,7 @@ export function DailyEventsList({
       >
         <span>{title}</span>
         {incidents.length > 0 && (
-          <span style={{ fontSize: '12px', color: '#6b7280' }}>
+          <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
             {incidents.length} evento(s)
           </span>
         )}
@@ -410,7 +410,7 @@ export function DailyEventsList({
             exit={{ opacity: 0 }}
             style={{
               fontSize: '0.875rem',
-              color: '#6b7280',
+              color: 'var(--text-muted)',
               fontStyle: 'italic',
               textAlign: 'center',
               padding: '20px 0',
@@ -452,3 +452,4 @@ export function DailyEventsList({
     </section>
   )
 }
+

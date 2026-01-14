@@ -34,10 +34,10 @@ export function StatsView() {
       <div
         style={{
 
-          background: 'white',
+          background: 'var(--bg-panel)',
           borderRadius: '12px 12px 0 0',
           padding: '0 16px',
-          border: '1px solid #e5e7eb',
+          border: '1px solid var(--border-subtle)',
           borderBottom: 'none',
         }}
       >
@@ -63,9 +63,9 @@ export function StatsView() {
 
       <div
         style={{
-          background: '#ffffff',
+          background: 'var(--bg-panel)',
           borderRadius: '0 0 12px 12px',
-          border: '1px solid #e5e7eb',
+          border: '1px solid var(--border-subtle)',
           borderTop: 'none',
           minHeight: '80vh',
         }}
@@ -77,3 +77,4 @@ export function StatsView() {
     </div>
   )
 }
+

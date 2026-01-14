@@ -31,7 +31,7 @@ import { CalendarGrid } from '../components/CalendarGrid'
 
 const styles = {
   btnPrimary: {
-    backgroundColor: '#111827',
+    backgroundColor: 'var(--accent)',
     color: 'white',
     padding: '10px',
     borderRadius: '6px',
@@ -48,7 +48,7 @@ const styles = {
   },
   input: {
     width: '100%',
-    border: '1px solid #d1d5db',
+    border: '1px solid var(--border-strong)',
     borderRadius: '6px',
     padding: '10px 12px',
     fontSize: '14px',
@@ -59,7 +59,7 @@ const styles = {
     fontSize: '14px',
     fontWeight: 500,
     marginBottom: '6px',
-    color: '#374151',
+    color: 'var(--text-main)',
   },
   listItem: {
     width: '100%',
@@ -70,7 +70,7 @@ const styles = {
     border: 'none',
     background: 'transparent',
     fontSize: '14px',
-    color: '#374151',
+    color: 'var(--text-main)',
   },
   activeListItem: {
     background: '#f3f4f6',
@@ -126,7 +126,7 @@ const ShiftStatusDisplay = ({
         ) : (
           <Moon size={18} style={{ color: '#a5b4fc' }} />
         )}
-        <span style={{ fontWeight: 600, fontSize: '1rem', color: '#1f2937' }}>
+        <span style={{ fontWeight: 600, fontSize: '1rem', color: 'var(--text-main)' }}>
           {label}
         </span>
       </div>
@@ -140,12 +140,12 @@ const ShiftStatusDisplay = ({
           gap: '6px',
         }}
       >
-        <Users size={14} style={{ color: '#6b7280' }} />
+        <Users size={14} style={{ color: 'var(--text-muted)' }} />
         <span
           style={{
             fontWeight: 700,
             fontSize: '1.25rem',
-            color: '#111827',
+            color: 'var(--text-main)',
           }}
         >
           {coverageCount}
@@ -439,7 +439,7 @@ export function DailyLogView() {
           backgroundColor: 'white',
           borderRadius: '12px',
           padding: '20px',
-          border: '1px solid #e5e7eb',
+          border: '1px solid var(--border-subtle)',
           display: 'flex',
           flexDirection: 'column',
           gap: '16px',
@@ -448,7 +448,7 @@ export function DailyLogView() {
       >
         <div>
           <h3
-            style={{ fontWeight: 500, margin: '0 0 12px 0', color: '#1f2937', fontSize: '13px' }}
+            style={{ fontWeight: 500, margin: '0 0 12px 0', color: 'var(--text-main)', fontSize: '13px' }}
           >
             Estado de Turnos
           </h3>
@@ -519,7 +519,7 @@ export function DailyLogView() {
         <div
           style={{
             backgroundColor: 'white',
-            border: '1px solid #e5e7eb',
+            border: '1px solid var(--border-subtle)',
             borderRadius: '12px',
             padding: '16px 20px',
             display: 'flex',
@@ -535,23 +535,23 @@ export function DailyLogView() {
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', position: 'relative' }} ref={calendarRef}>
             <button
               onClick={() => setLogDate(format(subDays(dateForLog, 1), 'yyyy-MM-dd'))}
-              style={{ padding: '8px', border: '1px solid #d1d5db', background: 'white', borderRadius: '6px', cursor: 'pointer' }}
+              style={{ padding: '8px', border: '1px solid var(--border-strong)', background: 'var(--bg-panel)', borderRadius: '6px', cursor: 'pointer' }}
             >
               <ChevronLeft size={16} />
             </button>
-            <div style={{ fontWeight: 600, fontSize: '14px', color: '#1f2937', minWidth: '220px', textAlign: 'center' }}>
+            <div style={{ fontWeight: 600, fontSize: '14px', color: 'var(--text-main)', minWidth: '220px', textAlign: 'center' }}>
               {format(dateForLog, "EEEE, dd 'de' MMMM", { locale: es })}
             </div>
             <button
               onClick={() => setLogDate(format(addDays(dateForLog, 1), 'yyyy-MM-dd'))}
-              style={{ padding: '8px', border: '1px solid #d1d5db', background: 'white', borderRadius: '6px', cursor: 'pointer' }}
+              style={{ padding: '8px', border: '1px solid var(--border-strong)', background: 'var(--bg-panel)', borderRadius: '6px', cursor: 'pointer' }}
             >
               <ChevronRight size={16} />
             </button>
 
             <button
               onClick={() => setIsCalendarOpen(prev => !prev)}
-              style={{ padding: '8px', border: '1px solid #d1d5db', background: 'white', borderRadius: '6px', cursor: 'pointer' }}
+              style={{ padding: '8px', border: '1px solid var(--border-strong)', background: 'var(--bg-panel)', borderRadius: '6px', cursor: 'pointer' }}
             >
               <CalendarIcon size={16} />
             </button>
@@ -561,9 +561,9 @@ export function DailyLogView() {
                 onClick={() => setLogDate(format(new Date(), 'yyyy-MM-dd'))}
                 style={{
                   padding: '8px 12px',
-                  border: '1px solid #d1d5db',
+                  border: '1px solid var(--border-strong)',
                   borderRadius: '6px',
-                  background: 'white',
+                  background: 'var(--bg-panel)',
                   fontSize: '12px',
                   fontWeight: 600,
                   cursor: 'pointer',
@@ -579,8 +579,8 @@ export function DailyLogView() {
                 top: '100%',
                 right: 0,
                 marginTop: '8px',
-                background: 'white',
-                border: '1px solid #e5e7eb',
+                background: 'var(--bg-panel)',
+                border: '1px solid var(--border-subtle)',
                 borderRadius: '8px',
                 padding: '16px',
                 zIndex: 10,
@@ -603,7 +603,7 @@ export function DailyLogView() {
           <div
             style={{
               backgroundColor: 'white',
-              border: '1px solid #e5e7eb',
+              border: '1px solid var(--border-subtle)',
               borderRadius: '12px',
               padding: '20px',
               display: 'flex',
@@ -712,11 +712,19 @@ export function DailyLogView() {
             <div>
               <button
                 type="submit"
-                style={{
-                  ...styles.btnPrimary,
-                  ...(!selectedRep ? styles.btnDisabled : {}),
-                }}
                 disabled={!selectedRep}
+                style={{
+                  padding: '10px 16px',
+                  fontSize: '14px',
+                  fontWeight: 600,
+                  backgroundColor: !selectedRep ? '#e5e7eb' : '#2563eb',
+                  color: !selectedRep ? '#9ca3af' : '#ffffff',
+                  border: 'none',
+                  borderRadius: '6px',
+                  cursor: !selectedRep ? 'not-allowed' : 'pointer',
+                  width: '100%',
+                  transition: 'background-color 0.2s',
+                }}
               >
                 Registrar evento
               </button>
@@ -736,7 +744,7 @@ export function DailyLogView() {
           <div
             style={{
               backgroundColor: 'white',
-              border: '1px solid #e5e7eb',
+              border: '1px solid var(--border-subtle)',
               borderRadius: '12px',
               padding: '20px',
               overflowY: 'auto',
@@ -752,7 +760,7 @@ export function DailyLogView() {
           <div
             style={{
               backgroundColor: 'white',
-              border: '1px solid #e5e7eb',
+              border: '1px solid var(--border-subtle)',
               borderRadius: '12px',
               padding: '20px',
               overflowY: 'auto',
@@ -770,3 +778,4 @@ export function DailyLogView() {
     </div>
   )
 }
+

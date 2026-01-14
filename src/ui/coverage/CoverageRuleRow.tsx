@@ -41,18 +41,18 @@ export function CoverageRuleRow({
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: '12px',
-        background: 'white',
+        background: 'var(--bg-panel)',
         borderRadius: '8px',
-        border: '1px solid #e5e7eb',
+        border: '1px solid var(--border-subtle)',
       }}
     >
       <div>
-        <div style={{ fontWeight: 600, color: '#1f2937' }}>
+        <div style={{ fontWeight: 600, color: 'var(--text-main)' }}>
           {rule.label || label}
         </div>
         <div style={{ fontSize: '14px', color: '#4b5563', marginTop: '2px' }}>
           Mínimo:{' '}
-          <strong style={{ color: '#111827' }}>{rule.required}</strong> personas
+          <strong style={{ color: 'var(--text-main)' }}>{rule.required}</strong> personas
         </div>
       </div>
       <div style={{ display: 'flex', gap: '8px' }}>
@@ -60,8 +60,8 @@ export function CoverageRuleRow({
           onClick={onEdit}
           style={{
             padding: '6px 10px',
-            border: '1px solid #d1d5db',
-            background: 'white',
+            border: '1px solid var(--border-strong)',
+            background: 'var(--bg-panel)',
             borderRadius: '6px',
             cursor: 'pointer',
           }}
@@ -88,3 +88,4 @@ export function CoverageRuleRow({
     </div>
   )
 }
+

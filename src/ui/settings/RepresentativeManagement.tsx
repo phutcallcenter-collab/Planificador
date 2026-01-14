@@ -106,7 +106,7 @@ const RepresentativeForm = ({
         background: '#f9fafb',
         padding: '20px',
         borderRadius: '8px',
-        border: '1px solid #e5e7eb',
+        border: '1px solid var(--border-subtle)',
         marginBottom: '24px',
         display: 'flex',
         flexDirection: 'column',
@@ -114,14 +114,14 @@ const RepresentativeForm = ({
       }}
     >
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h3 style={{ margin: 0, fontSize: '16px', color: '#374151' }}>
+        <h3 style={{ margin: 0, fontSize: '16px', color: 'var(--text-main)' }}>
           {rep ? 'Editar Representante' : 'Nuevo Representante'}
         </h3>
-        {rep && <button type="button" onClick={onCancel} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#6b7280' }}><X size={18} /></button>}
+        {rep && <button type="button" onClick={onCancel} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)' }}><X size={18} /></button>}
       </div>
 
       <div>
-        <label style={{ display: 'block', fontSize: '13px', fontWeight: 500, marginBottom: '6px', color: '#374151' }}>
+        <label style={{ display: 'block', fontSize: '13px', fontWeight: 500, marginBottom: '6px', color: 'var(--text-main)' }}>
           Nombre Completo
         </label>
         <input
@@ -129,27 +129,27 @@ const RepresentativeForm = ({
           value={name}
           onChange={e => setName(e.target.value)}
           placeholder="Ej: Ana García"
-          style={{ width: '100%', padding: '8px 10px', border: '1px solid #d1d5db', borderRadius: '6px', fontSize: '14px', boxSizing: 'border-box' }}
+          style={{ width: '100%', padding: '8px 10px', border: '1px solid var(--border-strong)', borderRadius: '6px', fontSize: '14px', boxSizing: 'border-box' }}
           required
         />
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '16px' }}>
         <div>
-          <label style={{ display: 'block', fontSize: '13px', fontWeight: 500, marginBottom: '6px', color: '#374151' }}>
+          <label style={{ display: 'block', fontSize: '13px', fontWeight: 500, marginBottom: '6px', color: 'var(--text-main)' }}>
             Rol
           </label>
           <select
             value={role}
             onChange={e => setRole(e.target.value as RepresentativeRole)}
-            style={{ width: '100%', padding: '8px 10px', border: '1px solid #d1d5db', borderRadius: '6px', fontSize: '14px', boxSizing: 'border-box', background: 'white' }}
+            style={{ width: '100%', padding: '8px 10px', border: '1px solid var(--border-strong)', borderRadius: '6px', fontSize: '14px', boxSizing: 'border-box', background: 'var(--bg-panel)' }}
           >
             <option value="SALES">Ventas</option>
             <option value="CUSTOMER_SERVICE">Servicio al Cliente</option>
           </select>
         </div>
         <div>
-          <label style={{ display: 'block', fontSize: '13px', fontWeight: 500, marginBottom: '6px', color: '#374151' }}>
+          <label style={{ display: 'block', fontSize: '13px', fontWeight: 500, marginBottom: '6px', color: 'var(--text-main)' }}>
             Turno Base
           </label>
           <div style={{ display: 'flex', gap: '8px' }}>
@@ -170,16 +170,16 @@ const RepresentativeForm = ({
           </div>
         </div>
         <div>
-          <label style={{ display: 'block', fontSize: '13px', fontWeight: 500, marginBottom: '6px', color: '#374151' }}>
+          <label style={{ display: 'block', fontSize: '13px', fontWeight: 500, marginBottom: '6px', color: 'var(--text-main)' }}>
             Patrón base de mixto
           </label>
-          <p style={{ fontSize: '12px', color: '#6b7280', marginBottom: '8px', marginTop: 0 }}>
+          <p style={{ fontSize: '12px', color: 'var(--text-muted)', marginBottom: '8px', marginTop: 0 }}>
             Se usa solo como referencia cuando no hay ajustes temporales. Los cambios especiales se configuran en Horarios Especiales.
           </p>
           <select
             value={mixProfile}
             onChange={e => setMixProfile(e.target.value as any)}
-            style={{ width: '100%', padding: '8px 10px', border: '1px solid #d1d5db', borderRadius: '6px', fontSize: '14px', boxSizing: 'border-box', background: 'white' }}
+            style={{ width: '100%', padding: '8px 10px', border: '1px solid var(--border-strong)', borderRadius: '6px', fontSize: '14px', boxSizing: 'border-box', background: 'var(--bg-panel)' }}
           >
             <option value="">Ninguno</option>
             <option value="WEEKDAY">Mixto entre semana (L-J) - base</option>
@@ -189,10 +189,10 @@ const RepresentativeForm = ({
       </div>
 
       <div>
-        <label style={{ display: 'block', fontSize: '13px', fontWeight: 500, marginBottom: '6px', color: '#374151' }}>
+        <label style={{ display: 'block', fontSize: '13px', fontWeight: 500, marginBottom: '6px', color: 'var(--text-main)' }}>
           Días Libres Base (semana)
         </label>
-        <p style={{ fontSize: '12px', color: '#6b7280', marginBottom: '8px', marginTop: 0 }}>
+        <p style={{ fontSize: '12px', color: 'var(--text-muted)', marginBottom: '8px', marginTop: 0 }}>
           Selecciona los días que el representante NO trabaja
         </p>
         <DayScheduleSelector schedule={baseSchedule} onChange={setBaseSchedule} />
@@ -253,11 +253,11 @@ export function RepresentativeManagement() {
   return (
     <div style={{ maxWidth: '800px', margin: '0 auto' }}>
       <div style={{ marginBottom: '30px' }}>
-        <h2 style={{ margin: 0, marginBottom: '8px', fontSize: '20px', color: '#1F2937' }}>
+        <h2 style={{ margin: 0, marginBottom: '8px', fontSize: '20px', color: 'var(--text-main)' }}>
           Gestión de Representantes
         </h2>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <p style={{ margin: 0, fontSize: '14px', color: '#6b7280' }}>
+          <p style={{ margin: 0, fontSize: '14px', color: 'var(--text-muted)' }}>
             Añade, edita o desactiva representantes. El orden determina el ranking del incentivo.
           </p>
           <HelpPanel
@@ -343,7 +343,7 @@ export function RepresentativeManagement() {
         {/* Contenido según tab activo */}
         {activeShift === 'ALL' ? (
           <div>
-            <div style={{ fontSize: '12px', color: '#6b7280', marginBottom: '12px', fontStyle: 'italic' }}>
+            <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginBottom: '12px', fontStyle: 'italic' }}>
               💡 Para reordenar, selecciona un turno específico
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -353,7 +353,7 @@ export function RepresentativeManagement() {
                   <Sun size={14} style={{ display: 'inline', marginRight: '6px' }} />
                   Turno Día ({dayReps.length})
                 </h4>
-                <div style={{ fontSize: '13px', color: '#6b7280' }}>
+                <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>
                   {dayReps.map(r => r.name).join(', ') || 'Sin representantes'}
                 </div>
               </div>
@@ -362,7 +362,7 @@ export function RepresentativeManagement() {
                   <Moon size={14} style={{ display: 'inline', marginRight: '6px' }} />
                   Turno Noche ({nightReps.length})
                 </h4>
-                <div style={{ fontSize: '13px', color: '#6b7280' }}>
+                <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>
                   {nightReps.map(r => r.name).join(', ') || 'Sin representantes'}
                 </div>
               </div>
@@ -381,13 +381,13 @@ export function RepresentativeManagement() {
 
         {inactiveReps.length > 0 && (
           <div style={{ marginTop: '24px' }}>
-            <button onClick={() => setShowInactive(!showInactive)} style={{ fontSize: '14px', color: '#6b7280', fontWeight: 500, background: 'none', border: 'none', cursor: 'pointer' }}>
+            <button onClick={() => setShowInactive(!showInactive)} style={{ fontSize: '14px', color: 'var(--text-muted)', fontWeight: 500, background: 'none', border: 'none', cursor: 'pointer' }}>
               {showInactive ? 'Ocultar' : 'Mostrar'} {inactiveReps.length} representantes inactivos
             </button>
             {showInactive && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '12px' }}>
                 {inactiveReps.map(rep => (
-                  <div key={rep.id} style={{ padding: '12px 16px', background: '#f9fafb', border: '1px solid #e5e7eb', borderRadius: '6px', color: '#9ca3af', fontStyle: 'italic' }}>
+                  <div key={rep.id} style={{ padding: '12px 16px', background: '#f9fafb', border: '1px solid var(--border-subtle)', borderRadius: '6px', color: '#9ca3af', fontStyle: 'italic' }}>
                     {rep.name} (Inactivo)
                   </div>
                 ))}
@@ -399,3 +399,4 @@ export function RepresentativeManagement() {
     </div>
   )
 }
+

@@ -38,7 +38,7 @@ const ReportHeader = ({
       >
         Reporte de Puntos por Incidencia
       </h2>
-      <p style={{ margin: '4px 0 0', color: '#6b7280', fontSize: '14px' }}>
+      <p style={{ margin: '4px 0 0', color: 'var(--text-muted)', fontSize: '14px' }}>
         Resumen mensual de incidencias punitivas y puntos, segmentado por rol y turno.
       </p>
     </div>
@@ -47,9 +47,9 @@ const ReportHeader = ({
         onClick={onPrev}
         style={{
           padding: '8px',
-          border: '1px solid #d1d5db',
+          border: '1px solid var(--border-strong)',
           borderRadius: '6px',
-          background: 'white',
+          background: 'var(--bg-panel)',
           cursor: 'pointer',
         }}
       >
@@ -71,9 +71,9 @@ const ReportHeader = ({
         onClick={onNext}
         style={{
           padding: '8px',
-          border: '1px solid #d1d5db',
+          border: '1px solid var(--border-strong)',
           borderRadius: '6px',
-          background: 'white',
+          background: 'var(--bg-panel)',
           cursor: 'pointer',
         }}
       >
@@ -111,7 +111,7 @@ const ReportTable = ({
     textAlign: 'left',
     fontSize: '12px',
     fontWeight: 600,
-    color: '#6b7280',
+    color: 'var(--text-muted)',
     textTransform: 'uppercase',
     borderBottom: '1px solid #e5e7eb',
   }
@@ -158,10 +158,10 @@ const ReportTable = ({
       </header>
       <div
         style={{
-          border: '1px solid #e5e7eb',
+          border: '1px solid var(--border-subtle)',
           borderRadius: '8px',
           overflow: 'hidden',
-          background: 'white',
+          background: 'var(--bg-panel)',
         }}
       >
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
@@ -273,3 +273,4 @@ export function PointsReportView() {
     </div>
   )
 }
+

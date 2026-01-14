@@ -63,9 +63,9 @@ const MonthlyHeader = ({
         onClick={onPrev}
         style={{
           padding: '8px',
-          border: '1px solid #d1d5db',
+          border: '1px solid var(--border-strong)',
           borderRadius: '6px',
-          background: 'white',
+          background: 'var(--bg-panel)',
           cursor: 'pointer',
         }}
       >
@@ -87,9 +87,9 @@ const MonthlyHeader = ({
         onClick={onNext}
         style={{
           padding: '8px',
-          border: '1px solid #d1d5db',
+          border: '1px solid var(--border-strong)',
           borderRadius: '6px',
-          background: 'white',
+          background: 'var(--bg-panel)',
           cursor: 'pointer',
         }}
       >
@@ -113,9 +113,9 @@ const InfoCard = ({
   <div
     style={{
       padding: '16px',
-      background: 'white',
+      background: 'var(--bg-panel)',
       borderRadius: '8px',
-      border: '1px solid #e5e7eb',
+      border: '1px solid var(--border-subtle)',
       display: 'flex',
       flexDirection: 'column',
       gap: '8px',
@@ -123,11 +123,11 @@ const InfoCard = ({
   >
     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
       <Icon size={18} style={{ color }} />
-      <span style={{ fontSize: '13px', color: '#6b7280', fontWeight: 500 }}>
+      <span style={{ fontSize: '13px', color: 'var(--text-muted)', fontWeight: 500 }}>
         {label}
       </span>
     </div>
-    <div style={{ fontSize: '28px', fontWeight: 700, color: '#1f2937' }}>
+    <div style={{ fontSize: '28px', fontWeight: 700, color: 'var(--text-main)' }}>
       {value}
     </div>
   </div>
@@ -192,7 +192,7 @@ const MonthlyChart = ({
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          color: '#6b7280',
+          color: 'var(--text-muted)',
         }}
       >
         Cargando datos del gráfico...
@@ -203,14 +203,14 @@ const MonthlyChart = ({
   return (
     <div
       style={{
-        background: 'white',
+        background: 'var(--bg-panel)',
         padding: '20px',
         borderRadius: '12px',
-        border: '1px solid #e5e7eb',
+        border: '1px solid var(--border-subtle)',
         height: '100%',
       }}
     >
-      <h3 style={{ marginTop: 0, color: '#1f2937' }}>Incidencias por Día</h3>
+      <h3 style={{ marginTop: 0, color: 'var(--text-main)' }}>Incidencias por Día</h3>
       <div style={{ height: '220px' }}>
         <Bar
           data={chartData}
@@ -292,7 +292,7 @@ const MonthlyTable = ({
     textAlign: 'left',
     fontSize: '12px',
     fontWeight: 600,
-    color: '#6b7280',
+    color: 'var(--text-muted)',
     textTransform: 'uppercase',
     borderBottom: '1px solid #e5e7eb',
     opacity: 0.7,
@@ -309,9 +309,9 @@ const MonthlyTable = ({
     <div
       style={{
         borderRadius: '8px',
-        border: '1px solid #e5e7eb',
+        border: '1px solid var(--border-subtle)',
         overflow: 'hidden',
-        background: 'white',
+        background: 'var(--bg-panel)',
       }}
     >
       <table style={{ width: '100%', borderCollapse: 'collapse' }}>
@@ -340,7 +340,7 @@ const MonthlyTable = ({
               }}
               className="hover-row"
             >
-              <td style={{ ...cellStyle, fontWeight: 600, color: '#1f2937' }}>
+              <td style={{ ...cellStyle, fontWeight: 600, color: 'var(--text-main)' }}>
                 {person.name}
               </td>
               <td
@@ -543,7 +543,7 @@ export function MonthlySummaryView() {
 
       {/* Buscador de Representantes */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-        <label style={{ fontSize: '14px', fontWeight: 600, color: '#374151' }}>
+        <label style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text-main)' }}>
           Buscar Representante
         </label>
         <input
@@ -554,7 +554,7 @@ export function MonthlySummaryView() {
           style={{
             width: '100%',
             padding: '10px 14px',
-            border: '1px solid #d1d5db',
+            border: '1px solid var(--border-strong)',
             borderRadius: '8px',
             fontSize: '14px',
             outline: 'none',
@@ -564,7 +564,7 @@ export function MonthlySummaryView() {
           onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
         />
         {searchTerm && filteredSummary && (
-          <div style={{ fontSize: '13px', color: '#6b7280' }}>
+          <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>
             Mostrando {filteredSummary.byPerson.length} de {summary?.byPerson.length || 0} representantes
           </div>
         )}
@@ -580,3 +580,4 @@ export function MonthlySummaryView() {
     </div>
   )
 }
+
