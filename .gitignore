@@ -41,7 +41,9 @@ next_error.txt
 
 # Test output files (keep test source files)
 test_*.txt
+test-*.txt
 test_*.log
+test-*.log
 full_suite_output.txt
 
 # Temporary fix scripts
