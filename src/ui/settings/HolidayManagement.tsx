@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { useAppStore } from '@/store/useAppStore'
 import { SpecialDay, ISODate } from '@/domain/types'
 import { Trash2, Plus, Calendar as CalendarIcon } from 'lucide-react'
+import { useEditMode } from '@/hooks/useEditMode'
 
 export function HolidayManagement() {
   const { calendar, addOrUpdateSpecialDay, removeSpecialDay } = useAppStore(s => ({
@@ -11,6 +12,8 @@ export function HolidayManagement() {
     addOrUpdateSpecialDay: s.addOrUpdateSpecialDay,
     removeSpecialDay: s.removeSpecialDay,
   }))
+
+  const { mode } = useEditMode()
 
   const [newDate, setNewDate] = useState('')
   const [newLabel, setNewLabel] = useState('')
@@ -37,7 +40,7 @@ export function HolidayManagement() {
     }
 
     addOrUpdateSpecialDay(specialDay)
-    
+
     // Limpiar formulario
     setNewDate('')
     setNewLabel('')
@@ -170,7 +173,7 @@ export function HolidayManagement() {
         <h3 style={{ margin: '0 0 12px 0', fontSize: '16px', color: '#374151' }}>
           Feriados Configurados ({holidays.length})
         </h3>
-        
+
         {holidays.length === 0 ? (
           <div
             style={{
@@ -222,22 +225,24 @@ export function HolidayManagement() {
                     </div>
                   </div>
                 </div>
-                <button
-                  onClick={() => handleDelete(holiday.date)}
-                  style={{
-                    padding: '8px',
-                    background: 'transparent',
-                    border: 'none',
-                    cursor: 'pointer',
-                    color: '#ef4444',
-                    display: 'flex',
-                    alignItems: 'center',
-                    borderRadius: '4px',
-                  }}
-                  title="Eliminar feriado"
-                >
-                  <Trash2 size={18} />
-                </button>
+                {mode === 'ADMIN_OVERRIDE' && (
+                  <button
+                    onClick={() => handleDelete(holiday.date)}
+                    style={{
+                      padding: '8px',
+                      background: 'transparent',
+                      border: 'none',
+                      cursor: 'pointer',
+                      color: '#ef4444',
+                      display: 'flex',
+                      alignItems: 'center',
+                      borderRadius: '4px',
+                    }}
+                    title="Eliminar feriado"
+                  >
+                    <Trash2 size={18} />
+                  </button>
+                )}
               </div>
             ))}
           </div>

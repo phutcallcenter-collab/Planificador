@@ -2,6 +2,7 @@
 
 import React from 'react'
 import type { CoverageRule } from '../../domain/types'
+import { useEditMode } from '@/hooks/useEditMode'
 
 function getRuleLabel(rule: CoverageRule): string {
   switch (rule.scope.type) {
@@ -30,6 +31,7 @@ export function CoverageRuleRow({
   onEdit: () => void
   onDelete: () => void
 }) {
+  const { mode } = useEditMode()
   const label = getRuleLabel(rule)
 
   return (
@@ -66,20 +68,22 @@ export function CoverageRuleRow({
         >
           Editar
         </button>
-        <button
-          onClick={onDelete}
-          style={{
-            padding: '6px 10px',
-            border: 'none',
-            background: '#fee2e2',
-            color: '#991b1b',
-            borderRadius: '6px',
-            cursor: 'pointer',
-            fontWeight: 500,
-          }}
-        >
-          Eliminar
-        </button>
+        {mode === 'ADMIN_OVERRIDE' && (
+          <button
+            onClick={onDelete}
+            style={{
+              padding: '6px 10px',
+              border: 'none',
+              background: '#fee2e2',
+              color: '#991b1b',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontWeight: 500,
+            }}
+          >
+            Eliminar
+          </button>
+        )}
       </div>
     </div>
   )

@@ -3,6 +3,7 @@ import { CSS } from '@dnd-kit/utilities'
 import { Representative } from '@/domain/types'
 import { Edit, Trash2 } from 'lucide-react'
 import { useAppStore } from '@/store/useAppStore'
+import { useEditMode } from '@/hooks/useEditMode'
 import { SpecialScheduleList } from './SpecialScheduleList'
 import { SpecialScheduleWizard } from './SpecialScheduleWizard'
 import { Tooltip } from '@/ui/components/Tooltip'
@@ -17,6 +18,7 @@ interface SortableRepCardProps {
 
 export function SortableRepCard({ rep, onEdit, onAddSchedule, addingScheduleFor, advancedEditMode }: SortableRepCardProps) {
     const deactivateRepresentative = useAppStore(s => s.deactivateRepresentative)
+    const { mode } = useEditMode()
 
     const {
         attributes,
@@ -88,13 +90,15 @@ export function SortableRepCard({ rep, onEdit, onAddSchedule, addingScheduleFor,
                     >
                         <Edit size={16} />
                     </button>
-                    <button
-                        onClick={() => deactivateRepresentative(rep.id)}
-                        style={{ padding: '8px', background: '#fef2f2', border: '1px solid #fee2e2', borderRadius: '4px', cursor: 'pointer', color: '#b91c1c' }}
-                        title="Desactivar"
-                    >
-                        <Trash2 size={16} />
-                    </button>
+                    {mode === 'ADMIN_OVERRIDE' && (
+                        <button
+                            onClick={() => deactivateRepresentative(rep.id)}
+                            style={{ padding: '8px', background: '#fef2f2', border: '1px solid #fee2e2', borderRadius: '4px', cursor: 'pointer', color: '#b91c1c' }}
+                            title="Desactivar"
+                        >
+                            <Trash2 size={16} />
+                        </button>
+                    )}
                 </div>
             </div>
 

@@ -2,12 +2,14 @@ import { useAppStore } from '@/store/useAppStore'
 import { ShiftAssignment } from '@/domain/types'
 import { Trash2, Calendar, Clock } from 'lucide-react'
 import { format, parseISO } from 'date-fns'
+import { useEditMode } from '@/hooks/useEditMode'
 
 export function SpecialScheduleList({ repId }: { repId: string }) {
     const { specialSchedules, removeSpecialSchedule } = useAppStore(s => ({
         specialSchedules: s.specialSchedules.filter(ss => ss.representativeId === repId),
         removeSpecialSchedule: s.removeSpecialSchedule,
     }));
+    const { mode } = useEditMode()
 
     if (specialSchedules.length === 0) return null;
 
@@ -36,7 +38,9 @@ export function SpecialScheduleList({ repId }: { repId: string }) {
                             <span>{formatDays(ss.daysOfWeek)} &rarr; <strong>{formatAssignment(ss.assignment)}</strong></span>
                         </div>
                     </div>
-                    <button onClick={() => removeSpecialSchedule(ss.id)} style={{ color: '#ef4444', background: 'none', border: 'none', cursor: 'pointer' }}><Trash2 size={14} /></button>
+                    {mode === 'ADMIN_OVERRIDE' && (
+                        <button onClick={() => removeSpecialSchedule(ss.id)} style={{ color: '#ef4444', background: 'none', border: 'none', cursor: 'pointer' }}><Trash2 size={14} /></button>
+                    )}
                 </div>
             ))}
         </div>

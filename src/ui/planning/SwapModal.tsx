@@ -1,6 +1,7 @@
 // ... imports ...
 import { useState, useMemo, useEffect } from 'react'
 import { useAppStore } from '@/store/useAppStore'
+import { useEditMode } from '@/hooks/useEditMode'
 import { ISODate, ShiftType, SwapEvent, SwapType, WeeklyPlan } from '@/domain/types'
 import {
   Sun,
@@ -59,7 +60,11 @@ export function SwapModal({
     swaps: s.swaps,
   }))
 
+  const { mode } = useEditMode()
   const [date, setDate] = useState<ISODate>(initialDate || planningAnchorDate)
+  const [activeTab, setActiveTab] = useState<'SWAP' | 'COVER' | 'FREE'>(
+    'SWAP'
+  )
   const [shift, setShift] = useState<ShiftType>(initialShift || 'DAY')
 
   // 🎯 CAMBIO CRÍTICO: Delegar construcción de contexto al dominio
@@ -635,21 +640,23 @@ export function SwapModal({
                 >
                   Cancelar
                 </button>
-                <button
-                  onClick={handleDeleteSwap}
-                  style={{
-                    padding: '8px 20px',
-                    fontSize: '14px',
-                    fontWeight: 500,
-                    color: 'white',
-                    backgroundColor: '#dc2626',
-                    border: 'none',
-                    borderRadius: '8px',
-                    cursor: 'pointer',
-                  }}
-                >
-                  Eliminar Cambio
-                </button>
+                {mode === 'ADMIN_OVERRIDE' && (
+                  <button
+                    onClick={handleDeleteSwap}
+                    style={{
+                      padding: '8px 20px',
+                      fontSize: '14px',
+                      fontWeight: 500,
+                      color: 'white',
+                      backgroundColor: '#dc2626',
+                      border: 'none',
+                      borderRadius: '8px',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    Eliminar Cambio
+                  </button>
+                )}
               </div>
             </>
           ) : (

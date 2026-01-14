@@ -11,6 +11,7 @@ import { calculatePoints } from '@/domain/analytics/computeMonthlySummary'
 import type { IncidentType } from '@/domain/types'
 import { format, parseISO } from 'date-fns'
 import { es } from 'date-fns/locale'
+import { useEditMode } from '@/hooks/useEditMode'
 
 // --- VIEW MODELS ---
 interface PersonInGroup {
@@ -31,9 +32,11 @@ interface GroupedByType {
 const PersonRow = memo(function PersonRow({
   person,
   onDelete,
+  canDelete,
 }: {
   person: PersonInGroup
   onDelete: (ids: string[]) => void
+  canDelete: boolean
 }) {
   return (
     <div
@@ -55,17 +58,19 @@ const PersonRow = memo(function PersonRow({
             ×{person.count}
           </span>
         )}
-        <button
-          onClick={() => onDelete(person.incidents.map(i => i.id))}
-          style={{
-            background: 'none',
-            border: 'none',
-            color: '#9ca3af',
-            cursor: 'pointer',
-          }}
-        >
-          <Trash2 size={14} />
-        </button>
+        {canDelete && (
+          <button
+            onClick={() => onDelete(person.incidents.map(i => i.id))}
+            style={{
+              background: 'none',
+              border: 'none',
+              color: '#9ca3af',
+              cursor: 'pointer',
+            }}
+          >
+            <Trash2 size={14} />
+          </button>
+        )}
       </div>
     </div>
   )
@@ -74,9 +79,11 @@ const PersonRow = memo(function PersonRow({
 const OtherIncidentRow = memo(function OtherIncidentRow({
   incident,
   onDelete,
+  canDelete,
 }: {
   incident: EnrichedIncident
   onDelete: (id: string) => void
+  canDelete: boolean
 }) {
   const points = calculatePoints(incident)
   return (
@@ -100,17 +107,19 @@ const OtherIncidentRow = memo(function OtherIncidentRow({
               -{points} pts
             </div>
           )}
-          <button
-            onClick={() => onDelete(incident.id)}
-            style={{
-              background: 'none',
-              border: 'none',
-              color: '#9ca3af',
-              cursor: 'pointer',
-            }}
-          >
-            <Trash2 size={14} />
-          </button>
+          {canDelete && (
+            <button
+              onClick={() => onDelete(incident.id)}
+              style={{
+                background: 'none',
+                border: 'none',
+                color: '#9ca3af',
+                cursor: 'pointer',
+              }}
+            >
+              <Trash2 size={14} />
+            </button>
+          )}
         </div>
       </div>
       {incident.note && (
@@ -132,9 +141,11 @@ const OtherIncidentRow = memo(function OtherIncidentRow({
 const RangeIncidentCard = memo(function RangeIncidentCard({
   incident,
   onDelete,
+  canDelete,
 }: {
   incident: EnrichedIncident
   onDelete: (id: string) => void
+  canDelete: boolean
 }) {
   const styleInfo = INCIDENT_STYLES[incident.type] ?? INCIDENT_STYLES['OTRO']
   const progress =
@@ -167,12 +178,14 @@ const RangeIncidentCard = memo(function RangeIncidentCard({
         }}
       >
         <StatusPill label={styleInfo.label} variant={styleInfo.variant} />
-        <button
-          onClick={() => onDelete(incident.id)}
-          style={{ background: 'none', border: 'none', color: '#9ca3af', cursor: 'pointer' }}
-        >
-          <Trash2 size={14} />
-        </button>
+        {canDelete && (
+          <button
+            onClick={() => onDelete(incident.id)}
+            style={{ background: 'none', border: 'none', color: '#9ca3af', cursor: 'pointer' }}
+          >
+            <Trash2 size={14} />
+          </button>
+        )}
       </header>
       <div style={{ padding: '12px 15px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
         <div style={{ fontWeight: 600, color: '#1f2937' }}>{incident.repName}</div>
@@ -205,10 +218,12 @@ const PunctualIncidentGroup = memo(function PunctualIncidentGroup({
   group,
   onDeleteSingle,
   onDeleteGroup,
+  canDelete,
 }: {
   group: GroupedByType
   onDeleteSingle: (id: string) => void
   onDeleteGroup: (ids: string[]) => void
+  canDelete: boolean
 }) {
   const styleInfo = INCIDENT_STYLES[group.type] ?? INCIDENT_STYLES['OTRO']
 
@@ -247,6 +262,7 @@ const PunctualIncidentGroup = memo(function PunctualIncidentGroup({
               key={inc.id}
               incident={inc}
               onDelete={onDeleteSingle}
+              canDelete={canDelete}
             />
           ))
           : group.people?.map(person => (
@@ -254,6 +270,7 @@ const PunctualIncidentGroup = memo(function PunctualIncidentGroup({
               key={person.repName}
               person={person}
               onDelete={onDeleteGroup}
+              canDelete={canDelete}
             />
           ))}
       </div>
@@ -278,6 +295,9 @@ export function DailyEventsList({
     removeIncidents: s.removeIncidents,
     showConfirm: s.showConfirm,
   }))
+
+  const { mode } = useEditMode()
+  const canDelete = mode === 'ADMIN_OVERRIDE'
 
   const { punctualGroups, rangeIncidents } = useMemo(() => {
     const punctual = incidents.filter(i => i.type !== 'LICENCIA' && i.type !== 'VACACIONES')
@@ -404,7 +424,12 @@ export function DailyEventsList({
         )}
 
         {rangeIncidents.map(incident => (
-          <RangeIncidentCard key={incident.id} incident={incident} onDelete={() => handleDeleteSingle(incident)} />
+          <RangeIncidentCard
+            key={incident.id}
+            incident={incident}
+            onDelete={() => handleDeleteSingle(incident)}
+            canDelete={canDelete}
+          />
         ))}
 
         {punctualGroups.map(group => (
@@ -417,10 +442,12 @@ export function DailyEventsList({
             }}
             onDeleteGroup={(ids) => {
               const person = group.people?.find(p => p.incidents.some(i => i.id === ids[0]));
-              if (person) handleDeleteGroup(person, group.type);
+              if (person) handleDeleteGroup(person, group.type)
             }}
+            canDelete={canDelete}
           />
         ))}
+
       </AnimatePresence>
     </section>
   )
