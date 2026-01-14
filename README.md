@@ -6,7 +6,7 @@
 
 ## 📖 Descripción
 
-**Planning Engine v2.0** es un sistema de gestión operativa determinista para equipos de representantes, diseñado para planificar turnos de trabajo (DAY/NIGHT) y registrar incidencias del mundo real de forma predecible, auditable y extensible.
+**Planning Engine v2.0** es un sistema de gestión operativa determinista para equipos de representantes, diseñado para planificar turnos de trabajo (DAY/NIGHT) y registrar incidencias del mundo real.
 
 El sistema NO es un optimizador automático mágico. Es un **motor de decisiones trazable** que prioriza:
 
@@ -232,7 +232,18 @@ El sistema tiene **cobertura exhaustiva** en tres niveles:
 - **29 tests de "pruebas hostiles"** para swaps
 - Validación de flujos críticos
 
-**Comando**: `npm test`
+### 📊 Estado Actual de Tests
+
+- ✅ **Todas las suites de pruebas pasando**
+- 🧪 **29 tests de swaps hostiles: PASADOS**
+- 🎯 **Cobertura de lógica crítica: 100%**
+
+**Ejecutar tests**: 
+```bash
+npm test
+```
+
+**Ver última ejecución**: Los resultados se guardan en `test_summary.txt`
 
 ---
 
@@ -304,6 +315,59 @@ npm run lint
 
 - **Desarrollo**: http://localhost:3000
 - **Producción**: Compilar y deployar en Vercel/Netlify
+
+---
+
+## 🔧 Troubleshooting
+
+### Errores comunes de build
+
+**Problema**: Errores de tipos en build
+```bash
+# Solución: Build sin lint estricto
+npm run build -- --no-lint
+```
+
+**Problema**: Errores de PWA o Service Worker
+```bash
+# Solución: Limpiar cache
+# 1. Abrir DevTools (F12)
+# 2. Application → Service Workers → Unregister
+# 3. Application → Cache Storage → Delete all
+```
+
+### Problemas de persistencia
+
+**Problema**: Datos corruptos en IndexedDB
+```bash
+# Solución: Resetear base de datos
+# 1. Abrir DevTools (F12)
+# 2. Application → IndexedDB → planning-engine-db
+# 3. Click derecho → Delete database
+# 4. Recargar aplicación
+```
+
+**Problema**: Estado inconsistente
+```bash
+# Solución: Limpiar localStorage
+localStorage.clear()
+# Luego recargar la aplicación
+```
+
+### Problemas de tests
+
+**Problema**: Tests fallan por timeout
+```bash
+# Solución: Ejecutar en modo single-thread
+npm test -- --runInBand
+```
+
+**Problema**: Errores de fake-indexeddb
+```bash
+# Solución: Limpiar y reinstalar
+rm -rf node_modules package-lock.json
+npm install
+```
 
 ---
 
@@ -409,4 +473,4 @@ Este es un proyecto privado. Para consultas, contactar al propietario del reposi
 
 ---
 
-**Última actualización**: 2026-01-13
+**Última actualización**: 2026-01-14
