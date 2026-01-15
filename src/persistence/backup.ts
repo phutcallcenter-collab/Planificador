@@ -63,7 +63,7 @@ export function getBackupHistory(): Array<{ key: string; timestamp: string; size
             if (value) {
                 backups.push({
                     key,
-                    timestamp: key.replace('planning-backup-', ''),
+                    timestamp: key.replace('planning-backup-manual-', '').replace('planning-backup-auto-', '').replace('planning-backup-', ''),
                     size: new Blob([value]).size,
                 })
             }
@@ -76,23 +76,65 @@ export function getBackupHistory(): Array<{ key: string; timestamp: string; size
 /**
  * Saves a backup to localStorage
  */
-export function saveBackupToLocalStorage(state: PlanningBaseState): void {
+export function saveBackupToLocalStorage(state: PlanningBaseState, type: 'manual' | 'auto' = 'manual'): void {
     const timestamp = new Date().toISOString()
-    const key = `planning-backup-${timestamp}`
+    const key = `planning-backup-${type}-${timestamp}`
     const value = JSON.stringify(state)
 
     try {
+        // For auto backups, limit to 5 most recent
+        if (type === 'auto') {
+            const backups = getBackupHistory().filter(b => b.key.includes('-auto-'))
+            if (backups.length >= 5) {
+                // Remove oldest auto backups until we have space for one more
+                const sorted = backups.sort((a, b) => a.timestamp.localeCompare(b.timestamp)) // Oldest first
+                const toRemove = sorted.slice(0, backups.length - 4) // Keep 4, so +1 = 5
+                toRemove.forEach(b => localStorage.removeItem(b.key))
+            }
+        }
+
         localStorage.setItem(key, value)
+        if (type === 'auto') {
+            localStorage.setItem('planning-auto-backup-last-run', timestamp)
+        }
     } catch (error) {
-        // If quota exceeded, remove oldest backup and try again
+        // If quota exceeded, try removing oldest manual backup as last resort
         const backups = getBackupHistory()
         if (backups.length > 0) {
             localStorage.removeItem(backups[backups.length - 1].key)
-            localStorage.setItem(key, value)
+            try {
+                localStorage.setItem(key, value)
+            } catch {
+                console.error("Storage full, cannot save backup")
+            }
         } else {
-            throw error
+            console.error("Storage full, cannot save backup", error)
         }
     }
+}
+
+/**
+ * Checks if an auto-backup is needed (every 24h)
+ */
+export function shouldRunAutoBackup(): boolean {
+    const lastRun = localStorage.getItem('planning-auto-backup-last-run')
+    if (!lastRun) return true
+
+    const lastDate = new Date(lastRun).getTime()
+    const now = new Date().getTime()
+    const hoursSince = (now - lastDate) / (1000 * 60 * 60)
+
+    return hoursSince >= 24
+}
+
+/**
+ * Gets the last backup date (manual or auto)
+ */
+export function getLastBackupDate(): Date | null {
+    const history = getBackupHistory()
+    if (history.length === 0) return null
+    // History is sorted desc
+    return new Date(history[0].timestamp)
 }
 
 /**

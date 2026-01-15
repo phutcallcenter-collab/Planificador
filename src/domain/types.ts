@@ -59,6 +59,7 @@ export type CoverageRuleScope =
   | { type: 'GLOBAL' }
   | { type: 'SHIFT'; shift: ShiftType }
   | { type: 'DATE'; date: ISODate }
+  | { type: 'WEEKDAY'; day: 0 | 1 | 2 | 3 | 4 | 5 | 6; shift?: ShiftType }
 
 /**
  * Representa una regla que define el número mínimo de personas requeridas.

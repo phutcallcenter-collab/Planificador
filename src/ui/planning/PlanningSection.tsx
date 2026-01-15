@@ -30,7 +30,7 @@ import {
 import { CalendarDayModal } from './CalendarDayModal'
 import { SwapModal } from './SwapModal'
 import { CoverageRulesPanel } from '../coverage/CoverageRulesPanel'
-import { CoverageRuleModal } from '../coverage/CoverageRuleModal'
+// CoverageRuleModal removed
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAppStore } from '@/store/useAppStore'
 import { useWeeklyPlan } from '../../hooks/useWeeklyPlan'
@@ -39,7 +39,7 @@ import { useWeekNavigator } from '@/hooks/useWeekNavigator'
 import { useEditMode } from '@/hooks/useEditMode'
 import { resolveCoverage } from '@/domain/planning/resolveCoverage'
 import { CoverageChart } from '../coverage/CoverageChart'
-import { CoverageEmptyState } from '../coverage/CoverageEmptyState'
+// CoverageEmptyState removed
 import { getEffectiveAssignmentsForPlanner } from '@/application/ui-adapters/getEffectiveAssignmentsForPlanner'
 import {
   getEffectiveDailyCoverage,
@@ -77,14 +77,12 @@ function belongsToShiftThisWeek(
   })
 }
 
-export function PlanningSection() {
+export function PlanningSection({ onNavigateToSettings }: { onNavigateToSettings: () => void }) {
   const {
     representatives,
     coverageRules,
     planningAnchorDate,
     isLoading,
-    addOrUpdateCoverageRule,
-    removeCoverageRule,
     addOrUpdateSpecialDay,
     removeSpecialDay,
     setPlanningAnchorDate,
@@ -100,8 +98,6 @@ export function PlanningSection() {
     coverageRules: s.coverageRules,
     planningAnchorDate: s.planningAnchorDate,
     isLoading: s.isLoading,
-    addOrUpdateCoverageRule: s.addOrUpdateCoverageRule,
-    removeCoverageRule: s.removeCoverageRule,
     addOrUpdateSpecialDay: s.addOrUpdateSpecialDay,
     removeSpecialDay: s.removeSpecialDay,
     setPlanningAnchorDate: s.setPlanningAnchorDate,
@@ -136,8 +132,7 @@ export function PlanningSection() {
 
   const [activeShift, setActiveShift] = useState<ShiftType>('DAY')
   const [editingDay, setEditingDay] = useState<DayInfo | null>(null)
-  const [editingRule, setEditingRule] = useState<CoverageRule | null>(null)
-  const [isCreatingRule, setIsCreatingRule] = useState(false)
+  // Coverage rule editing is now handled in Settings > Demand
   const [swapModalState, setSwapModalState] = useState<{
     isOpen: boolean
     repId: string | null
@@ -582,27 +577,14 @@ export function PlanningSection() {
                   {hasAnyCoverageRule ? (
                     <CoverageChart data={coverageData} />
                   ) : (
-                    <CoverageEmptyState
-                      onCreateRule={() => setIsCreatingRule(true)}
-                    />
+                    /* Empty state handled now by Matrix in Settings */
+                    <div style={{ marginBottom: '16px', padding: '16px', background: '#f9fafb', borderRadius: '8px', border: '1px dashed #d1d5db', textAlign: 'center', color: '#6b7280', fontSize: '13px' }}>
+                      Sin reglas de cobertura activas.
+                    </div>
                   )}
 
                   <CoverageRulesPanel
-                    rules={coverageRules}
-                    onAdd={() => setIsCreatingRule(true)}
-                    onEdit={rule => setEditingRule(rule)}
-                    onDelete={async id => {
-                      const confirmed = await showConfirm({
-                        title: '¿Eliminar Regla?',
-                        description:
-                          'Esta acción eliminará la regla de cobertura permanentemente.',
-                        intent: 'danger',
-                        confirmLabel: 'Sí, eliminar',
-                      })
-                      if (confirmed) {
-                        removeCoverageRule(id)
-                      }
-                    }}
+                    onNavigateToSettings={onNavigateToSettings}
                   />
                 </div>
               </aside>
@@ -627,21 +609,6 @@ export function PlanningSection() {
             if (confirmed) {
               removeSpecialDay(date)
             }
-          }}
-        />
-      )}
-
-      {(editingRule || isCreatingRule) && (
-        <CoverageRuleModal
-          rule={editingRule ?? undefined}
-          onSave={rule => {
-            addOrUpdateCoverageRule(rule)
-            setEditingRule(null)
-            setIsCreatingRule(false)
-          }}
-          onClose={() => {
-            setEditingRule(null)
-            setIsCreatingRule(false)
           }}
         />
       )}

@@ -156,9 +156,15 @@ export function BackupManagement() {
 
     return (
         <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
-            <h2 style={{ marginTop: 0, marginBottom: '24px', color: 'var(--text-main)' }}>
+            <h2 style={{ marginTop: 0, marginBottom: '24px', color: 'var(--text-main)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 Gestión de Backups
+                {backups.length > 0 && (
+                    <span style={{ fontSize: '14px', fontWeight: 500, color: 'var(--text-muted)' }}>
+                        Último respaldo: {formatDate(backups[0].timestamp)}
+                    </span>
+                )}
             </h2>
+
 
             {error && (
                 <div style={{
@@ -291,8 +297,18 @@ export function BackupManagement() {
                                 }}
                             >
                                 <div>
-                                    <div style={{ fontWeight: 600, color: 'var(--text-main)', marginBottom: '4px' }}>
+                                    <div style={{ fontWeight: 600, color: 'var(--text-main)', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '8px' }}>
                                         {formatDate(backup.timestamp)}
+                                        {backup.key.includes('-auto-') && (
+                                            <span style={{ fontSize: '10px', background: '#e0f2fe', color: '#0369a1', padding: '2px 6px', borderRadius: '4px', textTransform: 'uppercase' }}>
+                                                AUTO
+                                            </span>
+                                        )}
+                                        {backup.key.includes('-manual-') && (
+                                            <span style={{ fontSize: '10px', background: '#f3f4f6', color: '#374151', padding: '2px 6px', borderRadius: '4px', textTransform: 'uppercase' }}>
+                                                MANUAL
+                                            </span>
+                                        )}
                                     </div>
                                     <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>
                                         Tamaño: {formatSize(backup.size)}

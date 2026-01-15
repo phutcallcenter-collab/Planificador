@@ -41,8 +41,8 @@ export function mapEffectiveDutyToCellState(
             label: 'AUS',
             tooltip: humanize.absentTooltip(rep, day.date),
             ariaLabel: `${rep.name} estuvo ausente el ${day.date}`,
-            canEdit: true,
-            canContextMenu: true,
+            canEdit: false,
+            canContextMenu: false,
         }
     }
 

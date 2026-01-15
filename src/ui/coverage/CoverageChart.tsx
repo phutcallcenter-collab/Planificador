@@ -4,7 +4,9 @@ import React from 'react'
 import type { ISODate } from '@/domain/types'
 import { EffectiveCoverageResult } from '@/application/ui-adapters/getEffectiveDailyCoverage'
 
-// Mock Tooltip component for demonstration
+import { createPortal } from 'react-dom'
+
+// Portal-based Tooltip for robust overflow handling
 const Tooltip = ({
   content,
   children,
@@ -13,40 +15,64 @@ const Tooltip = ({
   children: React.ReactNode
 }) => {
   const [show, setShow] = React.useState(false)
+  const [coords, setCoords] = React.useState({ top: 0, left: 0 })
+  const triggerRef = React.useRef<HTMLDivElement>(null)
+
+  const handleMouseEnter = () => {
+    if (triggerRef.current) {
+      const rect = triggerRef.current.getBoundingClientRect()
+      setCoords({
+        top: rect.top - 8, // Gap above trigger
+        left: rect.left + rect.width / 2,
+      })
+      setShow(true)
+    }
+  }
+
+  const handleMouseLeave = () => {
+    setShow(false)
+  }
+
   return (
-    <div
-      style={{
-        position: 'relative',
-        display: 'flex',
-        alignItems: 'flex-end',
-        width: '100%',
-        height: '100%',
-      }}
-      onMouseEnter={() => setShow(true)}
-      onMouseLeave={() => setShow(false)}
-    >
-      {children}
-      {show && (
+    <>
+      <div
+        ref={triggerRef}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        style={{
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          alignItems: 'flex-end',
+          justifyContent: 'center',
+        }}
+      >
+        {children}
+      </div>
+      {show && typeof document !== 'undefined' && createPortal(
         <div
           style={{
-            position: 'absolute',
-            bottom: '100%',
-            left: '50%',
-            transform: 'translateX(-50%)',
+            position: 'fixed',
+            top: coords.top,
+            left: coords.left,
+            transform: 'translate(-50%, calc(-100% - 8px))',
             background: '#1f2937',
             color: 'white',
             padding: '8px 12px',
             borderRadius: '6px',
             fontSize: '13px',
-            whiteSpace: 'nowrap',
-            zIndex: 1000,
-            marginBottom: '8px',
+            zIndex: 9999,
+            pointerEvents: 'none',
+            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+            maxWidth: '240px',
+            width: 'max-content',
           }}
         >
           {content}
-        </div>
+        </div>,
+        document.body
       )}
-    </div>
+    </>
   )
 }
 
@@ -90,7 +116,8 @@ export function CoverageChart({
           paddingLeft: '10px',
           position: 'relative',
           maxWidth: '100%',
-          overflowX: 'auto',
+          // Important: Allow portal to render outside but keep container clean
+          overflow: 'visible',
         }}
       >
         {dates.map(date => {
@@ -98,6 +125,8 @@ export function CoverageChart({
 
           const barHeight = maxCoverage > 0 ? (actual / maxCoverage) * 100 : 0
           const isDeficit = status === 'DEFICIT'
+          const delta = actual - required
+          const deltaSign = delta >= 0 ? '+' : ''
 
           const barColor = isDeficit
             ? 'hsl(350, 80%, 60%)'
@@ -105,33 +134,14 @@ export function CoverageChart({
 
           const countColor = isDeficit ? 'hsl(350, 80%, 50%)' : '#111827'
 
-          const dateObj = new Date(date + 'T12:00:00Z')
-          const dayName = dateObj.toLocaleDateString('es-ES', { weekday: 'long' })
-          const formattedDate = dateObj.toLocaleDateString('es-ES', {
-            day: 'numeric',
-            month: 'long'
-          })
-
           const tooltipContent = (
-            <div>
-              <div style={{ fontWeight: 700, marginBottom: 6, textTransform: 'capitalize' }}>
-                {dayName}, {formattedDate}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+              <div style={{ fontWeight: 700, marginBottom: '2px' }}>
+                {isDeficit ? '🔴' : '🟢'} {isDeficit ? 'Déficit de cobertura' : 'Cobertura OK'} ({deltaSign}{delta})
               </div>
-              <div style={{ fontWeight: 600 }}>
-                Presentes: {actual} | Requerido: {required}
-              </div>
-              {reason && (
-                <div
-                  style={{
-                    marginTop: 4,
-                    fontSize: 11,
-                    color: '#cbd5e1',
-                    maxWidth: 200,
-                  }}
-                >
-                  {reason}
-                </div>
-              )}
+              <div>👥 En turno: {actual}</div>
+              <div>🎯 Mínimo requerido: {required}</div>
+              <div>📏 Criterio: {reason || 'N/A'}</div>
             </div>
           )
 
@@ -170,6 +180,7 @@ export function CoverageChart({
                   }}
                 />
               </Tooltip>
+
               <div
                 style={{
                   fontSize: '12px',
@@ -194,10 +205,7 @@ export function CoverageChart({
         <svg
           style={{
             position: 'absolute',
-            bottom: '34px',
-            left: '10px',
-            width: 'calc(100% - 10px)',
-            height: 'calc(100% - 34px)',
+            inset: 0,
             pointerEvents: 'none',
           }}
           viewBox="0 0 100 100"
@@ -207,7 +215,10 @@ export function CoverageChart({
             points={dates
               .map((date, i) => {
                 const req = data[date]?.required ?? 0
-                const y = 100 - (maxCoverage > 0 ? (req / maxCoverage) * 100 : 0)
+                // Match bar coordinate system: 0% is bottom, 100% is top
+                // SVG Y=0 is top, Y=100 is bottom.
+                // So "height % from bottom" corresponds to "100 - height%" in SVG Y
+                const y = (1 - (maxCoverage > 0 ? req / maxCoverage : 0)) * 100
                 const x = (i + 0.5) * (100 / dates.length)
                 return `${x},${y}`
               })
