@@ -1,44 +1,99 @@
 'use client'
 
 import React from 'react'
+import { ManagerVisualState } from '@/application/ui-adapters/types'
 
-export interface ManagerCellProps {
-    label: string
-    variant: 'DAY' | 'NIGHT' | 'INTER' | 'MONITORING' | 'OFF' | 'VACATION' | 'LICENSE'
-    tooltip?: string
-    onClick?: () => void
+export const managerCellStyles: Record<ManagerVisualState, React.CSSProperties> = {
+    DAY: { background: '#e0f2fe', color: '#075985' },
+    NIGHT: { background: '#312e81', color: '#e0e7ff' },
+    INTER: { background: '#e5e7eb', color: '#374151' },
+    MONITOR: { background: '#dcfce7', color: '#166534' },
+    VACACIONES: { background: '#ecfeff', color: '#065f46' },
+    LICENCIA: { background: '#f3e8ff', color: '#6b21a8' },
+    AUS_JUST: { background: '#fef9c3', color: '#854d0e' },
+    AUS_UNJUST: { background: '#fee2e2', color: '#7f1d1d', fontWeight: 600 },
+    OFF: { background: '#f3f4f6', color: '#6b7280' },
+    EMPTY: { background: 'transparent', color: '#9ca3af' },
 }
 
-export function ManagerPlannerCell({ label, variant, tooltip, onClick }: ManagerCellProps) {
-    const styles: Record<string, React.CSSProperties> = {
-        DAY: { background: '#ecfeff', color: '#0369a1' },
-        NIGHT: { background: '#eef2ff', color: '#3730a3' },
-        INTER: { background: '#fef9c3', color: '#854d0e' },
-        MONITORING: { background: '#f0fdf4', color: '#166534' },
-        OFF: { background: '#f3f4f6', color: '#6b7280' },
-        VACATION: { background: '#fce7f3', color: '#be185d', fontWeight: 700 }, // Pink
-        LICENSE: { background: '#e0f2fe', color: '#0369a1', fontStyle: 'italic' }, // Light Blue
-    }
+interface Props {
+    state: ManagerVisualState
+    label?: string
+    tooltip?: string
+    onClick?: () => void
+    onChange?: (value: string) => void
+    currentValue?: string // Needed to show correct selection in dropdown
+}
 
-    // Fallback for unexpected variant
-    const style = styles[variant] || { background: '#fff', color: '#000' }
+export function ManagerPlannerCell({ state, label, tooltip, onClick, onChange, currentValue }: Props) {
+    const style = managerCellStyles[state] || managerCellStyles.EMPTY
+
+    // Determine current value for the select if not explicitly passed
+    // Try to guess from state, but better to have it passed explicitly if possible.
+    // If we use this component for non-editable things, onChange is undefined.
+
+    // Safety check for interaction
+    const isInteractive = !!onChange
 
     return (
         <div
-            onClick={onClick}
-            title={tooltip}
             style={{
-                padding: '6px 8px',
-                borderRadius: '6px',
-                fontSize: '12px',
-                fontWeight: 600,
-                textAlign: 'center',
-                cursor: onClick ? 'pointer' : 'default',
-                border: '1px solid #e5e7eb',
                 ...style,
+                borderRadius: '6px',
+                padding: '0', // Reset padding for relative positioning context
+                textAlign: 'center',
+                cursor: isInteractive ? 'pointer' : 'default',
+                position: 'relative',
+                fontSize: '13px',
+                height: '32px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
             }}
+            onClick={onClick} // Keep onClick for backwards compat/other uses if any (though we are replacing it)
         >
-            {label || '\u00A0'}
+            {label ?? '—'}
+
+            {tooltip && (
+                <span
+                    title={tooltip}
+                    style={{
+                        position: 'absolute',
+                        top: 2,
+                        right: 4,
+                        fontSize: '9px',
+                        opacity: 0.7,
+                        pointerEvents: 'none' // Click through to select
+                    }}
+                >
+                    ⓘ
+                </span>
+            )}
+
+            {isInteractive && (
+                <select
+                    style={{
+                        position: 'absolute',
+                        inset: 0,
+                        opacity: 0,
+                        width: '100%',
+                        height: '100%',
+                        cursor: 'pointer',
+                        appearance: 'none', // Remove native arrow
+                    }}
+                    value={currentValue ?? ''}
+                    onChange={(e) => onChange && onChange(e.target.value)}
+                    onClick={(e) => e.stopPropagation()} // Prevent bubbling if container has click
+                >
+                    <option value="" disabled>Seleccionar...</option>
+                    <option value="DAY">Día</option>
+                    <option value="NIGHT">Noche</option>
+                    <option value="INTER">Intermedio</option>
+                    <option value="MONITORING">Monitoreo</option>
+                    <option value="OFF">OFF</option>
+                    <option value="EMPTY">—</option>
+                </select>
+            )}
         </div>
     )
 }

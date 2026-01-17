@@ -22,7 +22,6 @@ import { HistoryEvent } from '@/store/useAppStore'
 import { SwapEvent, SwapType } from './planning/swap'
 import { ShiftAssignment } from './planning/shiftAssignment'
 import { EffectiveSchedulePeriod } from './planning/effectiveSchedulePeriod'
-import { Manager, ManagerSchedule } from './management/types'
 
 // Re-export ISODate to be available from the root domain types
 export type { ISODate, DayInfo, SpecialDay, DayKind } from './calendar/types'

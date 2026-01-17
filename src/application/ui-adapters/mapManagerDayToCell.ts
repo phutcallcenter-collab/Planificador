@@ -1,24 +1,10 @@
-import { EffectiveManagerDay } from './types'
-
-/**
- * 🎨 MAPPER VISUAL - HORARIO GERENCIAL
- * 
- * SEMÁNTICA DE ESTADOS:
- * - DAY, NIGHT, INTER, MONITORING: Asignaciones explícitas
- * - OFF (—): No definido, celda vacía (NO es "libre")
- * - VACATION, LICENSE: Bloqueantes, prioridad máxima
- * 
- * NOTAS:
- * - Icono 📝 solo si existe note
- * - Tooltip nativo (title) al hover
- * - Sin ruido visual si no hay comentario
- */
+import { EffectiveManagerDay, ManagerVisualState } from './types'
 
 export interface ManagerCellState {
+    state: ManagerVisualState
     label: string
-    variant: 'DAY' | 'NIGHT' | 'INTER' | 'MONITORING' | 'OFF' | 'VACATION' | 'LICENSE'
     tooltip?: string
-    note?: string
+    isEditable: boolean
 }
 
 export function mapManagerDayToCell(
@@ -27,45 +13,65 @@ export function mapManagerDayToCell(
 ): ManagerCellState {
     if (day.kind === 'VACATION') {
         return {
+            state: 'VACACIONES',
             label: 'VAC',
-            variant: 'VACATION',
-            note: day.note,
-            tooltip: day.note 
-                ? `Vacaciones\n📝 ${day.note}`
-                : 'Vacaciones',
+            tooltip: day.note ? `Vacaciones\n📝 ${day.note}` : 'Vacaciones',
+            isEditable: false,
         }
     }
 
     if (day.kind === 'LICENSE') {
         return {
+            state: 'LICENCIA',
             label: 'LIC',
-            variant: 'LICENSE',
-            note: day.note,
-            tooltip: day.note
-                ? `Licencia\n📝 ${day.note}`
-                : 'Licencia',
+            tooltip: day.note ? `Licencia\n📝 ${day.note}` : 'Licencia',
+            isEditable: false,
+        }
+    }
+
+    if (day.kind === 'EMPTY') {
+        const note = day.note
+        return {
+            state: 'EMPTY',
+            label: '—',
+            tooltip: note ? `📝 ${note}` : undefined,
+            isEditable: true,
         }
     }
 
     if (day.kind === 'OFF') {
         return {
-            label: '—',
-            variant: 'OFF',
+            state: 'OFF',
+            label: 'OFF',
+            tooltip: 'Día Libre (Sin asignación)',
+            isEditable: true,
         }
     }
 
     // DUTY
+    const duty = day.duty!
     const labels: Record<string, string> = {
         DAY: 'Día',
         NIGHT: 'Noche',
-        INTER: 'Inter',
-        MONITORING: 'Mon',
+        INTER: 'Intermedio',
+        MONITORING: 'Monitoreo',
+    }
+
+    // Variant mapping
+    let visualState: ManagerVisualState = 'EMPTY'
+    switch (duty) {
+        case 'DAY': visualState = 'DAY'; break;
+        case 'NIGHT': visualState = 'NIGHT'; break;
+        case 'INTER': visualState = 'INTER'; break;
+        case 'MONITORING': visualState = 'MONITOR'; break;
     }
 
     return {
-        label: labels[day.duty!],
-        variant: day.duty!,
-        note: day.note,
-        tooltip: day.note ? `${labels[day.duty!]}\n📝 ${day.note}` : undefined,
+        state: visualState,
+        label: labels[duty] || duty,
+        tooltip: day.note
+            ? `${labels[duty] || duty}\n📝 ${day.note}`
+            : undefined,
+        isEditable: true,
     }
 }

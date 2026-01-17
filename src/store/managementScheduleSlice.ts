@@ -5,17 +5,14 @@ import {
     ManagerPlanDay,
     ManagerWeeklyPlan,
 } from '@/domain/management/types'
-import { validateManagerNote } from '@/domain/management/validation'
 
 export interface ManagementScheduleSlice {
     managementSchedules: Record<string, ManagerWeeklyPlan>
 
-    ensureManagerSchedule: (managerId: string) => void
-
     setManagerDuty: (
         managerId: string,
         date: ISODate,
-        duty: ManagerDuty | null, // null = OFF
+        duty: ManagerDuty | null, // null = EMPTY/Reset
         note?: string
     ) => void
 
@@ -28,9 +25,13 @@ export interface ManagementScheduleSlice {
         managerId: string,
         date: ISODate
     ) => ManagerPlanDay | null
+
+    copyManagerWeek: (
+        fromDates: string[],
+        toDates: string[]
+    ) => void
 }
 
-// Adapted for Immer middleware usage in useAppStore
 export const createManagementScheduleSlice: StateCreator<
     ManagementScheduleSlice,
     [['zustand/immer', never]],
@@ -39,30 +40,15 @@ export const createManagementScheduleSlice: StateCreator<
 > = (set, get) => ({
     managementSchedules: {},
 
-    ensureManagerSchedule: (managerId) => {
+    setManagerDuty: (managerId, date, duty, note) => {
         set((state: any) => {
             if (!state.managementSchedules[managerId]) {
-                state.managementSchedules[managerId] = {
-                    managerId,
-                    days: {},
-                }
+                state.managementSchedules[managerId] = { managerId, days: {} }
             }
-        })
-    },
-
-    setManagerDuty: (managerId, date, duty, note) => {
-        get().ensureManagerSchedule(managerId)
-        
-        const validatedNote = validateManagerNote(note)
-        
-        set((state: any) => {
-
             const schedule = state.managementSchedules[managerId]
-
-            // Set assignment (reemplazo completo, no merge)
             schedule.days[date] = {
                 duty,
-                note: validatedNote,
+                note: note?.trim() || undefined,
             }
         })
     },
@@ -71,18 +57,36 @@ export const createManagementScheduleSlice: StateCreator<
         set((state: any) => {
             const schedule = state.managementSchedules[managerId]
             if (!schedule) return
-
             delete schedule.days[date]
         })
     },
 
     getManagerAssignment: (managerId, date) => {
         const schedule = get().managementSchedules[managerId]
-        
-        if (!schedule || !schedule.days) {
-            return null
-        }
-        
-        return schedule.days[date] ?? null
+        return schedule?.days[date] ?? null
     },
+
+    copyManagerWeek: (fromDates, toDates) => {
+        if (fromDates.length !== toDates.length) return
+
+        set((state: ManagementScheduleSlice) => {
+            const schedules = state.managementSchedules as Record<string, ManagerWeeklyPlan>
+            Object.keys(schedules).forEach(managerId => {
+                const schedule = schedules[managerId]
+                // For each day index
+                fromDates.forEach((fromDate, index) => {
+                    const toDate = toDates[index]
+                    const sourceDay = schedule.days[fromDate]
+
+                    if (sourceDay) {
+                        schedule.days[toDate] = { ...sourceDay }
+                    } else {
+                        // If source is empty, clear target? Or leave as is?
+                        // Usually "Clone" implies exact copy, so clearing target if source is null.
+                        delete schedule.days[toDate]
+                    }
+                })
+            })
+        })
+    }
 })

@@ -98,9 +98,11 @@ export function mapEffectiveDutyToCellState(
             tooltip += `\n📝 ${duty.note}`
         }
 
+        const isManager = rep.role === 'MANAGER'
+
         return {
             variant: 'OFF',
-            label: 'OFF',
+            label: isManager ? 'OFF' : 'OFF',
             tooltip,
             ariaLabel: `${rep.name} no trabaja este día`,
             canEdit: true,
@@ -120,9 +122,20 @@ export function mapEffectiveDutyToCellState(
         }
     }
 
-    // 🟢 TRABAJO NORMAL (baseline, sin label)
+    // 🟢 TRABAJO NORMAL (baseline, con label visible para managers)
+    const isManager = rep.role === 'MANAGER'
+    
+    let label: string | undefined = undefined
+    if (isManager) {
+        // Para managers, mostrar el turno visible
+        if (rep.baseShift === 'DAY') label = 'Día'
+        else if (rep.baseShift === 'NIGHT') label = 'Noche'
+        // INTER se maneja con effective periods o overrides
+    }
+    
     return {
         variant: 'WORKING',
+        label,
         tooltip: humanize.workingBaseTooltip(rep, day.date),
         ariaLabel: `${rep.name} trabaja normalmente`,
         canEdit: true,

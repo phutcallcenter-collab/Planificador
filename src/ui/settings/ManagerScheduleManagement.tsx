@@ -3,37 +3,42 @@
 import React, { useState } from 'react'
 import { useAppStore } from '@/store/useAppStore'
 import { useWeekNavigator } from '@/hooks/useWeekNavigator'
-import { format, parseISO } from 'date-fns'
+import { format, parseISO, addDays } from 'date-fns'
 import { es } from 'date-fns/locale'
 import { ManagerDuty } from '@/domain/management/types'
 import { Plus, Trash2, User } from 'lucide-react'
 import { ManagerPlannerCell } from '@/ui/management/ManagerPlannerCell'
-import { getEffectiveManagerDuty } from '@/application/ui-adapters/getEffectiveManagerDuty'
-
-const DUTY_CYCLE: Record<ManagerDuty, ManagerDuty> = {
-    OFF: 'DAY',
-    DAY: 'NIGHT',
-    NIGHT: 'MID',
-    MID: 'MONITOR',
-    MONITOR: 'OFF', // Cycle back to OFF
-    UNAVAILABLE: 'OFF', // Default start
-}
+import { resolveEffectiveManagerDay } from '@/application/ui-adapters/resolveEffectiveManagerDay'
+import { mapManagerDayToCell } from '@/application/ui-adapters/mapManagerDayToCell'
+import { EffectiveManagerDay } from '@/application/ui-adapters/types'
 
 export function ManagerScheduleManagement() {
     const {
         managers,
+        managementSchedules,
+        incidents,
+        allCalendarDaysForRelevantMonths,
+        representatives,
         addManager,
         removeManager,
         setManagerDuty,
+        clearManagerDuty,
         planningAnchorDate,
         setPlanningAnchorDate,
+        copyManagerWeek,
     } = useAppStore(s => ({
         managers: s.managers,
+        managementSchedules: s.managementSchedules,
+        incidents: s.incidents,
+        allCalendarDaysForRelevantMonths: s.allCalendarDaysForRelevantMonths,
+        representatives: s.representatives,
         addManager: s.addManager,
         removeManager: s.removeManager,
         setManagerDuty: s.setManagerDuty,
+        clearManagerDuty: s.clearManagerDuty,
         planningAnchorDate: s.planningAnchorDate,
         setPlanningAnchorDate: s.setPlanningAnchorDate,
+        copyManagerWeek: s.copyManagerWeek
     }))
 
     const { weekDays, label: weekLabel, handlePrevWeek, handleNextWeek } = useWeekNavigator(
@@ -49,16 +54,37 @@ export function ManagerScheduleManagement() {
         setNewManagerName('')
     }
 
-    const handleCellClick = (managerId: string, date: string) => {
-        // Get effective duty using adapter
-        const effective = getEffectiveManagerDuty(managerId, date)
-        const currentDuty = effective.duty
+    const handleDutyChange = (managerId: string, date: string, value: string) => {
+        if (value === 'EMPTY') {
+            const note = window.prompt('Limpiar día y añadir comentario (opcional):', '')
+            // allow empty string to clear without note
+            if (note === null) return
 
-        // Cycle to next
-        const nextDuty = DUTY_CYCLE[currentDuty] || 'OFF'
+            setManagerDuty(managerId, date, null, note || undefined)
+        } else if (value === 'OFF') {
+            setManagerDuty(managerId, date, 'OFF', undefined)
+        } else {
+            // DAY, NIGHT, INTER, MONITORING
+            setManagerDuty(managerId, date, value as ManagerDuty)
+        }
+    }
 
-        // Note is optional, passing undefined
-        setManagerDuty(managerId, date, nextDuty)
+    const handleCopyWeek = () => {
+        const confirm = window.confirm(
+            `¿Estás seguro de copiar la planificación de esta semana (${weekLabel}) a la siguiente? Esto sobrescribirá los datos existentes de la próxima semana.`
+        )
+        if (!confirm) return
+
+        const currentWeekDates = weekDays.map(d => d.date)
+        const nextWeekDates = currentWeekDates.map(dateStr => {
+            const date = parseISO(dateStr)
+            return format(addDays(date, 7), 'yyyy-MM-dd')
+        })
+
+        copyManagerWeek(currentWeekDates, nextWeekDates)
+
+        // Optional: Navigate to next week to see result
+        handleNextWeek()
     }
 
     return (
@@ -69,7 +95,7 @@ export function ManagerScheduleManagement() {
                         Horarios de Gerencia
                     </h3>
                     <p style={{ margin: 0, fontSize: '14px', color: '#6b7280' }}>
-                        Planificación semanal de supervisores y gerentes.
+                        Planificación semanal con soporte para incidencias.
                     </p>
                 </div>
 
@@ -78,6 +104,24 @@ export function ManagerScheduleManagement() {
                     <button onClick={handlePrevWeek} style={{ border: 'none', background: 'transparent', cursor: 'pointer', padding: '4px 8px' }}>&lt;</button>
                     <span style={{ fontSize: '13px', fontWeight: 500, width: '180px', textAlign: 'center' }}>{weekLabel}</span>
                     <button onClick={handleNextWeek} style={{ border: 'none', background: 'transparent', cursor: 'pointer', padding: '4px 8px' }}>&gt;</button>
+                </div>
+
+                <div style={{ marginLeft: '12px' }}>
+                    <button
+                        onClick={handleCopyWeek}
+                        style={{
+                            background: '#f3f4f6',
+                            border: '1px solid #d1d5db',
+                            borderRadius: '6px',
+                            padding: '4px 12px',
+                            fontSize: '13px',
+                            cursor: 'pointer',
+                            color: '#374151',
+                        }}
+                        title="Copiar planificación a la próxima semana"
+                    >
+                        Copiar ➝
+                    </button>
                 </div>
             </div>
 
@@ -98,6 +142,9 @@ export function ManagerScheduleManagement() {
                     </thead>
                     <tbody>
                         {managers.map(manager => {
+                            const representative = representatives.find(r => r.id === manager.id)
+                            const weeklyPlan = managementSchedules[manager.id] || null
+
                             return (
                                 <tr key={manager.id} style={{ borderBottom: '1px solid #f3f4f6' }}>
                                     <td style={{ padding: '8px 16px', color: '#111827', fontWeight: 500 }}>
@@ -109,14 +156,32 @@ export function ManagerScheduleManagement() {
                                         </div>
                                     </td>
                                     {weekDays.map(day => {
-                                        const effective = getEffectiveManagerDuty(manager.id, day.date)
+                                        const effectiveDay = resolveEffectiveManagerDay(
+                                            weeklyPlan,
+                                            incidents,
+                                            day.date,
+                                            allCalendarDaysForRelevantMonths,
+                                            representative
+                                        )
+
+                                        const cellState = mapManagerDayToCell(effectiveDay, manager.name)
+
+                                        // Determine current value for selector
+                                        let currentValue = 'EMPTY'
+                                        if (effectiveDay.kind === 'DUTY') currentValue = effectiveDay.duty
+                                        else if (effectiveDay.kind === 'OFF') currentValue = 'OFF'
+                                        else if (effectiveDay.kind === 'EMPTY') currentValue = 'EMPTY'
+
+                                        const isEditable = cellState.isEditable && effectiveDay.kind !== 'VACATION' && effectiveDay.kind !== 'LICENSE'
 
                                         return (
                                             <td key={day.date} style={{ padding: '6px' }}>
                                                 <ManagerPlannerCell
-                                                    duty={effective.duty}
-                                                    note={effective.note}
-                                                    onClick={() => handleCellClick(manager.id, day.date)}
+                                                    state={cellState.state}
+                                                    label={cellState.label}
+                                                    tooltip={cellState.tooltip}
+                                                    currentValue={currentValue}
+                                                    onChange={isEditable ? (val) => handleDutyChange(manager.id, day.date, val) : undefined}
                                                 />
                                             </td>
                                         )

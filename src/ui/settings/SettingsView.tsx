@@ -22,8 +22,8 @@ import { AuditEvent } from '@/domain/audit/types'
 import { format, parseISO } from 'date-fns'
 import { es } from 'date-fns/locale'
 
-import { ManagerScheduleManagement } from './ManagerScheduleManagement'
 import { Briefcase } from 'lucide-react'
+import { ManagerScheduleManagement } from './ManagerScheduleManagement'
 
 type SettingsTab = 'equipo' | 'calendario' | 'sistema' | 'gerencia'
 type EquipoSection = 'representatives' | 'demand'

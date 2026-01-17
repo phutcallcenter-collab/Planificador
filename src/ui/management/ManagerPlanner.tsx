@@ -1,9 +1,9 @@
 'use client'
 
-import React from 'react'
 import { useAppStore } from '@/store/useAppStore'
 import { useWeekNavigator } from '@/hooks/useWeekNavigator'
 import { useWeeklyPlan } from '@/hooks/useWeeklyPlan'
+import { PlanRow } from '@/ui/planning/PlanRow'
 
 /**
  * 🧩 PLANNER GERENCIAL — Vista filtrada del planner operativo
@@ -25,7 +25,7 @@ import { useWeeklyPlan } from '@/hooks/useWeeklyPlan'
  * - ✅ Mismos overrides
  * - ✅ Mismas celdas (PlanCell)
  */
-export function ManagementPlanner() {
+export function ManagerPlanner() {
   const {
     representatives,
     planningAnchorDate,
@@ -96,38 +96,17 @@ export function ManagementPlanner() {
             No hay gerentes activos
           </div>
         ) : (
-          managers.map(manager => {
-            const agentPlan = weeklyPlan.agents.find(a => a.representativeId === manager.id)
-            
-            return (
-              <React.Fragment key={manager.id}>
-                <div style={{ fontWeight: 600, padding: '8px' }}>{manager.name}</div>
-                {weekDays.map(day => {
-                  const assignment = agentPlan?.days[day.date]
-                  
-                  return (
-                    <div 
-                      key={day.date}
-                      style={{
-                        padding: '8px',
-                        textAlign: 'center',
-                        fontSize: '14px',
-                        fontWeight: 600,
-                      }}
-                    >
-                      {assignment?.assignment.type === 'SINGLE' && assignment.assignment.shift}
-                      {assignment?.assignment.type === 'BOTH' && 'BOTH'}
-                      {assignment?.assignment.type === 'OFF' && 'OFF'}
-                      {!assignment && '—'}
-                    </div>
-                  )
-                })}
-              </React.Fragment>
-            )
-          })
+          managers.map(manager => (
+            <PlanRow
+              key={manager.id}
+              representative={manager}
+              weekDays={weekDays}
+              weeklyPlan={weeklyPlan}
+              activeShift="DAY" // Irrelevante para gerencia
+            />
+          ))
         )}
       </div>
     </div>
   )
 }
-

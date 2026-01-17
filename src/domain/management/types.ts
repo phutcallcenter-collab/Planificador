@@ -5,6 +5,7 @@ export type ManagerDuty =
     | 'NIGHT'
     | 'INTER'
     | 'MONITORING'
+    | 'OFF'
 
 export interface Manager {
     id: string
@@ -16,7 +17,7 @@ export interface Manager {
 export const DEFAULT_MANAGER_DUTY: ManagerDuty | null = null
 
 export interface ManagerPlanDay {
-    duty: ManagerDuty | null // null = explícitamente vacío
+    duty: ManagerDuty | null // null = explícitamente vacío (EMPTY)
     note?: string
 }
 
@@ -25,6 +26,6 @@ export interface ManagerWeeklyPlan {
     days: Record<ISODate, ManagerPlanDay>
 }
 
-// Alias for backward compatibility with Store Slice if needed, or update Slice
+// Aliases
 export type ManagerSchedule = ManagerWeeklyPlan
 export type ManagerAssignment = ManagerPlanDay & { date?: ISODate }

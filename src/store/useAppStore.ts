@@ -18,14 +18,8 @@ import {
   EffectiveSchedulePeriod,
   WeeklyPattern,
   DailyDuty,
-  Manager,
-  ManagerDuty,
-  ManagerSchedule,
 } from '@/domain/types'
-import {
-  createManagementScheduleSlice,
-  ManagementScheduleSlice,
-} from './managementScheduleSlice'
+import { Manager } from '@/domain/management/types'
 import { createInitialState, createBaseSchedule } from '@/domain/state'
 import { loadState, saveState } from '@/persistence/storage'
 import {
@@ -46,6 +40,7 @@ import { recordAuditEvent } from '@/domain/audit/auditRecorder'
 import * as humanize from '@/application/presenters/humanize'
 import { BackupPayload } from '@/application/backup/types'
 import { validateNoOverlap } from '@/domain/planning/effectivePeriodHelpers'
+import { ManagementScheduleSlice, createManagementScheduleSlice } from './managementScheduleSlice'
 
 // --- UI Slice Types ---
 type ConfirmIntent = 'danger' | 'warning' | 'info'
@@ -188,12 +183,10 @@ export type AppState = PlanningBaseState & ManagementScheduleSlice & {
 }
 
 export const useAppStore = create<AppState>()(
-  immer((set, get) => ({
+  immer((set, get, api) => ({
     ...createInitialState(),
-    ...createInitialState(),
-    ...createManagementScheduleSlice(set as any, get as any, {} as any),
+    ...createManagementScheduleSlice(set, get, api),
     managers: [],
-    // managementSchedules is initialized by slice or createInitialState
     isLoading: true,
     planningAnchorDate: new Date().toISOString().split('T')[0],
     allCalendarDaysForRelevantMonths: [],
@@ -809,18 +802,13 @@ export const useAppStore = create<AppState>()(
 
     removeManager: id => {
       set(state => {
-        state.managers = state.managers.filter(m => m.id !== id)
+        state.managers = state.managers.filter((m: Manager) => m.id !== id)
         // Also clean up schedules? User said "No validaciones cruzadas", but cleaning up is good.
         // But maybe we want to keep history?
         // User said: "Si mañana hay historial → se versiona".
         // Use safest approach: keep schedules for now (audit), or delete?
-        // Logic: "No metemos gerencia en operaciones".
-        // I will keep schedules to be safe, or delete if strictly linked.
-        // User emphasizes "Entity: ManagerSchedule". "managerId".
-        // I'll delete schedules to keep state clean.
-        if (state.managementSchedules[id]) {
-          delete state.managementSchedules[id]
-        }
+        // Remove manager from representatives array
+        state.representatives = state.representatives.filter(r => r.id !== id)
       })
     },
 
