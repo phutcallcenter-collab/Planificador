@@ -716,6 +716,7 @@ export function DailyLogView() {
                   <option value="ERROR">Error</option>
                   <option value="OTRO">Otro</option>
                   <option value="LICENCIA">Licencia</option>
+                  <option value="VACACIONES">Vacaciones</option>
                 </select>
               </div>
 
