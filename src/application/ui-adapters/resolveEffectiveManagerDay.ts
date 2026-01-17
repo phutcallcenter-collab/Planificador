@@ -29,7 +29,7 @@ export function resolveEffectiveManagerDay(
     }
 
     // 2. OVERRIDE / PLAN
-    const plannedDay = managerPlan?.days[date]
+    const plannedDay = managerPlan?.days?.[date]
 
     if (plannedDay && plannedDay.duty !== undefined) {
         if (plannedDay.duty === 'OFF') {

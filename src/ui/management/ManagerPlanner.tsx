@@ -5,7 +5,7 @@ import { useWeekNavigator } from '@/hooks/useWeekNavigator'
 import { useWeeklyPlan } from '@/hooks/useWeeklyPlan'
 import { PlanRow } from '@/ui/planning/PlanRow'
 import { getEffectiveAssignmentsForPlanner } from '@/application/ui-adapters/getEffectiveAssignmentsForPlanner'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 
 /**
  * 🧩 PLANNER GERENCIAL — Vista filtrada del planner operativo
@@ -50,6 +50,8 @@ export function ManagerPlanner() {
     planningAnchorDate,
     setPlanningAnchorDate
   )
+
+  const [activeShift, setActiveShift] = useState<'DAY' | 'NIGHT'>('DAY')
 
   const { weeklyPlan } = useWeeklyPlan(weekDays)
 
@@ -131,7 +133,7 @@ export function ManagerPlanner() {
               agent={manager}
               weekDays={weekDays}
               weeklyPlan={weeklyPlan}
-              activeShift="DAY"
+              activeShift={activeShift}
               assignmentsMap={assignmentsMap}
               onCellClick={() => { }}
               onCellContextMenu={() => { }}
