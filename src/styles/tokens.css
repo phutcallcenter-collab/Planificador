@@ -14,24 +14,23 @@
      ============================================ */
 
     /* Backgrounds */
-    --bg-app: #f6f7f9;
-    /* App base - subtle, almost imperceptible */
+    --bg-app: #f0f2f5;
+    /* PREMIUM: Slightly darker/warmer gray for depth */
     --bg-surface: #ffffff;
-    /* Cards, panels - clean white */
-    --bg-subtle: #f9fafb;
-    /* Rows, soft sections */
+    --bg-subtle: #f8fafc;
+    --bg-hover: #f1f5f9;
 
-    /* Borders */
-    --border-subtle: #e5e7eb;
-    --border-strong: #d1d5db;
-
-    /* Text */
+    /* Typography Colors */
     --text-main: #111827;
-    /* Primary text - high contrast */
-    --text-muted: #6b7280;
-    /* Secondary text */
-    --text-faint: #9ca3af;
-    /* Tertiary, hints */
+    /* Gray 900 */
+    --text-muted: #64748b;
+    /* Slate 500 */
+    --text-faint: #94a3b8;
+    /* Slate 400 */
+    --text-on-accent: #ffffff;
+
+    /* Borders & Shadows */
+    --border-subtle: #e2e8f0;
 
     /* ============================================
      COLORS - Semantic

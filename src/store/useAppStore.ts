@@ -411,9 +411,9 @@ export const useAppStore = create<AppState>()(
             title: isOverride ? 'Confirmar Cambio de Turno' : 'Confirmar Incidencia',
             description: React.createElement('span', null,
               'Registrar ',
-              isOverride ? 'una modificación manual' : React.createElement('strong', null, incidentLabel),
+              isOverride ? 'una modificación manual' : React.createElement('strong', { style: { fontWeight: 700, color: 'var(--text-main)' } }, incidentLabel),
               ' a ',
-              React.createElement('strong', null, repName),
+              React.createElement('strong', { style: { fontWeight: 700, color: 'var(--text-main)' } }, repName),
               '.'
             ),
             intent: isOverride ? 'info' : 'info',
