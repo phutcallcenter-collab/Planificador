@@ -14,6 +14,7 @@ import {
   ShiftAssignment,
 } from '../../domain/types'
 import { useIncidentFlow } from '../../hooks/useIncidentFlow'
+import * as humanize from '@/application/presenters/humanize'
 import { resolveIncidentDates } from '../../domain/incidents/resolveIncidentDates'
 import { checkIncidentConflicts } from '../../domain/incidents/checkIncidentConflicts'
 import { Sun, Moon, Users, ChevronLeft, ChevronRight, Calendar as CalendarIcon } from 'lucide-react'
@@ -171,7 +172,9 @@ export function DailyLogView() {
     setPlanningAnchorDate,
     swaps,
     isLoading,
-    effectivePeriods
+    effectivePeriods,
+    pushUndo,
+    removeIncident,
   } = useAppStore(s => ({
     incidents: s.incidents,
     allCalendarDaysForRelevantMonths: s.allCalendarDaysForRelevantMonths,
@@ -181,6 +184,8 @@ export function DailyLogView() {
     swaps: s.swaps,
     isLoading: s.isLoading,
     effectivePeriods: s.effectivePeriods ?? [],
+    pushUndo: s.pushUndo,
+    removeIncident: s.removeIncident,
   }))
 
   // 🎯 SIEMPRE empezar en el día actual (hoy)
@@ -419,7 +424,17 @@ export function DailyLogView() {
   }, [])
 
   const { submit } = useIncidentFlow({
-    onSuccess: () => resetForm(true),
+    onSuccess: (incidentId: string) => {
+      // ✅ SUCCESS: Trigger Undo UI here
+      // This is the clean separation the user requested. UI controls the experience.
+      if (incidentId) {
+        pushUndo({
+          label: 'Incidencia registrada',
+          undo: () => removeIncident(incidentId, true), // Silent remove
+        }, 6000)
+      }
+      resetForm(true)
+    },
   })
 
   // ✅ STEP 3: Preventive validation (non-blocking)

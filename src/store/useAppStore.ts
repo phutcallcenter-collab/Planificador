@@ -124,7 +124,7 @@ export type AppState = PlanningBaseState & ManagementScheduleSlice & {
     data: IncidentInput,
     skipConfirm?: boolean
   ) => Promise<{ ok: true; newId: string } | { ok: false; reason: string }>
-  removeIncident: (id: string) => void
+  removeIncident: (id: string, silent?: boolean) => void
   removeIncidents: (ids: string[]) => void
   addSwap: (data: Omit<SwapEvent, 'id' | 'createdAt'>) => void
   removeSwap: (id: string) => void
@@ -482,12 +482,7 @@ export const useAppStore = create<AppState>()(
         }
 
         if (newIncident.type !== 'OVERRIDE') {
-          // Automatic undo for standard incidents.
-          pushUndo({
-            label: `${humanize.incidentLabel(newIncident.type)} registrada: ${rep.name
-              }`,
-            undo: () => get().removeIncident(newIncident.id),
-          })
+          // Automatic undo moved to UI layer
         }
 
         if (newIncident.type === 'VACACIONES') {
@@ -511,7 +506,7 @@ export const useAppStore = create<AppState>()(
 
       return { ok: true, newId: newIncident.id }
     },
-    removeIncident: (id) => {
+    removeIncident: (id, silent = false) => {
       const {
         incidents,
         representatives,
@@ -521,33 +516,35 @@ export const useAppStore = create<AppState>()(
       const incidentToRemove = incidents.find(i => i.id === id)
       if (!incidentToRemove) return
 
-      const repNameText = humanize.repName(
-        representatives,
-        incidentToRemove.representativeId
-      )
+      if (!silent) {
+        const repNameText = humanize.repName(
+          representatives,
+          incidentToRemove.representativeId
+        )
 
-      addHistoryEvent({
-        category: 'INCIDENT',
-        title: `Incidencia eliminada: ${humanize.incidentLabel(
-          incidentToRemove.type
-        )}`,
-        subject: repNameText,
-        metadata: { incident: incidentToRemove },
-      })
-      addAuditEvent({
-        actor: { id: 'admin', name: 'Administrador' },
-        action: 'INCIDENT_DELETED',
-        target: {
-          entity: 'INCIDENT',
-          entityId: incidentToRemove.id,
-          label: humanize.incidentLabel(incidentToRemove.type),
-        },
-        context: {
-          date: incidentToRemove.startDate,
-          representativeId: incidentToRemove.representativeId,
-          reason: 'Eliminación manual',
-        },
-      })
+        addHistoryEvent({
+          category: 'INCIDENT',
+          title: `Incidencia eliminada: ${humanize.incidentLabel(
+            incidentToRemove.type
+          )}`,
+          subject: repNameText,
+          metadata: { incident: incidentToRemove },
+        })
+        addAuditEvent({
+          actor: { id: 'admin', name: 'Administrador' },
+          action: 'INCIDENT_DELETED',
+          target: {
+            entity: 'INCIDENT',
+            entityId: incidentToRemove.id,
+            label: humanize.incidentLabel(incidentToRemove.type),
+          },
+          context: {
+            date: incidentToRemove.startDate,
+            representativeId: incidentToRemove.representativeId,
+            reason: 'Eliminación manual',
+          },
+        })
+      }
 
 
       set(state => {
@@ -897,20 +894,19 @@ export const useAppStore = create<AppState>()(
         recordAuditEvent(state, event)
       })
     },
-    pushUndo: (action, timeoutMs = 5000) => {
+    pushUndo: (action, timeoutMs = 6000) => {
       const { commitUndo } = get()
       set(state => {
+        // Clear any existing stack to enforce single buffer
+        state.undoStack.forEach(item => clearTimeout(item.timeoutId))
+        state.undoStack = []
+
         const id = `undo-${crypto.randomUUID()}`
 
         const timeoutId = window.setTimeout(() => {
           commitUndo(id)
         }, timeoutMs)
 
-        const existingIndex = state.undoStack.findIndex(a => a.id === id)
-        if (existingIndex > -1) {
-          clearTimeout(state.undoStack[existingIndex].timeoutId)
-          state.undoStack.splice(existingIndex, 1)
-        }
         state.undoStack.push({ ...action, id, timeoutId: timeoutId as any })
       })
     },
