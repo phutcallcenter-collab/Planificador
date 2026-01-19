@@ -8,7 +8,8 @@ import {
     getBackupHistory,
     saveBackupToLocalStorage,
     loadBackupFromLocalStorage,
-    deleteBackupFromLocalStorage
+    deleteBackupFromLocalStorage,
+    getAutoBackupMetadata
 } from '@/persistence/backup'
 import { Download, Upload, Trash2, Save, AlertCircle } from 'lucide-react'
 
@@ -25,12 +26,10 @@ export function BackupManagement() {
 
     const refreshBackupList = () => {
         setBackups(getBackupHistory())
-        // @ts-ignore - function added recently
-        import('@/persistence/backup').then(mod => {
-            if (mod.getAutoBackupMetadata) {
-                setAutoBackup(mod.getAutoBackupMetadata())
-            }
-        })
+        const auto = getAutoBackupMetadata()
+        if (auto) {
+            setAutoBackup(auto)
+        }
     }
 
     const handleExport = () => {
