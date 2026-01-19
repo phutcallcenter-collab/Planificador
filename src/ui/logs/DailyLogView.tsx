@@ -320,7 +320,12 @@ export function DailyLogView() {
     }
 
     const representativesInShift = activeEntries
-      .filter(e => isExpected(e))
+      .filter(e => {
+        // B2/B3 Separation of Concerns:
+        // 1. isExpected(e) -> TRUE (Keeps them in the math: 13/14)
+        // 2. We explicitly HIDE them from the list if they are ABSENT
+        return isExpected(e) && e.logStatus !== 'ABSENT'
+      })
       .map(e => repMap.get(e.representativeId))
       .filter((r): r is Representative => !!r && r.isActive)
 
@@ -331,7 +336,7 @@ export function DailyLogView() {
       dayShiftPlanned,
       nightShiftPlanned,
     }
-  }, [dailyLogEntries, activeShift, weeklyPlan, representatives, isLoading])
+  }, [dailyLogEntries, activeShift, weeklyPlan, representatives, isLoading, incidentType])
 
   const filteredRepresentatives = useMemo(() => {
     if (!searchTerm) return representativesInShift
@@ -426,12 +431,12 @@ export function DailyLogView() {
   const { submit } = useIncidentFlow({
     onSuccess: (incidentId?: string) => {
       // ✅ SUCCESS: Trigger Undo UI here
-      // This is the clean separation the user requested. UI controls the experience.
+      // Fix M2: Ensure this always fires and gives feedback
       if (incidentId) {
         pushUndo({
-          label: 'Incidencia registrada',
+          label: 'Evento registrado', // Generic label for consistency
           undo: () => removeIncident(incidentId, true), // Silent remove
-        }, 6000)
+        }, 5000) // 5 seconds per user request (5-7s)
       }
       resetForm(true)
     },

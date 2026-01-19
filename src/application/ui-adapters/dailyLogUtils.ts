@@ -27,11 +27,24 @@ export const isExpected = (e: DailyLogEntry) => {
 
     // If absent...
     if (e.logStatus === 'ABSENT') {
-        const justified = ['VACACIONES', 'LICENCIA', 'JUSTIFICADA']
-        // If justified, does NOT count in planned (reduces denominator)
-        if (e.details && justified.includes(e.details)) return false
-        // If unjustified (ABSENT, TARDINESS implicit), IT COUNTS (we want to see the hole)
-        return true
+        // Fix B2 (Counter): "El contador queda 13/14".
+        // To keep the denominator (14) intact, the system must consider them "Expected".
+        // We will handle the VISIBILITY (hiding them) in the UI layer.
+
+        // Administrative absences (VACATION, LICENSE) usually reduce the denominator (14/14 -> 13/13).
+        // But the user said "Juanito (justified absence)... counter 13/14".
+        // This implies even justified absences (punctual) are holes.
+        // VACATION/LICENSE are distinct types usually.
+        // Assuming 'ABSENT' status comes from daily events (Ausencia), not long-term License.
+        // If details is explicitly VACATION/LICENSE, we might still want to exclude.
+        // But for "Ausencia Justificada", it MUST return TRUE.
+
+        const longTermExclusions = ['VACACIONES', 'LICENCIA']
+        if (e.details && longTermExclusions.includes(e.details)) {
+            return false // Long term leaves reduce the planned workforce size
+        }
+
+        return true // Punctual absences (Justified or Not) count as Planned Workforce
     }
 
     // OFF, SWAPPED_OUT -> Not expected in this shift

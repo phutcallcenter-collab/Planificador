@@ -70,6 +70,10 @@ export function mapEffectiveDutyToCellState(
     }
 
     // 🟣 LICENCIA
+    // Fix: Un día OFF gana sobre el label de licencia
+    // Robust Fix: Use day.dayOfWeek directly from DayInfo to avoid timezone issues with parseISO
+    const isBaseOff = rep.baseSchedule[day.dayOfWeek] === 'OFF'
+
     if (duty.reason === 'LICENCIA') {
         let tooltip = `${rep.name} está de licencia.`
         if (duty.note) tooltip += `\n📝 ${duty.note}`
@@ -124,7 +128,7 @@ export function mapEffectiveDutyToCellState(
 
     // 🟢 TRABAJO NORMAL (baseline, con label visible para managers)
     const isManager = rep.role === 'MANAGER'
-    
+
     let label: string | undefined = undefined
     if (isManager) {
         // Para managers, mostrar el turno visible
@@ -132,7 +136,7 @@ export function mapEffectiveDutyToCellState(
         else if (rep.baseShift === 'NIGHT') label = 'Noche'
         // INTER se maneja con effective periods o overrides
     }
-    
+
     return {
         variant: 'WORKING',
         label,

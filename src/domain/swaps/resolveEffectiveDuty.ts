@@ -178,11 +178,9 @@ export function resolveEffectiveDuty(
       }
     }
 
-    if (i.type === 'LICENCIA' && resolved.start && resolved.returnDate) {
-      if (date >= resolved.start && date < resolved.returnDate) {
-        return true
-      }
-    }
+    // License is strictly Calendar Days, already expanded in resolved.dates
+    // We should NOT bridge the gap to returnDate visually, as that creates "ghost" days
+    // on OFF days that are past the license duration.
 
     return false
   })
