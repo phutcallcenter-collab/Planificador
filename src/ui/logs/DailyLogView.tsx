@@ -156,6 +156,19 @@ export function DailyLogView() {
   const [activeShift, setActiveShift] = useState<'DAY' | 'NIGHT'>('DAY')
   const [confirmConfig, setConfirmConfig] = useState<any>(null)
 
+  // 🟢 Absence Confirmation Modal State
+  const [absenceConfirmState, setAbsenceConfirmState] = useState<{
+    isOpen: boolean
+    rep: Representative | null
+    onConfirm: (isJustified: boolean) => void
+    onCancel: () => void
+  }>({
+    isOpen: false,
+    rep: null,
+    onConfirm: () => { },
+    onCancel: () => { }
+  })
+
   const calendarRef = useRef<HTMLDivElement>(null)
 
   const dateForLog = useMemo(() => parseISO(logDate), [logDate])
@@ -458,24 +471,23 @@ export function DailyLogView() {
 
     // 🟢 INTERSTITIAL CONFIRMATION for ABSENCE
     if (incidentType === 'AUSENCIA') {
-      const isJustified = await showConfirm({
-        title: 'Confirmar Ausencia',
-        description: (
-          <span>
-            ¿Registrar <strong>Ausencia</strong> a <strong>{selectedRep.name}</strong>?
-            <br />
-            <span style={{ fontSize: '0.9em', color: '#6b7280' }}>
-              Seleccione si es justificada o no.
-            </span>
-          </span>
-        ),
-        confirmLabel: 'Sí, justificada',
-        cancelLabel: 'No, injustificada',
+      setAbsenceConfirmState({
+        isOpen: true,
+        rep: selectedRep,
+        onConfirm: (isJustified) => {
+          submit({
+            representativeId: selectedRep.id,
+            type: 'AUSENCIA',
+            startDate: logDate,
+            duration: 1,
+            note: note.trim() || undefined,
+            details: isJustified ? 'JUSTIFICADA' : 'INJUSTIFICADA' // INJUSTIFICADA explicita si es false
+          }, selectedRep)
+          setAbsenceConfirmState(prev => ({ ...prev, isOpen: false }))
+        },
+        onCancel: () => setAbsenceConfirmState(prev => ({ ...prev, isOpen: false }))
       })
-
-      if (isJustified) {
-        details = 'JUSTIFICADA'
-      }
+      return
     }
 
     const isMultiDay =
@@ -983,6 +995,161 @@ export function DailyLogView() {
           I will Remove the local `confirmConfig` usage to avoid confusion.
       */}
       {/* Only render store-based confirm if I am the one responsible? No, typically main layout. */}
-    </div >
+      {/* 🟢 CUSTOM ABSENCE CONFIRMATION MODAL */}
+      {absenceConfirmState.isOpen && absenceConfirmState.rep && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0,0,0,0.5)',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          zIndex: 9999
+        }}>
+          <div style={{
+            background: 'white',
+            borderRadius: '12px',
+            padding: '24px',
+            width: '400px',
+            maxWidth: '90%',
+            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '20px'
+          }}>
+            <header>
+              <h3 style={{ margin: 0, fontSize: '18px', fontWeight: 700, color: '#111827' }}>
+                Confirmar Ausencia
+              </h3>
+            </header>
+
+            <div style={{ textAlign: 'center' }}>
+              <p style={{ fontSize: '15px', color: '#374151', margin: 0 }}>
+                ¿Registrar <strong>Ausencia</strong> a
+              </p>
+              <p style={{ fontSize: '20px', fontWeight: 800, color: '#111827', margin: '4px 0 0' }}>
+                {absenceConfirmState.rep.name}
+              </p>
+            </div>
+
+            <AbsenceSelector
+              onConfirm={absenceConfirmState.onConfirm}
+              onCancel={absenceConfirmState.onCancel}
+            />
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
+function AbsenceSelector({ onConfirm, onCancel }: { onConfirm: (val: boolean) => void, onCancel: () => void }) {
+  const [justified, setJustified] = useState<boolean | null>(null)
+
+  return (
+    <>
+      <div
+        style={{
+          padding: '16px',
+          borderRadius: '10px',
+          border: '2px solid #e5e7eb',
+          background: '#f9fafb',
+        }}
+      >
+        <div
+          style={{
+            fontSize: '16px',
+            fontWeight: 700,
+            marginBottom: '12px',
+            color: '#111827',
+            textAlign: 'center'
+          }}
+        >
+          ¿La ausencia es justificada?
+        </div>
+
+        <div style={{ display: 'flex', gap: '12px' }}>
+          <button
+            type="button"
+            onClick={() => setJustified(true)}
+            style={{
+              flex: 1,
+              padding: '14px',
+              fontSize: '15px',
+              fontWeight: 700,
+              borderRadius: '8px',
+              border: justified === true ? '2px solid #16a34a' : '1px solid #d1d5db',
+              background: justified === true ? '#dcfce7' : 'white',
+              color: justified === true ? '#166534' : '#374151',
+              cursor: 'pointer',
+              transition: 'all 0.2s'
+            }}
+          >
+            SÍ
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setJustified(false)}
+            style={{
+              flex: 1,
+              padding: '14px',
+              fontSize: '15px',
+              fontWeight: 700,
+              borderRadius: '8px',
+              border: justified === false ? '2px solid #dc2626' : '1px solid #d1d5db',
+              background: justified === false ? '#fee2e2' : 'white',
+              color: justified === false ? '#7f1d1d' : '#374151',
+              cursor: 'pointer',
+              transition: 'all 0.2s'
+            }}
+          >
+            NO
+          </button>
+        </div>
+
+        <p style={{ margin: '12px 0 0', fontSize: '13px', color: '#6b7280', textAlign: 'center' }}>
+          Esta decisión impacta puntos y reportes.
+        </p>
+      </div>
+
+      <div style={{ display: 'flex', gap: '8px', marginTop: '8px' }}>
+        <button
+          onClick={onCancel}
+          style={{
+            flex: 1,
+            padding: '10px',
+            border: 'none',
+            background: 'transparent',
+            color: '#6b7280',
+            fontWeight: 600,
+            cursor: 'pointer'
+          }}
+        >
+          Cancelar
+        </button>
+        <button
+          onClick={() => {
+            if (justified !== null) onConfirm(justified)
+          }}
+          disabled={justified === null}
+          style={{
+            flex: 2,
+            padding: '10px',
+            borderRadius: '6px',
+            border: 'none',
+            background: justified === null ? '#e5e7eb' : '#2563eb',
+            color: justified === null ? '#9ca3af' : 'white',
+            fontWeight: 600,
+            cursor: justified === null ? 'not-allowed' : 'pointer'
+          }}
+        >
+          Confirmar Ausencia
+        </button>
+      </div>
+    </>
   )
 }
