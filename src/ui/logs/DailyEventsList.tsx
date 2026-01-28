@@ -73,14 +73,28 @@ const PersonRow = memo(function PersonRow({
               x{person.count}
             </span>
           )}
-          {canDelete && person.count > 1 && (
-            <button
-              onClick={() => onDeleteGroup(person.incidents.map(i => i.id))}
-              style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontSize: '10px' }}
-              title="Borrar todos"
-            >
-              Borrar todo
-            </button>
+
+          {/* 🗑️ FIX: Allow deleting single incidents in Advanced Mode */}
+          {canDelete && (
+            <>
+              {person.count > 1 ? (
+                <button
+                  onClick={() => onDeleteGroup(person.incidents.map(i => i.id))}
+                  style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontSize: '10px' }}
+                  title="Borrar todos"
+                >
+                  Borrar todo
+                </button>
+              ) : (
+                <button
+                  onClick={() => onDeleteSingle(person.incidents[0].id)}
+                  style={{ background: 'none', border: 'none', color: '#9ca3af', cursor: 'pointer' }}
+                  title="Borrar incidencia"
+                >
+                  <Trash2 size={14} />
+                </button>
+              )}
+            </>
           )}
         </div>
       </div>
