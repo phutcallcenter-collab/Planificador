@@ -21,11 +21,11 @@ export default function ShiftCard({ name, kpis }: ShiftCardProps) {
         <KPIItem title="Recibidas" value={kpis.recibidas} />
         <KPIItem title="Contestadas" value={kpis.contestadas} />
         <KPIItem title="Transacciones" value={kpis.trans} />
-        <KPIItem title="% ConversiÃƒÂ³n" value={formatPercent(kpis.conv)} />
+        <KPIItem title="% Conversión" value={formatPercent(kpis.conv)} />
         <KPIItem title="Abandonadas" value={kpis.abandonadas} />
         <KPIItem title="Duplicadas" value={kpis.duplicadas} />
         <KPIItem title="< 20s" value={kpis.lt20} />
-        <KPIItem title="% AtenciÃƒÂ³n" value={formatPercent(kpis.atencion)} />
+        <KPIItem title="% Atención" value={formatPercent(kpis.atencion)} />
         <KPIItem title="% Abandono" value={formatPercent(kpis.abandonoPct)} />
       </div>
     </div>
