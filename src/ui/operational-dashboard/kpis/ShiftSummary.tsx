@@ -13,7 +13,7 @@ export default function ShiftSummary() {
 
   return (
     <section className="space-y-4">
-      <h2 className="text-xl font-bold">AnÃƒÂ¡lisis por Turno</h2>
+      <h2 className="text-xl font-bold">Análisis por Turno</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {kpisByShift.map((shiftKpis) => (
           <ShiftCard key={shiftKpis.shift} kpis={shiftKpis} />
