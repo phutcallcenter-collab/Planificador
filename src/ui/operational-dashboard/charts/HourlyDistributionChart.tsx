@@ -96,10 +96,10 @@ export default function HourlyDistributionChart() {
           <CardTitle>Distribución de llamadas por hora</CardTitle>
           <PillToggleContainer>
             <PillButton
-              onClick={() => setHourlyChartShift('DÃ­a')}
-              isActive={hourlyChartShift === 'DÃ­a'}
+              onClick={() => setHourlyChartShift('Día')}
+              isActive={hourlyChartShift === 'Dí­a'}
             >
-              DÃ­a
+              Dí­a
             </PillButton>
             <PillButton
               onClick={() => setHourlyChartShift('Noche')}
