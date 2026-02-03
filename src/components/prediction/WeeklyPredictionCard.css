@@ -1,0 +1,264 @@
+/* components/prediction/WeeklyPredictionCard.css */
+
+/**
+ * Weekly Prediction Card Styles
+ * 
+ * Design philosophy: Visual separation prevents misinterpretation.
+ * Colors are muted, borders are dashed, confidence is prominent.
+ */
+
+/* ============================================ */
+/* CARD CONTAINER */
+/* ============================================ */
+
+.weekly-prediction-card {
+  background: #F9FAFB;
+  border: 2px dashed #E5E7EB;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ============================================ */
+/* HEADER */
+/* ============================================ */
+
+.prediction-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #E5E7EB;
+}
+
+.prediction-label {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #374151;
+  letter-spacing: 0.025em;
+}
+
+/* ============================================ */
+/* CONFIDENCE BADGE */
+/* ============================================ */
+
+.confidence-badge {
+  display: inline-block;
+  padding: 0.375rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  cursor: help;
+}
+
+.confidence-blue {
+  background: #DBEAFE;
+  color: #1E40AF;
+}
+
+.confidence-amber {
+  background: #FEF3C7;
+  color: #B45309;
+}
+
+.confidence-orange {
+  background: #FFEDD5;
+  color: #C2410C;
+}
+
+.confidence-gray {
+  background: #F3F4F6;
+  color: #6B7280;
+}
+
+/* ============================================ */
+/* PERSISTENT WARNING (BAJA confidence) */
+/* ============================================ */
+
+.prediction-warning-persistent {
+  background: #FEF3C7;
+  border: 1px solid #FCD34D;
+  border-radius: 4px;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  color: #92400E;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* ============================================ */
+/* CONTEXT SECTION */
+/* ============================================ */
+
+.prediction-context {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #E5E7EB;
+}
+
+.prediction-context p {
+  margin: 0.25rem 0;
+  font-size: 0.875rem;
+  color: #6B7280;
+}
+
+.context-note {
+  color: #9CA3AF;
+  font-size: 0.8125rem;
+  font-style: italic;
+}
+
+/* ============================================ */
+/* SCOPE CLARIFICATION */
+/* ============================================ */
+
+.prediction-scope-note {
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  border-radius: 4px;
+  padding: 0.625rem;
+  margin-bottom: 1rem;
+  color: #1E40AF;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* ============================================ */
+/* DAILY OUTLOOK */
+/* ============================================ */
+
+.daily-outlook {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #E5E7EB;
+}
+
+.day-row {
+  display: grid;
+  grid-template-columns: 100px 60px 120px 80px 60px;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.5rem 0;
+  font-size: 0.9375rem;
+}
+
+.day-row-peak {
+  background: #FEF3C7;
+  border-radius: 4px;
+  padding: 0.5rem;
+  margin: 0 -0.5rem;
+}
+
+.day-name {
+  color: #374151;
+  font-weight: 500;
+}
+
+.day-change {
+  color: #111827;
+  font-weight: 700;
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.day-severity {
+  color: #6B7280;
+  font-size: 0.875rem;
+}
+
+.day-volume {
+  color: #9CA3AF;
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.peak-marker {
+  color: #B45309;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+/* ============================================ */
+/* SUMMARY SECTION */
+/* ============================================ */
+
+.prediction-summary {
+  margin-top: 1rem;
+}
+
+.summary-peak,
+.summary-trend,
+.summary-variability {
+  margin: 0.5rem 0;
+  font-size: 0.9375rem;
+  color: #374151;
+  font-weight: 500;
+}
+
+/* ============================================ */
+/* ASSUMPTIONS */
+/* ============================================ */
+
+.assumptions {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: #FEF3C7;
+  border-radius: 4px;
+}
+
+.assumptions-label {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #92400E;
+}
+
+.assumptions ul {
+  margin: 0;
+  padding-left: 1.25rem;
+  list-style-type: disc;
+}
+
+.assumptions li {
+  margin: 0.25rem 0;
+  font-size: 0.8125rem;
+  color: #78350F;
+  line-height: 1.4;
+}
+
+/* ============================================ */
+/* RESPONSIVE */
+/* ============================================ */
+
+@media (max-width: 640px) {
+  .day-row {
+    grid-template-columns: 80px 50px 100px 70px;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+  }
+
+  .peak-marker {
+    grid-column: 1 / -1;
+    text-align: right;
+  }
+}
+
+/* ============================================ */
+/* ACCESSIBILITY */
+/* ============================================ */
+
+.confidence-badge:focus {
+  outline: 2px solid #3B82F6;
+  outline-offset: 2px;
+}
+
+.day-row:focus-within {
+  outline: 2px solid #3B82F6;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
